@@ -1,0 +1,182 @@
+{% extends 'OdysseusFrontBundle::layout.html.twig' %}
+{% block content %}
+<div class="row">
+	<!-- Titre de la page -->
+	<div class="col-lg-12">
+		<h2>LISTE DES PRODUITS - INFORMATIQUE</h2>
+	</div>
+
+	<!-- Parametres de filtrage -->
+	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+		<div class="sidebar">
+			<!-- Filtre par marque -->
+			<h4><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#marque">MARQUE</a></h4>
+			<ol id="marque" class="target-collapse collapse in">
+				<li><a href="#" class="active">Asus</a></li>
+				<li><a href="#">Acer</a></li>
+				<li><a href="#">Dell</a></li>
+				<li><a href="#">Alienware</a></li>
+			</ol>
+			<!-- Filtre par prix -->
+			<h4><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#prix">PRIX</a></h4>
+			<ol id="prix" class="target-collapse collapse in">
+				<li><a href="#">Moins de 100 €</a></li>
+				<li><a href="#">100 € - 200 €</a></li>
+				<li><a href="#">200 € - 300 €</a></li>
+				<li><a href="#">300 € - 400 €</a></li>
+				<li><a href="#">400 € - 500 €</a></li>
+				<li><a href="#">Plus de 500 €</a></li>
+			</ol>
+			<!-- Filtre par Etat -->
+			<h4><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#etat">ETAT</a></h4>
+			<ol id="etat" class="target-collapse collapse in">
+			<ol>
+				<li><a href="#">Neuf</a></li>
+				<li><a href="#">Comme Neuf</a></li>
+				<li><a href="#">Bon</a></li>
+				<li><a href="#">Légèrement abimé</a></li>
+				<li><a href="#">Très abimé</a></li>
+			</ol>
+		</div>
+	</div>
+
+	<!-- Listing de produits -->
+	<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+		<div class="row">
+
+			<!-- Parametres d'affichage -->
+			<div class="col-lg-12">	
+				<div class="productFilter clearfix">
+					<div class="sortBy inline pull-left">
+						Trier par
+						<select name="">
+							<option value="Default">Popularité</option>
+							<option value="">Nom (A-Z)</option>
+							<option value="">Nom (Z-A)</option>
+							<option value="">Prix (Moins cher)</option>
+							<option value="">Prix (Plus cher)</option>
+						</select>
+					</div>
+
+					<div class="showItem inline pull-left">
+						Afficher
+						<select name="">
+							<option value="5">5 produits</option>
+							<option value="10">10 produits</option>
+							<option value="20">20 produits</option>
+						</select>
+					</div><!--end sortBy-->
+
+					<div class="displaytBy inline pull-right">
+						<div class="btn-group">
+							<button class="btn btn-greend active"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></button>
+							<button class="btn btn-default"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></button>
+						</div>
+					</div><!--end displaytBy-->
+				</div>
+			</div>
+
+			<!-- Article -->
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<div class="shop-item">
+					<div class="image">
+						<a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}"><img src="{{ asset('/bundles/odysseusfront/images/product1.jpg') }}" alt="Item Name"></a>
+					</div>
+					<div class="title">
+						<h3><a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">Lorem ipsum dolor</a></h3>
+					</div>
+					<div class="price">
+						<span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
+						25,99 €
+					</div>
+					<!--<div class="description">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</p>
+					</div>-->
+					<div class="actions">
+						<a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Article -->
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<div class="shop-item">
+					<img src="{{ asset('/bundles/odysseusfront/images/ruban.png') }}" class="ribbon"/>
+					<div class="image">
+						<a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}"><img src="{{ asset('/bundles/odysseusfront/images/product1.jpg') }}" alt="Item Name"></a>
+					</div>
+					<div class="title">
+						<h3><a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">Lorem ipsum dolor</a></h3>
+					</div>
+					<div class="price">
+						<span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
+						<span class="price-was">959,99 €</span> 429,99 €
+					</div>
+					<!--<div class="description">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</p>
+					</div>-->
+					<div class="actions">
+						<a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Article -->
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<div class="shop-item">
+					<div class="image">
+						<a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}"><img src="{{ asset('/bundles/odysseusfront/images/product1.jpg') }}" alt="Item Name"></a>
+					</div>
+					<div class="title">
+						<h3><a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">Lorem ipsum dolor</a></h3>
+					</div>
+					<div class="price">
+						<span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
+						238.00 €
+					</div>
+					<!--<div class="description">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</p>
+					</div>-->
+					<div class="actions">
+						<a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Article ligne -->
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="shop-item line-item">
+					<div class="image">
+						<a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}"><img src="{{ asset('/bundles/odysseusfront/images/product1.jpg') }}" alt="Item Name"></a>
+					</div><!--
+				--><div class="inline-div">
+						<div class="title">
+							<h3><a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">Lorem ipsum dolor</a></h3>
+						</div>
+						<div class="price">
+							<span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
+							238.00 €
+						</div>
+					</div><!--
+				--><div class="actions">
+						<a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Pagination -->
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custompager">
+				<ul class="pagination">
+					<li class="disabled"><span>&laquo;</span></li>
+					<li class="active"><span>1</span></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#">&raquo;</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

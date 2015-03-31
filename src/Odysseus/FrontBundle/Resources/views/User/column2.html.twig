@@ -1,0 +1,30 @@
+{% extends 'OdysseusFrontBundle::layout.html.twig' %}
+{% block content %}
+<div class="row">
+    <!-- Titre de la page -->
+    <div class="col-lg-12">
+        <h2>{% block content_title %}{% endblock content_title %}</h2>
+    </div>
+
+    <!-- Menu de l'espace perso -->
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+        <div class="sidebar">
+            <h4>Menu</h4>
+            <ol id="menu" class="target-collapse collapse in">
+                {% for item in accountMenu %}
+                    {% if item.isVisible %}
+                <li>
+                    <a href="{{ item.url }}" class="{{ (item.isActive ? 'active' : '')}}">{{ item.label }}</a>
+                </li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+
+    <!-- Listing de produits -->
+    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+        {% block column_content %}{% endblock column_content %}
+    </div>
+</div>
+{% endblock content %}

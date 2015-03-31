@@ -1,0 +1,38 @@
+body { margin: 0px auto; }
+a { color: #009900; }
+a:hover { color: #006600; }
+
+.text-center { text-align: center; }
+
+.portfolio-item {
+    margin-bottom: 25px;
+}
+
+header {
+	text-align: center;
+	background-color: #333;
+	padding-top: 5px;
+}
+
+.navbar-inverse {
+	background-color: #00AA00;
+	border: 0px solid black;
+	border-radius: 0px;
+}
+
+.navbar-inverse .navbar-nav li a {
+	color: #EEE;
+}
+.navbar-inverse .navbar-nav li { border-right: 1px solid #009900;}
+.navbar-inverse .navbar-nav li a:hover {
+	background-color: #333;
+}
+
+footer {
+    margin: 50px 0;
+}
+/*
+.btn {
+    border-radius: 0px;
+}
+*/

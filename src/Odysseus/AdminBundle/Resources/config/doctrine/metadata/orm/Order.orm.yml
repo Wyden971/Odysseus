@@ -1,0 +1,95 @@
+Order:
+    type: entity
+    table: order
+    indexes:
+        fk_order_User1_idx:
+            columns:
+                - User_id
+        fk_order_payment_method1_idx:
+            columns:
+                - payment_method_id
+        fk_order_order_details1_idx:
+            columns:
+                - builling_id
+        fk_order_order_details2_idx:
+            columns:
+                - shipping_id
+        fk_order_shipping_method1_idx:
+            columns:
+                - shipping_method_id
+        fk_order_order_status1_idx:
+            columns:
+                - status_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        validatedAt:
+            type: datetime
+            nullable: true
+            column: validated_at
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                User_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        paymentMethod:
+            targetEntity: PaymentMethod
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                payment_method_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        builling:
+            targetEntity: OrderDetails
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                builling_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        shipping:
+            targetEntity: OrderDetails
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                shipping_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        shippingMethod:
+            targetEntity: ShippingMethod
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                shipping_method_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        status:
+            targetEntity: OrderStatus
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                status_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

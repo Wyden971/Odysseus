@@ -1,0 +1,198 @@
+{% extends 'OdysseusFrontBundle::layout.html.twig' %}
+{% block content %}
+<div class="row">
+	<!-- Titre de la page -->
+	<div class="col-lg-12">
+		<h2>Commande</h2>
+	</div>
+	<!-- Commande -->
+	<div class="col-lg-12">
+		<div class="row form-group">
+			<div class="col-xs-12">
+				<ul class="nav nav-pills nav-justified thumbnail setup-panel">
+					<li class="active"><a href="#step-1">
+						<h4 class="list-group-item-heading">ADRESSE</h4>
+						<p class="list-group-item-text">Choix d'adresse</p>
+					</a></li>
+					<li class="disabled"><a href="#step-2">
+						<h4 class="list-group-item-heading">LIVRAISON</h4>
+						<p class="list-group-item-text">Méthode de livraison</p>
+					</a></li>
+					<li class="disabled"><a href="#step-3">
+						<h4 class="list-group-item-heading">PAIEMENT</h4>
+						<p class="list-group-item-text">Moyen de paiement</p>
+					</a></li>
+					<li class="disabled"><a href="#step-4">
+						<h4 class="list-group-item-heading">VALIDATION</h4>
+						<p class="list-group-item-text">Dernière vérification</p>
+					</a></li>
+					<li class="disabled"><a href="#step-5">
+						<h4 class="list-group-item-heading">CONFIRMATION</h4>
+						<p class="list-group-item-text">Merci pour votre achat !</p>
+					</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- ETAPE 1 -->
+		<form class="form-horizontal">
+		<div class="row setup-content" id="step-1">
+			<div class="col-lg-12">
+					<div class="titleHeader clearfix">
+						<h3>Informations de livraison</h3>
+					</div>
+					<div class="form-group">
+						<label for="societe" class="col-sm-3 control-label">Societe</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="societe" name="societe" placeholder="Entrez le nom de votre societe">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="adresse" class="col-sm-3 control-label">Adresse *</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="adresse" name="adresse" placeholder="Entrez votre adresse" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="adressecomp" class="col-sm-3 control-label">Complément d'Adresse</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="adressecomp" name="adresscomp" placeholder="Entrez, si besoin, un complement d'adresse">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="codepostal" class="col-sm-3 control-label">Code Postal *</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="codepostal" name="codepostal" placeholder="Entrez votre code postal" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="ville" class="col-sm-3 control-label">Ville *</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="ville" name="ville" placeholder="Entrez votre ville" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="pays" class="col-sm-3 control-label">Pays *</label>
+						<div class="col-sm-9">
+							<select class="form-control" id="pays" name="pays" required>
+									<option value="" disabled selected>Entrez votre pays de résidence</option>
+									<option>France</option>
+									<option>Corée du Nord</option>
+									<option>Russie</option>
+									<option>Westeros</option>
+									<option>Middle Earth</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="telfixe" class="col-sm-3 control-label">Téléphone Fixe *</label>
+						<div class="col-sm-9">
+							<input type="phone" class="form-control" id="telfixe" name="telfixe" placeholder="Entrez votre numéro de téléphone fixe" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="telport" class="col-sm-3 control-label">Téléphone Portable</label>
+						<div class="col-sm-9">
+							<input type="phone" class="form-control" id="telport" name="telport" placeholder="Entrez votre numéro de téléphone portable">
+						</div>
+					</div>
+					<button id="activate-step-2" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
+			</div>
+		</div>
+		<!-- ETAPE 2 -->
+		<div class="row setup-content" id="step-2">
+			<form>
+				<!-- Methode de livraison 1 -->
+				<div class="col-xs-12 col-md-4">
+					<div class="panel panel-default panel-shipping">
+						<div class="panel-heading basic">
+							<h3 class="panel-title">Livraison normale</h3>
+						</div>
+						<div class="panel-body">
+							<div class="the-price">
+								<h1>GRATUIT</h1>
+								<p>Livraison en 4 à 7 jours ouvrées</p>
+								<p><em>La solution économique<br />Colis non suivi envoyé par un transporteur tiers. N'inclus pas de service après vente.</em></p>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<label class="btn" style>
+								<input type="radio" name="transporteur" id="transporteur1" value="1" /> Choisir la livraison normale
+							</label>
+						</div>
+					</div>
+				</div>
+				<!-- Methode de livraison 2 -->
+				<div class="col-xs-12 col-md-4">
+					<div class="panel panel-default panel-shipping">
+						<div class="panel-heading rapid">
+							<h3 class="panel-title">Livraison rapide</h3>
+						</div>
+						<div class="panel-body">
+							<div class="the-price">
+								<h1>7,99 €</h1>
+								<p>Livraison en 48h ouvrées</p>
+								<p><em>Colis suivi par internet<br />Profitez d'une livraison au meilleur prix. Inclus un service après vente par mail.</em></p>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<label class="btn" style>
+								<input type="radio" name="transporteur" id="transporteur2" value="2" /> Choisir la livraison rapide
+							</label>
+						</div>
+					</div>
+				</div>
+				<!-- Methode de livraison 3 -->
+				<div class="col-xs-12 col-md-4">
+					<div class="panel panel-default panel-shipping">
+						<div class="panel-heading express">
+							<h3 class="panel-title">Livraison express</h3>
+						</div>
+						<div class="panel-body">
+							<div class="the-price">
+								<h1>15,99 €</h1>
+								<p>Livraison en 24h</p>
+								<p><em>Recevez votre commande en 24h chrono !<br />Beneficiez d'un suivi et d'un service après vente intégral et à tout heure.</em></p>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<label class="btn" style>
+								<input type="radio" name="transporteur" id="transporteur2" value="2" /> Choisir la livraison express
+							</label>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="col-xs-12">
+				<button id="activate-step-3" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
+			</div>
+		</div>
+		<!-- ETAPE 3 -->
+		<div class="row setup-content" id="step-3">
+			<div class="col-xs-12">
+				<div class="col-md-12 well text-center">
+					<h1 class="text-center"> STEP 3</h1>
+					<button id="activate-step-4" class="btn btn-greend btn-long">Passer à l'étape suivante</button>
+				</div>
+			</div>
+		</div>
+		<!-- ETAPE 4 -->
+		<div class="row setup-content" id="step-4">
+			<div class="col-xs-12">
+				<div class="col-md-12 well text-center">
+					<h1 class="text-center"> STEP 4</h1>
+					<button id="activate-step-5" class="btn btn-greend btn-long">Confirmer la commande</button>
+				</div>
+			</div>
+		</div>
+		</form>
+		<!-- ETAPE 5 -->
+		<div class="row setup-content" id="step-5">
+			<div class="col-xs-12">
+				<div class="col-md-12 well text-center">
+					<h1 class="text-center"> STEP 5</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

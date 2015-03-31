@@ -1,0 +1,31 @@
+ShippingMethod:
+    type: entity
+    table: shipping_method
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+        pricePerWeight:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            default: '0'
+            column: price_per_weight
+        pricePerM3:
+            type: string
+            nullable: true
+            length: 45
+            fixed: false
+            column: price_per_m3
+    lifecycleCallbacks: {  }

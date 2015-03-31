@@ -1,0 +1,464 @@
+{% extends 'OdysseusFrontBundle::layout.html.twig' %}
+{% block content %}
+<div class="row">
+
+    <!-- Titre de la page -->
+    <div class="col-lg-12">
+        <h2>Inscription</h2>
+        {% block title %}Inscription{% endblock title %}
+    </div>
+    <!-- Formulaire d'inscription -->
+        {{ 
+            form_start(form, {
+                'method':'POST',
+                'attrs':{
+                    'class' : 'form-horizontal form-register'
+                }
+            }) 
+        }}
+        {{ form_errors(form) }}
+
+
+    <div class="col-lg-12">	
+        <div class="titleHeader clearfix">
+            <h3>Informations de connexion</h3>
+        </div>
+        <div class="form-group">
+            <label for="odysseus_adminbundle_user_email" class="col-sm-3 control-label">E-mail *</label>
+
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.email, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre adresse mail'
+                        }
+                    })
+                }}
+                {{ form_errors(form.email) }}
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="odysseus_adminbundle_user_plainPassword_first" class="col-sm-3 control-label">Mot de passe *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.plainPassword.first, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre mot de passe'
+                        }
+                    })
+                }}
+                {{ form_errors(form.plainPassword) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="odysseus_adminbundle_user_plainPassword_second" class="col-sm-3 control-label">Confirmation Mot de passe *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.plainPassword.second, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre mot de passe'
+                        }
+                    })
+                }}
+                {{ form_errors(form.plainPassword) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12" id="shipping-infos-1">	
+        <div class="titleHeader clearfix">
+            <h3>Informations personnelles</h3>
+        </div>
+        <div class="form-group">
+            <label for="prenom" class="col-sm-3 control-label">Civilité *</label>
+            <div class="col-sm-9">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default btn-radio">
+                        {{ form_widget(form.infos[0].civility[0]) }} Monsieur
+                    </label>
+                    <label class="btn btn-default btn-radio">
+                        {{ form_widget(form.infos[0].civility[1]) }} Madame
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nom" class="col-sm-3 control-label">Nom *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[0].lastName, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre Nom'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[0].lastName) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="prenom" class="col-sm-3 control-label">Prénom *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[0].firstName, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre Prénom'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[0].firstName) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="datenaissance" class="col-sm-3 control-label">Date de naissance *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.birthdate, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre Date de naissance'
+                        }
+                    })
+                }}
+                {{ form_errors(form.birthdate) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12" id="shipping-infos-2">
+        <div class="titleHeader clearfix">
+            <h3>Informations de livraison</h3>
+        </div>
+        <div class="form-group">
+            <label for="societe" class="col-sm-3 control-label">Societe</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[0].company, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrer le nom de votre société'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[0].company) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="adresse" class="col-sm-3 control-label">Adresse *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[0].address1, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrer votre adresse'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[0].address1) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="adressecomp" class="col-sm-3 control-label">Complément d'Adresse</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[0].address2, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez, si besoin, un complement d\'adresse'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[0].address2) }}
+            </div>
+        </div>
+        <div class="form-group" id="">
+            <label for="codepostal" class="col-sm-3 control-label">Code Postal *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[0].zipCode, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre code postal'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[0].zipCode) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ville" class="col-sm-3 control-label">Ville *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[0].city, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre ville'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[0].city) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pays" class="col-sm-3 control-label">Pays *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[0].country, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre ville'
+                        },
+                        'empty_value' : 'Entrez votre pays de résidence'
+                    })
+                }}
+                {{ form_errors(form.infos[0].country) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="telfixe" class="col-sm-3 control-label">Téléphone Fixe *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[0].telephone, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre numéro de téléphone fixe'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[0].telephone) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="telport" class="col-sm-3 control-label">Téléphone Portable</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[0].mobilePhone, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre numéro de téléphone portable'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[0].mobilePhone) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="telport" class="col-sm-3 control-label">Facturation</label>
+            <div class="col-sm-9" style="color:#999">
+                <input type="checkbox" id="fact_check" name="fact_check" value="yes"> Utiliser une adresse de facturation différente de celle de livraison
+            </div>
+            <script>
+                $('#fact_check').change(function() {
+                    if (this.checked) {
+                        $('#shipping-infos-1 input, #shipping-infos-2 input, #shipping-infos-2 select').each(function() {
+                            if (this.id.indexOf('odysseus_adminbundle_user') < 0)
+                                return true;
+
+                            var id = this.id.replace('infos_0_', 'infos_1_');
+                            console.log($(this).attr('type') + ' ' + id);
+                            if ($(this).attr('type') == 'radio' || $(this).attr('type') == 'checkbox') {
+                                if (this.checked)
+                                    $('#' + id).attr('checked', '').click();
+                                else
+                                    $('#' + id).removeAttr('checked');
+                            } else if (this.tag == 'select') {
+                                $('#' + id+'>option[value="'+this.value+'"]').prop('selected', true);
+                            } else {
+                                $('#' + id).val(this.value);
+                            }
+                        });
+                    }
+                });
+            </script>
+        </div>
+    </div>
+    <div class="col-lg-12 collapse" id="fact_adress">
+        <div class="titleHeader clearfix">
+            <h3>Informations de facturation</h3>
+        </div>
+        <div class="form-group">
+            <label for="prenom" class="col-sm-3 control-label">Civilité *</label>
+            <div class="col-sm-9">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default btn-radio">
+                        {{ form_widget(form.infos[1].civility[0]) }} Monsieur
+                    </label>
+                    <label class="btn btn-default btn-radio">
+                        {{ form_widget(form.infos[1].civility[1]) }} Madame
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nom" class="col-sm-3 control-label">Nom *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[1].lastName, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre Nom'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[1].lastName) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="prenom" class="col-sm-3 control-label">Prénom *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[1].firstName, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre Prénom'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[1].firstName) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="societe" class="col-sm-3 control-label">Societe</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[1].company, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrer le nom de votre société'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[1].company) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="adresse" class="col-sm-3 control-label">Adresse *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[1].address1, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrer votre adresse'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[1].address1) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="adressecomp" class="col-sm-3 control-label">Complément d'Adresse</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[1].address2, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez, si besoin, un complement d\'adresse'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[1].address2) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="codepostal" class="col-sm-3 control-label">Code Postal *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[1].zipCode, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre code postal'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[1].zipCode) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ville" class="col-sm-3 control-label">Ville *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[1].city, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre ville'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[1].city) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pays" class="col-sm-3 control-label">Pays *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[1].country, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre ville'
+                        },
+                        'empty_value' : 'Entrez votre pays de résidence'
+                    })
+                }}
+                {{ form_errors(form.infos[1].country) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="telfixe" class="col-sm-3 control-label">Téléphone Fixe *</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[1].telephone, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre numéro de téléphone fixe'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[1].telephone) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="telport" class="col-sm-3 control-label">Téléphone Portable</label>
+            <div class="col-sm-9">
+                {{ 
+                    form_widget(form.infos[1].mobilePhone, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Entrez votre numéro de téléphone portable'
+                        }
+                    })
+                }}
+                {{ form_errors(form.infos[1].mobilePhone) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div style="background-color:#e0e0e0; padding: 2px 10px">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    {{ form_widget(form.receiveSpecialOffers) }} Je souhaite recevoir gratuitement les offres exceptionnelles et réductions de InstanTrade.
+                    {{ form_errors(form.receiveSpecialOffers) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_widget(form.receivePartnersSpecialOffers) }} Je souhaite recevoir gratuitement les meilleures offres des partenaires de InstanTrade (Bons plans, promotions, etc…) par e-mail 
+                    {{ form_errors(form.receivePartnersSpecialOffers) }}
+                </div>
+            </div>
+            <p style="font-size:10px">
+                Les informations recueillies par InterTrade font l’objet d’un traitement informatique afin d’assurer la bonne exécution de vos commandes.
+                InterTrade et ses prestataires sont destinataires de ces données.
+                <br>Si vous l’acceptez, InterTrade et ses partenaires commerciaux peuvent vous informer de leurs offres promotionnelles.
+                <br>Conformément à la loi « informatique et libertés » du 6 janvier 1978 modifiée, vous bénéficiez d’un droit d’accès et de rectification aux informations qui vous concernent.Vous pouvez également, pour des motifs légitimes, vous opposer au traitement de données vous concernant.
+                <br>Vous pouvez exercer ces droits en contactant le Service Clients.
+            </p>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-greend btn-long pull-right">Confirmer votre inscription</button>
+    </div>
+
+
+    {{ form_end(form) }}
+</div>
+{% endblock %}

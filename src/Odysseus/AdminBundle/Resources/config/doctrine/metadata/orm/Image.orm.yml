@@ -1,0 +1,47 @@
+Image:
+    type: entity
+    table: Image
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: true
+            length: 256
+            fixed: false
+        url:
+            type: text
+            nullable: false
+            length: 65535
+            fixed: false
+        file:
+            type: text
+            nullable: false
+            length: 65535
+            fixed: false
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+    manyToMany:
+        article:
+            targetEntity: Article
+            cascade: {  }
+            mappedBy: image
+            inversedBy: null
+            joinTable: null
+            orderBy: null
+        model:
+            targetEntity: ArticleModel
+            cascade: {  }
+            mappedBy: image
+            inversedBy: null
+            joinTable: null
+            orderBy: null
+    lifecycleCallbacks: {  }

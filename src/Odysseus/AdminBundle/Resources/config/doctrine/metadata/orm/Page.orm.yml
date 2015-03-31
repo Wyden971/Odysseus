@@ -1,0 +1,63 @@
+Page:
+    type: entity
+    table: page
+    indexes:
+        fk_page_page_status1_idx:
+            columns:
+                - status_id
+        fk_page_page1_idx:
+            columns:
+                - parent_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        title:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+        content:
+            type: text
+            nullable: true
+            length: 65535
+            fixed: false
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        modifiedAt:
+            type: datetime
+            nullable: false
+            column: modified_at
+        template:
+            type: string
+            nullable: true
+            length: 256
+            fixed: false
+            default: 'OdysseusFrontBundle:Page:index.html;twig'
+    manyToOne:
+        status:
+            targetEntity: PageStatus
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                status_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        parent:
+            targetEntity: Page
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                parent_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

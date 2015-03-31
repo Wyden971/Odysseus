@@ -1,0 +1,19 @@
+services:
+#    odysseus_admin.example:
+#        class: Odysseus\AdminBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+#    kernel.listener.odysseus_admin_request_listener:
+#        class: Odysseus\AdminBundle\Listener\RequestListener
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            
+    odysseus_admin.service_menu:
+        class: Odysseus\AdminBundle\Service\Menu
+        arguments: ['@router']
+        
+    odysseus.twig.odysseus_extension:
+        class: Odysseus\FrontBundle\Twig\OdysseusExtension
+        tags:
+            - { name: twig.extension }
+        arguments: ["@doctrine.orm.entity_manager"]

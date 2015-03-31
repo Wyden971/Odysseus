@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{% block title %}Bienvenue sur Odysseus.fr{% endblock title %} - Odysseus</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="{{ asset('/bundles/odysseusfront/css/bootstrap.min.css') }}" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="{{ asset('/bundles/odysseusfront/css/slick.css') }}" rel="stylesheet">
+        <link href='{{ asset('/bundles/odysseusfront/css/fontface.css') }}' rel='stylesheet'>
+        <link href="{{ asset('/bundles/odysseusfront/css/custom-front.css') }}" rel="stylesheet">
+
+         <!-- jQuery & Bootstrap Core JavaScript -->
+        <script src="{{ asset('/bundles/odysseusfront/js/jquery-1.11.1.min.js') }}"></script>
+        <script src="{{ asset('/bundles/odysseusfront/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('/bundles/odysseusfront/js/slick.min.js') }}"></script>
+        
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+                <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+                <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <div class="container">
+            <!-- Header -->
+            <header>
+                <div class="row">
+                    <!-- Logo -->
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <a href="{{ path('odysseus_front_homepage') }}">
+                            <img class="img-responsive logo-responsive" src="{{ asset('/bundles/odysseusfront/images/logo.png') }}" alt="">
+                        </a>
+                    </div>
+                    <!-- Search (big screen) -->
+                    <div class="col-md-4 hidden-sm hidden-xs">
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control input-large" placeholder="Que recherchez-vous ?">
+                            </div>
+                            <button type="submit" class="btn btn-greend">Rechercher</button>
+                        </form>
+                    </div>
+                    <!-- Boutons Profil & Panier -->
+                    <div class="col-md-4 col-sm-6 col-xs-12 header-btn-align">
+                        <a href="{{ path('odysseus_front_user_my_summary') }}" class="btn btn-responsive btn-default">
+                            <span class="glyphicon glyphicon-user"></span> Mon Compte
+                        </a>
+                        {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('odysseus_front_order_cart') }}" class="btn btn-responsive btn-greend">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Mon Panier
+                        </a>
+                        {% endif %}
+                    </div>
+                    <!-- Search (Small screen) -->
+                    <div class="col-sm-12 col-xs-12 hidden-md hidden-lg">
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Que recherchez-vous ?">
+                            </div>
+                            <button type="submit" class="btn btn-greend">Rechercher</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Menu de navigation -->
+                    <div class="col-md-12">
+                        <nav class="navbar navbar-default main-nav" role="navigation">
+                            <!-- Menu responsive pour appareils mobiles -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand visible-xs" href="#">Menu</a>
+                            </div>
+                            <!-- Contenu du menu -->
+                            <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+                                <ul class="nav navbar-nav navbar-left">
+                                    <li class="{{ app.request.get('_route') == 'odysseus_front_homepage' ? 'active' : '' }}">
+                                        <a href="{{ path('odysseus_front_homepage') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+                                    </li>
+                                    {% for category in getCategories() %}
+                                    <li class="{{ (category_name is defined and category_name == category.url) ? 'active' : '' }}">
+                                        <a href="{{ path('odysseus_category_index', {'category_name':category.url}) }}">{{ category.name }}</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    {% if breadcrumb is defined %}
+                    <!-- Breadcrumb -->
+                    <div class="col-md-12">
+                        <ol class="breadcrumb">
+                            {% for item in breadcrumb %}
+                                <li class="{{ item.url is not defined ? 'active' : '' }}">
+                                    {% if item.url is defined %}
+                                    <a href="{{ item.url }}">{{ item.label }}</a>
+                                    {% else %}
+                                        {{ item.label }}
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    {% endif %}
+                </div>
+            </header>
+            <!-- /.Header -->
+
+            <!-- Page Content -->
+            <div>
+				{% block content %}
+				{% endblock %}
+            </div>
+            <!-- /.page content -->
+
+            <!-- Footer -->
+            <footer>
+                <div class="row">
+                    <!-- Inscription à la newsletter & Reseaux sociaux -->
+                    <div class="col-lg-12" style="margin-bottom:10px;">
+                        <div style="background-color:#E0E0E0; padding: 5px;">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-6">
+                                    <form class="form-inline">
+                                        <div class="form-group hidden-xs">
+                                            <input type="email" class="form-control" style="width:300px;" placeholder="Inscription à la Newsletter">
+                                        </div>
+                                        <button type="submit" class="btn btn-greend hidden-xs">S'inscrire</button>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-greend visible-xs" data-toggle="modal" data-target="#myModal">Inscription Newsletter</button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">Inscription à la newsletter</h4>
+                                                    </div>
+                                                    <div class="modal-body" >
+                                                        <div class="form-group">
+                                                            <input type="email" class="form-control" placeholder="Entrez-votre E-mail">
+                                                        </div>
+                                                        <div style="text-align:right;">
+                                                            <button type="sumbit" class="btn btn-greend">S'inscrire</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left:10px;">Annuler</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6" style="text-align:right;">
+                                    <a href="#"><img src="{{ asset('/bundles/odysseusfront/images/social_facebook.png') }}" alt="" /></a>
+                                    <a href="#"><img src="{{ asset('/bundles/odysseusfront/images/social_twitter.png') }}" alt="" /></a>
+                                    <a href="#"><img src="{{ asset('/bundles/odysseusfront/images/social_google+.png') }}" alt="" /></a>
+                                    <a href="#"><img src="{{ asset('/bundles/odysseusfront/images/social_RSS.png') }}" alt="" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Informations générales / Liens -->
+                    <div class="col-lg-12">
+                        <div style="background-color:#E0E0E0; padding: 15px">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                    <p class="foot-title">QUI SOMMES NOUS ?</p>
+                                    <p class="foot-link"><a href="{{ path('odysseus_front_policy') }}">Mentions légales</a></p>
+                                    <p class="foot-link"><a href="#">Nous contacter</a></p>
+                                    <p class="foot-link"><a href="#">A propos de nous</a></p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                    <p class="foot-title">NOS SERVICES</p>
+                                    <p class="foot-link"><a href="#">Vente particulier à particulier</a></p>
+                                    <p class="foot-link"><a href="#">Vente au professionnels</a></p>
+                                    <p class="foot-link"><a href="#">Publicité</a></p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                    <p class="foot-title">NOS PARTENAIRES</p>
+                                    <p class="foot-link"><a href="#">Amazone</a></p>
+                                    <p class="foot-link"><a href="#">Fnac</a></p>
+                                    <p class="foot-link"><a href="#">Materiel.net</a></p>
+                                    <p class="foot-link"><a href="#">Rueducommerce</a></p>
+                                    <p class="foot-link"><a href="#">Priceminister</a></p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                    <p class="foot-title">AIDE</p>
+                                    <p class="foot-link"><a href="">FAQ</a></p>
+                                    <p class="foot-link"><a href="#">Aide en lign</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <p id="page-copyright">&copy; InstanTrade 2014/2015 - Tout droits réservés</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- /.container -->
+
+       
+        <script src="{{ asset('/bundles/odysseusfront/js/custom.js') }}"></script>
+    </body>
+
+</html>

@@ -1,0 +1,53 @@
+{% extends 'OdysseusAdminBundle::column2.layout.html.twig' %}
+
+{% block title %}Liste des pages{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <h1 class="page-header">Les pages</h1>
+    </div>
+</div>
+<div class="panel panel-default">
+
+    <!-- Default panel contents -->
+    <div class="panel-heading">Pages ({{ pages|length }}/<strong>{{ count }}</strong>)</div>
+    <!-- Table -->
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Contenu</th>
+                <th>Date modif.</th>
+                <th>Statut</th>
+                <th class="actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for page in pages %}
+                    {% include 'OdysseusAdminBundle:Page:_page_line.html.twig' with {'page' : page, 'indent' : 0} only %}
+            {% else %}
+            <tr>
+                <td colspan="6" align="center">
+                    Aucune page dans la base de données
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        $('.page-line').each(function() {
+            $(this).find('>.page-line-title').click((function() {
+                $(this).toggleClass('children-visible');
+            }).bind(this));
+        });
+    </script>
+</div>
+{% endblock %}
+
+{% block operations %}
+<li class="list-group-item">
+    <a href="#">Ajouter nouvel utilisateur</a>
+</li>
+ {% endblock operations %}

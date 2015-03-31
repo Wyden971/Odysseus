@@ -1,0 +1,38 @@
+Payment:
+    type: entity
+    table: Payment
+    indexes:
+        fk_Payment_PaymentType1_idx:
+            columns:
+                - PaymentType_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        isvalidate:
+            type: boolean
+            nullable: false
+            comment: ''
+            default: '0'
+            column: isValidate
+        date:
+            type: datetime
+            nullable: false
+            comment: ''
+    manyToOne:
+        paymenttype:
+            targetEntity: Paymenttype
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                PaymentType_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

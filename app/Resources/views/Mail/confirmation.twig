@@ -1,0 +1,21 @@
+{% block subject %} Confirmation d'inscription {% endblock subject %}
+
+{% block body_html %}
+
+Félicitation {{ user.getDefaultInfos().firstName|capitalize }},<br /><br />
+
+Votre inscription a été pris en compte. Afin de valider votre inscription <a href="{{ baseurl }}{{ path('odysseus_front_user_validation', {'token':user.confirmationToken}) }}">cliquez ici</a>.<br /><br />
+
+<a href="{{ baseurl }}{{ path('odysseus_front_user_validation', {'token':user.confirmationToken}) }}">{{ baseurl }}{{ path('odysseus_front_user_validation', {'token':user.confirmationToken}) }}</a>
+<br /><br />
+
+L'équipe.
+{% endblock %}
+
+{% block body_text %}
+Félicitation {{ user.getDefaultInfos().firstName|capitalize }},
+
+Votre inscription a été pris en compte. Afin de valider votre inscription veuillez utiliser le lien suivant : {{ baseurl }}{{ path('odysseus_front_user_validation', {'token':user.confirmationToken}) }}.
+
+L'équipe.
+{% endblock %}

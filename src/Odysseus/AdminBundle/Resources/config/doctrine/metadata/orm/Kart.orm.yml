@@ -1,0 +1,55 @@
+Kart:
+    type: entity
+    table: Kart
+    indexes:
+        fk_Kart_User1_idx:
+            columns:
+                - User_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 256
+            fixed: false
+            comment: ''
+        date:
+            type: datetime
+            nullable: false
+            comment: ''
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                User_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        article:
+            targetEntity: Article
+            cascade: {  }
+            mappedBy: null
+            inversedBy: kart
+            joinTable:
+                name: kart_has_article
+                joinColumns:
+                    -
+                        name: Kart_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: Article_id
+                        referencedColumnName: id
+            orderBy: null
+    lifecycleCallbacks: {  }

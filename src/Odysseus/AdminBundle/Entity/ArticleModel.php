@@ -1,0 +1,410 @@
+<?php
+
+namespace Odysseus\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ArticleModel
+ *
+ * @ORM\Table(name="article_model", indexes={@ORM\Index(name="fk_article_model_article1_idx", columns={"article_id"}), @ORM\Index(name="fk_article_model_User1_idx", columns={"User_id"}), @ORM\Index(name="fk_article_model_article_model_status1_idx", columns={"status_id"})})
+ * @ORM\Entity
+ */
+class ArticleModel
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $price = '0';
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="weight", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $weight = '0';
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="width", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $width = '0';
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="height", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $height = '0';
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="depth", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $depth = '0';
+
+    /**
+     * @var \Article
+     *
+     * @ORM\ManyToOne(targetEntity="Article", inversedBy="models")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="article_id", referencedColumnName="id")
+     * })
+     */
+    private $article;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="articleModels")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="User_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+    /**
+     * @var \ArticleModelStatus
+     *
+     * @ORM\ManyToOne(targetEntity="ArticleModelStatus")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="status_id", referencedColumnName="id")
+     * })
+     */
+    private $status;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Image", inversedBy="model", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="article_model_has_Image",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="model_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="Image_id", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $image;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Cart", mappedBy="model",cascade={"persist", "remove"})
+     */
+    private $cart;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->image = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->cart = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return ArticleModel
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param float $weight
+     * @return ArticleModel
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return float 
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * Set width
+     *
+     * @param float $width
+     * @return ArticleModel
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * Get width
+     *
+     * @return float 
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * Set height
+     *
+     * @param float $height
+     * @return ArticleModel
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    /**
+     * Get height
+     *
+     * @return float 
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * Set depth
+     *
+     * @param float $depth
+     * @return ArticleModel
+     */
+    public function setDepth($depth)
+    {
+        $this->depth = $depth;
+
+        return $this;
+    }
+
+    /**
+     * Get depth
+     *
+     * @return float 
+     */
+    public function getDepth()
+    {
+        return $this->depth;
+    }
+
+    /**
+     * Set article
+     *
+     * @param \Odysseus\AdminBundle\Entity\Article $article
+     * @return ArticleModel
+     */
+    public function setArticle(\Odysseus\AdminBundle\Entity\Article $article = null)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return \Odysseus\AdminBundle\Entity\Article 
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Odysseus\AdminBundle\Entity\User $user
+     * @return ArticleModel
+     */
+    public function setUser(\Odysseus\AdminBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Odysseus\AdminBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set status
+     *
+     * @param \Odysseus\AdminBundle\Entity\ArticleModelStatus $status
+     * @return ArticleModel
+     */
+    public function setStatus(\Odysseus\AdminBundle\Entity\ArticleModelStatus $status = null)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \Odysseus\AdminBundle\Entity\ArticleModelStatus 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \Odysseus\AdminBundle\Entity\Image $image
+     * @return ArticleModel
+     */
+    public function addImage(\Odysseus\AdminBundle\Entity\Image $image)
+    {
+        $this->image[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \Odysseus\AdminBundle\Entity\Image $image
+     */
+    public function removeImage(\Odysseus\AdminBundle\Entity\Image $image)
+    {
+        $this->image->removeElement($image);
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Add cart
+     *
+     * @param \Odysseus\AdminBundle\Entity\Cart $cart
+     * @return ArticleModel
+     */
+    public function addCart(\Odysseus\AdminBundle\Entity\Cart $cart)
+    {
+        $this->cart[] = $cart;
+
+        return $this;
+    }
+
+    /**
+     * Remove cart
+     *
+     * @param \Odysseus\AdminBundle\Entity\Cart $cart
+     */
+    public function removeCart(\Odysseus\AdminBundle\Entity\Cart $cart)
+    {
+        $this->cart->removeElement($cart);
+    }
+
+    /**
+     * Get cart
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCart()
+    {
+        return $this->cart;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return ArticleModel
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+}

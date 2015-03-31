@@ -1,0 +1,96 @@
+{% extends 'OdysseusFrontBundle:User:column2.html.twig' %}
+
+{% block content_title %}MON COMPTE - INFORMATION PERSONNELLES{% endblock content_title %}
+
+{% block column_content %}
+<div class="row">
+    <div class="col-xs-12">
+        {% for flashMessage in app.session.flashbag.get('odysseus_front_user_my_personal_informations') %}
+            <div class="flash-notice">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="row">
+    {{ 
+        form_start(form, {
+            'method':'POST',
+            'attrs':{
+                'class' : 'form-horizontal form-register'
+            }
+        }) 
+    }}
+    {{ form_errors(form) }}
+    <!-- Tableau Achats/Ventes -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:20px">
+        
+        <div>
+            <div class="form-group">
+                <label for="prenom" class="col-sm-3 control-label">Civilité *</label>
+                <div class="col-sm-9">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default btn-radio {{ form.vars.value.civility=='M' ? 'active' : '' }}">
+                                {{ form_widget(form.civility[0]) }} Monsieur
+                        </label>
+                        <label class="btn btn-default btn-radio {{ form.vars.value.civility=='Mme' ? 'active' : '' }}">
+                                {{ form_widget(form.civility[1]) }} Madame
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nom" class="col-sm-3 control-label">Nom *</label>
+                <div class="col-sm-9">
+                        {{ 
+                            form_widget(form.lastName, {
+                                'attr' : {
+                                    'class' : 'form-control',
+                                    'placeholder' : 'Entrez votre Nom'
+                                }
+                            })
+                        }}
+                        {{ form_errors(form.lastName) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="prenom" class="col-sm-3 control-label">Prénom *</label>
+                <div class="col-sm-9">
+                        {{ 
+                            form_widget(form.firstName, {
+                                'attr' : {
+                                    'class' : 'form-control',
+                                    'placeholder' : 'Entrez votre Prénom'
+                                }
+                            })
+                        }}
+                        {{ form_errors(form.lastName) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="datenaissance" class="col-sm-3 control-label">Date de naissance *</label>
+                <div class="col-sm-9">
+                        {{ 
+                            form_widget(form.user.birthdate, {
+                                'attr' : {
+                                    'class' : 'form-control',
+                                    'placeholder' : 'jj/mm/aaaa'
+                                }
+                            })
+                        }}
+                        {{ form_errors(form.user.birthdate) }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Pagination -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <button type="submit" class="btn btn-greend btn-long pull-right">Enregistrer les modifications</button>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}

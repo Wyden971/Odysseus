@@ -1,0 +1,53 @@
+Address:
+    type: entity
+    table: Address
+    indexes:
+        fk_Address_country1_idx:
+            columns:
+                - country_iso
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        line1:
+            type: string
+            nullable: false
+            length: 256
+            fixed: false
+            comment: ''
+        line2:
+            type: string
+            nullable: true
+            length: 256
+            fixed: false
+            comment: ''
+        zipCode:
+            type: string
+            nullable: true
+            length: 45
+            fixed: false
+            comment: ''
+            column: zip_code
+        city:
+            type: string
+            nullable: true
+            length: 45
+            fixed: false
+            comment: ''
+    manyToOne:
+        countryIso:
+            targetEntity: Country
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                country_iso:
+                    referencedColumnName: iso
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,100 @@
+{% extends 'OdysseusFrontBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <!-- Panneaux publicitaires -->
+    <div class="col-lg-12 hidden-xs" style="margin-bottom:20px; text-align:center;">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <img src="{{ asset('/bundles/odysseusfront/images/service1.png') }}" alt="service" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <img src="{{ asset('/bundles/odysseusfront/images/service2.png') }}" alt="service" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <img src="{{ asset('/bundles/odysseusfront/images/service3.png') }}" alt="service" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <img src="{{ asset('/bundles/odysseusfront/images/service4.png') }}" alt="service" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Carousel -->
+    <div class="col-lg-12 hidden-xs" style="margin-bottom:20px;">
+        <div id="carousel-generic" class="carousel slide" data-ride="carousel" style="overflow:hidden;">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-generic" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <img src="{{ asset('/bundles/odysseusfront/images/slider1.jpg') }}" alt="diap1">
+                </div>
+                <div class="item">
+                    <img src="{{ asset('/bundles/odysseusfront/images/slider2.jpg') }}" alt="diap2">
+                </div>
+                <div class="item">
+                    <img src="{{ asset('/bundles/odysseusfront/images/slider3.jpg') }}" alt="diap3">
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    <!-- Contenu de la page -->
+    <div class="col-lg-12">
+        <h2>DERNIERS ARTICLE</h2>
+        <div class="row">
+            {% for row in lastArticles %}
+                {% if row.image is not empty %}
+                    {% set src = row.image[0].url %}
+                {% elseif row.article.image is not empty %}
+                    {% set src = row.article.image[0].url %}
+                {% else %}
+                    {% set src = asset('/bundles/odysseusfront/images/product1.jpg') %}
+                {% endif %}
+            <!-- Article -->
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="shop-item">
+                    <img src="{{ asset('/bundles/odysseusfront/images/ruban.png') }}" class="ribbon"/>
+                    <div class="image">
+                        <a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">
+
+                            <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:191px;border:1px solid #EEE;">
+                                <img src="{{ src }}" alt="{{ row.article.name }}" title="{{ row.article.name }}" height="191" style="opacity:0">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="title">
+                        <h3>
+                            <a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">{{ row.article.name }}</a>
+                        </h3>
+                    </div>
+                    <div class="price">
+                        <span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
+                                                {{ row.price }} €
+                    </div>
+
+                    <div class="actions">
+                        <a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22 nov. 2014, 00:08:32
+    Author     : wendyjean-louis
+*/
+
+
+
+body{
+    header{
+        color:red;
+        >.row:first-child{
+            height:82px;
+        }
+    }
+    
+    footer{
+        text-align:center;
+    }
+    
+    #mainPanel.locked{
+        position:fixed;
+        top:10px;
+    }
+    
+    .dropdown-menu{
+        >li{
+            >a{
+                text-align:left;
+            }
+        }
+    }
+    
+    th.actions:last-child{
+        min-width:150px;
+	    text-align:center;
+	}
+ 	
+ 	.nowrap{
+ 		white-space:nowrap;
+ 	}
+ 	
+ 	.page-line{
+		
+
+ 		>.page-line-title{
+ 			cursor:pointer;
+ 			text-decoration:underline;
+ 			font-weight:bold;
+ 			max-width:250px;
+ 			text-overflow:ellipsis;
+ 			overflow:hidden;
+ 		}
+ 	}
+}

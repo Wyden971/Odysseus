@@ -1,0 +1,24 @@
+Shipping:
+    type: entity
+    table: Shipping
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        date:
+            type: datetime
+            nullable: false
+            comment: ''
+        isvalidate:
+            type: boolean
+            nullable: false
+            comment: ''
+            default: '1'
+            column: isValidate
+    lifecycleCallbacks: {  }

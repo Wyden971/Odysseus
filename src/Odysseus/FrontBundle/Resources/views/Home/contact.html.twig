@@ -1,0 +1,59 @@
+{% extends 'OdysseusFrontBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="row">
+	<!-- Titre de la page -->
+	<div class="col-lg-12">
+		<h2>Nous contacter</h2>
+	</div>
+	<!-- Informations générales de contact -->
+	<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+		<div class="contact-info">
+			<div class="titleHeader clearfix">
+				<h3>Informations de contact</h3>
+			</div>
+			<address>
+				<strong><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Adresse</strong><br>
+				InstanTrade, Inc.<br>
+				78, Avenue du derp<br>
+				75019, PARIS<br>
+			</address>
+			<address>
+				<strong><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> Téléphone</strong><br>
+				<abbr title="Numéro de tél. Fixe">Fixe:</abbr> 01 23 45 67 89<br>
+				<abbr title="Numéro du Fax">Fax:</abbr> 01 23 45 67 89
+			</address>
+			<address>
+				<strong><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> E-mail</strong><br>
+				<abbr title="E-mail du Service Marketing">Service Marketing:</abbr> <a href="mailto:marketing@instantrade.com">marketing@instantrade.com</a><br>
+				<abbr title="E-mail du Service Après-vente">Service Après-vente:</abbr> <a href="mailto:sav@instantrade.com">sav@instantrade.com</a>
+			</address>
+		</div>
+	</div>
+	<!-- Carte Google & Formulaire de contact -->
+	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+		<div class="google-map">
+			<div class="titleHeader clearfix">
+				<h3>Où nous trouver</h3>
+			</div>
+			<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC__J69El1YGAGKxqNSBpz2q0f-N33HGpQ&amp;q=IP+Formation,Paris" height="246"></iframe>
+		</div>
+		<div class="contact-form">
+			<div class="titleHeader clearfix">
+				<h3>Formulaire de contact</h3>
+			</div>
+			<form method="POST" action="page">
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input class="form-control" placeholder="Votre nom" type="text"></div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input class="form-control" placeholder="Votre adresse e-mail" type="text"></div>
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><textarea class="form-control" placeholder="Votre message"></textarea></div>
+				</div>
+				<div class="controls">
+					<button type="submit" class="btn btn-greend pull-right">Envoyer le message</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>
+{% endblock %}

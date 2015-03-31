@@ -1,0 +1,32 @@
+Category:
+    type: entity
+    table: Category
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 256
+            fixed: false
+            comment: ''
+        description:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+        isactive:
+            type: boolean
+            nullable: false
+            comment: ''
+            default: '1'
+            column: isActive
+    lifecycleCallbacks: {  }

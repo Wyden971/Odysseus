@@ -1,0 +1,33 @@
+{% extends 'OdysseusAdminBundle::column2.layout.html.twig' %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <h1 class="page-header">{{ page.title }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12" id="articleContent">
+        {{ page.content }}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block operations %}
+    <li class="list-group-item">
+         <a href="{{ path('odysseus_admin_page_update', {id:page.id}) }}">Modifier</a>
+    </li>
+    <li class="list-group-item">
+         <a href="{{ path('odysseus_admin_page_delete', {id:page.id}) }}">Supprimer</a>
+    </li>
+    <li class="list-group-item">
+         <a href="{{ path('odysseus_admin_page') }}">Liste des pages</a>
+    </li>
+    <li class="list-group-item">
+         <a href="{{ path('odysseus_admin_page_create') }}">Ajouter une page</a>
+    </li>
+ {% endblock operations %}

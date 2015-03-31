@@ -1,0 +1,20 @@
+Orderstatus:
+    type: entity
+    table: OrderStatus
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 256
+            fixed: false
+            comment: ''
+    lifecycleCallbacks: {  }

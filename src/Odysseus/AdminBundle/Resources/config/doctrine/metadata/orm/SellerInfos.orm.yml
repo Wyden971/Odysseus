@@ -1,0 +1,43 @@
+SellerInfos:
+    type: entity
+    table: seller_infos
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        firstName:
+            type: string
+            nullable: false
+            length: 256
+            fixed: false
+            column: first_name
+        lastName:
+            type: string
+            nullable: false
+            length: 256
+            fixed: false
+            column: last_name
+        iban:
+            type: text
+            nullable: false
+            length: 65535
+            fixed: false
+        bic:
+            type: text
+            nullable: false
+            length: 65535
+            fixed: false
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        updatedAt:
+            type: datetime
+            nullable: false
+            column: updated_at
+    lifecycleCallbacks: {  }

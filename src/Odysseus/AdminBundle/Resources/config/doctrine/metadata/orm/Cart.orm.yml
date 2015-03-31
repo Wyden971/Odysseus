@@ -1,0 +1,63 @@
+Cart:
+    type: entity
+    table: cart
+    indexes:
+        fk_cart_User1_idx:
+            columns:
+                - User_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        createdAt:
+            type: datetime
+            nullable: true
+            column: created_at
+        modifiedAt:
+            type: datetime
+            nullable: true
+            column: modified_at
+        name:
+            type: string
+            nullable: true
+            length: 45
+            fixed: false
+        isVisible:
+            type: integer
+            nullable: false
+            unsigned: false
+            default: '0'
+            column: is_visible
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                User_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        model:
+            targetEntity: ArticleModel
+            cascade: {  }
+            mappedBy: null
+            inversedBy: cart
+            joinTable:
+                name: cart_has_article_model
+                joinColumns:
+                    -
+                        name: cart_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: model_id
+                        referencedColumnName: id
+            orderBy: null
+    lifecycleCallbacks: {  }

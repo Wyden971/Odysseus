@@ -1,0 +1,97 @@
+UserInfos:
+    type: entity
+    table: user_infos
+    indexes:
+        fk_user_infos_User1_idx:
+            columns:
+                - User_id
+        fk_user_infos_country1_idx:
+            columns:
+                - country_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        firstName:
+            type: string
+            nullable: false
+            length: 256
+            fixed: false
+            column: first_name
+        lastName:
+            type: string
+            nullable: false
+            length: 256
+            fixed: false
+            column: last_name
+        address1:
+            type: string
+            nullable: false
+            length: 256
+            fixed: false
+        address2:
+            type: string
+            nullable: true
+            length: 256
+            fixed: false
+        zipCode:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+            column: zip_code
+        city:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+        telephone:
+            type: string
+            nullable: false
+            length: 45
+            fixed: false
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        modifiedAt:
+            type: datetime
+            nullable: false
+            column: modified_at
+        isDefault:
+            type: integer
+            nullable: false
+            unsigned: false
+            default: '0'
+            column: is_default
+        isBuilling:
+            type: integer
+            nullable: false
+            unsigned: false
+            default: '0'
+            column: is_builling
+    manyToOne:
+        country:
+            targetEntity: Country
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                country_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                User_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

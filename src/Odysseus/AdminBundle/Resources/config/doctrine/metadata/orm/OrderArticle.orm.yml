@@ -1,0 +1,50 @@
+OrderArticle:
+    type: entity
+    table: order_article
+    indexes:
+        fk_order_article_order1_idx:
+            columns:
+                - order_id
+        fk_order_article_order_article_status1_idx:
+            columns:
+                - status_id
+        fk_order_article_article_model1_idx:
+            columns:
+                - model_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    manyToOne:
+        model:
+            targetEntity: ArticleModel
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                model_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        order:
+            targetEntity: Order
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                order_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        status:
+            targetEntity: OrderArticleStatus
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                status_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

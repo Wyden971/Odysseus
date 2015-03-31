@@ -1,0 +1,430 @@
+{% extends 'OdysseusAdminBundle::column2.layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 class="page-header">{{ block('form_title') }}</h1>
+        </div>
+    </div>
+    {% if app.session.flashBag.get('odysseus_admin_user_form') is not empty %}
+        <div class="row flashbags">
+            <div class="col-xs-12">
+                <div>
+                    {% for message in app.session.flashBag.get('odysseus_admin_user_form') %}
+                        <div>{{ message }}</div>    
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-xs-12">
+            {{ form_start(form, {'method' : 'POST'}) }}
+            {{ form_errors(form) }}
+
+            <div role="tabpanel">
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#main" aria-controls="main" role="tab" data-toggle="tab">Informations générales</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#shipping" aria-controls="shipping" role="tab" data-toggle="tab">Informations de livraison</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#builling" aria-controls="builling" role="tab" data-toggle="tab">Informations de facturation</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="main">
+                        <div class="form-group">
+                            <label for="user_name">Email :</label>
+                            {{ 
+                                form_widget(form.email, {
+                                    'attr' : {
+                                        'class' : 'form-control',
+                                        'placeholder' : 'Email'
+                                    },
+                                    'id' : 'user_email'
+                                })
+                            }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                        <div class="form-group">
+                            <label for="user_password_first">Mot de passe :</label>
+                            {{ 
+                                form_widget(form.plainPassword.first, {
+                                    'attr' : {
+                                        'class' : 'form-control',
+                                        'placeholder' : 'Mot de passe'
+                                    },
+                                    'id' : 'user_password_first'
+                                })
+                            }}
+                            {{ form_errors(form.plainPassword.first) }}
+                        </div>
+                        <div class="form-group">
+                            <label for="user_password_second">Confirmez votre mot de passe :</label>
+                            {{ 
+                                form_widget(form.plainPassword.second, {
+                                    'attr' : {
+                                        'class' : 'form-control',
+                                        'placeholder' : 'Mot de passe'
+                                    },
+                                    'id' : 'user_password_second'
+                                })
+                            }}
+                            {{ form_errors(form.plainPassword.second) }}
+                        </div>
+                        <div class="form-group">
+                            <label for="user_birthdate">Date de naissance :</label>
+                            {{ 
+                                form_widget(form.birthdate, {
+                                    'attr' : {
+                                        'class' : 'form-control',
+                                        'placeholder' : 'Date de naissance'
+                                    },
+                                    'id' : 'user_birthdate'
+                                })
+                            }}
+                            {{ form_errors(form.birthdate) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label class="btn btn-default btn-radio">
+                                {{ form_widget(form.receiveSpecialOffers) }} Je souhaite recevoir gratuitement les offres exceptionnelles et réductions de InstanTrade.
+                                {{ form_errors(form.receiveSpecialOffers) }}
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="btn btn-default btn-radio">
+                                {{ form_widget(form.receivePartnersSpecialOffers) }} Je souhaite recevoir gratuitement les meilleures offres des partenaires de InstanTrade (Bons plans, promotions, etc…) par e-mail 
+                                {{ form_errors(form.receivePartnersSpecialOffers) }}
+                            </label>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="shipping">
+                        <div class="form-group">
+                            <label>Civilité *</label>
+                            <div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-default btn-radio {{ form.infos[0].vars.value.civility == 'M' ? 'active':'' }}">
+                                        {{ form_widget(form.infos[0].civility[0]) }} Monsieur
+                                    </label>
+                                    <label class="btn btn-default btn-radio {{ form.infos[0].vars.value.civility == 'Mme' ? 'active':'' }}">
+                                        {{ form_widget(form.infos[0].civility[1]) }} Madame
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom" class="control-label">Nom *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[0].lastName, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre Nom'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[0].lastName) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom" class="control-label">Prénom *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[0].firstName, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre Prénom'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[0].firstName) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="societe" class="control-label">Societe</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[0].company, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrer le nom de votre société'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[0].company) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adresse" class="control-label">Adresse *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[0].address1, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrer votre adresse'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[0].address1) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adressecomp" class="control-label">Complément d'Adresse</label>
+                                {{ 
+                                    form_widget(form.infos[0].address2, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez, si besoin, un complement d\'adresse'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[0].address2) }}
+                        </div>
+                        <div class="form-group" id="">
+                            <label for="codepostal" class="control-label">Code Postal *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[0].zipCode, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre code postal'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[0].zipCode) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ville" class="control-label">Ville *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[0].city, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre ville'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[0].city) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pays" class="control-label">Pays *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[0].country, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre ville'
+                                        },
+                                        'empty_value' : 'Entrez votre pays de résidence'
+                                    })
+                                }}
+                                {{ form_errors(form.infos[0].country) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telfixe" class="control-label">Téléphone Fixe *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[0].telephone, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre numéro de téléphone fixe'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[0].telephone) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telport" class="control-label">Téléphone Portable</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[0].mobilePhone, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre numéro de téléphone portable'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[0].mobilePhone) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="builling">
+                        <div class="form-group">
+                            <label>Civilité *</label>
+                            <div>
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-default btn-radio {{ form.infos[1].vars.value.civility == 'M' ? 'active':'' }}">
+                                        {{ form_widget(form.infos[1].civility[0]) }} Monsieur
+                                    </label>
+                                    <label class="btn btn-default btn-radio {{ form.infos[1].vars.value.civility == 'Mme' ? 'active':'' }}">
+                                        {{ form_widget(form.infos[1].civility[1]) }} Madame
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom" class="control-label">Nom *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[1].lastName, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre Nom'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[1].lastName) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom" class="control-label">Prénom *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[1].firstName, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre Prénom'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[1].firstName) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="societe" class="control-label">Societe</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[1].company, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrer le nom de votre société'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[1].company) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adresse" class="control-label">Adresse *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[1].address1, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrer votre adresse'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[1].address1) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adressecomp" class="control-label">Complément d'Adresse</label>
+                                {{ 
+                                    form_widget(form.infos[1].address2, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez, si besoin, un complement d\'adresse'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[1].address2) }}
+                        </div>
+                        <div class="form-group" id="">
+                            <label for="codepostal" class="control-label">Code Postal *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[1].zipCode, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre code postal'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[1].zipCode) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ville" class="control-label">Ville *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[1].city, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre ville'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[1].city) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pays" class="control-label">Pays *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[1].country, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre ville'
+                                        },
+                                        'empty_value' : 'Entrez votre pays de résidence'
+                                    })
+                                }}
+                                {{ form_errors(form.infos[1].country) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telfixe" class="control-label">Téléphone Fixe *</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[1].telephone, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre numéro de téléphone fixe'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[1].telephone) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telport" class="control-label">Téléphone Portable</label>
+                            <div>
+                                {{ 
+                                    form_widget(form.infos[1].mobilePhone, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Entrez votre numéro de téléphone portable'
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.infos[1].mobilePhone) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <center>
+                    <button class="btn btn-default" type="submit">{{ block('form_submit') }}</button>
+                </center>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+

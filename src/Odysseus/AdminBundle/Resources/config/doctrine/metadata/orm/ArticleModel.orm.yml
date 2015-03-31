@@ -1,0 +1,105 @@
+ArticleModel:
+    type: entity
+    table: article_model
+    indexes:
+        fk_article_model_article1_idx:
+            columns:
+                - article_id
+        fk_article_model_User1_idx:
+            columns:
+                - User_id
+        fk_article_model_article_model_status1_idx:
+            columns:
+                - status_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        price:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            default: '0'
+        weight:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            default: '0'
+        width:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            default: '0'
+        height:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            default: '0'
+        depth:
+            type: float
+            nullable: false
+            precision: 10
+            scale: 0
+            default: '0'
+    manyToOne:
+        article:
+            targetEntity: Article
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                article_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                User_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        status:
+            targetEntity: ArticleModelStatus
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                status_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        image:
+            targetEntity: Image
+            cascade: {  }
+            mappedBy: null
+            inversedBy: model
+            joinTable:
+                name: article_model_has_image
+                joinColumns:
+                    -
+                        name: model_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: Image_id
+                        referencedColumnName: id
+            orderBy: null
+        cart:
+            targetEntity: Cart
+            cascade: {  }
+            mappedBy: model
+            inversedBy: null
+            joinTable: null
+            orderBy: null
+    lifecycleCallbacks: {  }

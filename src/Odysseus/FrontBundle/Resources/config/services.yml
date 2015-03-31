@@ -1,0 +1,10 @@
+services:
+#    odysseus_front.example:
+#        class: Odysseus\FrontBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    odysseus.twig.odysseus_extension:
+        class: Odysseus\FrontBundle\Twig\OdysseusExtension
+        tags:
+            - { name: twig.extension }
+        arguments: ["@doctrine.orm.entity_manager"]

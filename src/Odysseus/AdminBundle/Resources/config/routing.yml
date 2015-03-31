@@ -1,0 +1,28 @@
+odysseus_admin_dashboard_routes:
+    resource: "@OdysseusAdminBundle/Controller/DefaultController.php"
+    type:     annotation
+
+
+odysseus_admin_page_routes:
+    resource: "@OdysseusAdminBundle/Controller/PageController.php"
+    type:     annotation
+
+odysseus_admin_article_routes:
+    resource: "@OdysseusAdminBundle/Controller/ArticleController.php"
+    type:     annotation
+    
+odysseus_admin_category_routes:
+    resource: "@OdysseusAdminBundle/Controller/CategoryController.php"
+    type:     annotation
+    
+odysseus_admin_order_routes:
+    resource: "@OdysseusAdminBundle/Controller/OrderController.php"
+    type:     annotation
+    
+odysseus_admin_user_routes:
+    resource: "@OdysseusAdminBundle/Controller/UserController.php"
+    type:     annotation
+    
+odysseus_admin_config_routes:
+    resource: "@OdysseusAdminBundle/Controller/ConfigController.php"
+    type:     annotation

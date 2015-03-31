@@ -1,0 +1,34 @@
+odysseus_front:
+    resource: "@OdysseusFrontBundle/Resources/config/routing.yml"
+    prefix:   /
+
+odysseus_admin:
+    resource: "@OdysseusAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_user_security_admin_login:
+    path:      /admin/connexion
+    defaults:  { _controller: FOSUserBundle:Security:login, _method: POST }
+    
+fos_user_security_admin_logout:
+    path:      /admin/deconnexion
+    defaults:  { _controller: FOSUserBundle:Security:logout }
+    
+fos_user_security_admin_check:
+    path:      /admin/login_check
+    defaults:  { _controller: FOSUserBundle:Security:check, _method: POST }
+
+fos_user_security_front_login:
+    path:      /connexion
+    defaults:  { _controller: FOSUserBundle:Security:login, _method: POST }
+    
+fos_user_security_front_logout:
+    path:      /deconnexion
+    defaults:  { _controller: FOSUserBundle:Security:logout }
+    
+fos_user_security_front_check:
+    path:      /login_check
+    defaults:  { _controller: FOSUserBundle:Security:check, _method: POST}
+    
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

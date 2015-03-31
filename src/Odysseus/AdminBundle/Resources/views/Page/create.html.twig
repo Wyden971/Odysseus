@@ -1,0 +1,19 @@
+{% extends 'OdysseusAdminBundle:Page:form.html.twig' %}
+
+{% block title %}Nouvelle page{% endblock %}
+
+{% block form_title %}Nouvelle page{% endblock form_title %}
+
+{% block operations %}
+    <li class="list-group-item">
+        <a href="{{ path('odysseus_admin_page') }}">Publier</a>
+    </li>
+    
+    <li class="list-group-item">
+        <a href="{{ path('odysseus_admin_page') }}">Prévisualiser la page</a>
+    </li>
+    
+    <li class="list-group-item">
+        <a href="{{ path('odysseus_admin_page') }}">Annuler</a>
+    </li>
+{% endblock operations %}

@@ -1,0 +1,102 @@
+{% extends 'OdysseusFrontBundle:User:column2.html.twig' %}
+
+{% block content_title %}MON COMPTE - RECAPITULATIF{% endblock content_title %}
+
+{% block column_content %}
+
+<div class="row">
+    <!-- Présentation de l'utilisateur -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h3 style="margin-top:19px">Bienvenue sur votre espace personnel</h3>
+        <p>Profitez de l'ensemble des fonctionnalités qui vous sont proposées sur votre espace personnel pour consulter, suivre et gérer toutes les données vous concernant.</p>
+        <table class="table table-condensed userInfo">
+            <tbody>
+                <tr>
+                    <td>Nom &amp; Prénom</td>
+                    <td>{{ app.user.getDefaultInfos().civility}} {{ app.user.getDefaultInfos().getFullName() }}</td>
+                    <td>E-mail</td>
+                    <td>{{ app.user.email }}</td>
+                </tr>
+                <tr>
+                    <td>N° Client</td>
+                    <td>{{ app.user.id }}</td>
+                    <td>Date d'inscription</td>
+                    <td>25/09/2014</td>
+                </tr>
+                <tr>
+                    <td>Achats effectués</td>
+                    <td>{{ app.user.orders|length }}</td>
+                    <td>Ventes effectuées</td>
+                    <td>42</td>
+                </tr>
+        </table>
+    </div>
+
+    <!-- Tableau Achats/Ventes -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h4 style="margin-top:19px">Derniers Achats/Ventes</h4>
+        <table class="table table-condensed table-hover orderList">
+            <thead>
+                <tr>
+                    <th>N° de commande</th>
+                    <th>Type d'opération</th>
+                    <th>Date de commande</th>
+                    <th>Vendeur / Acheteur</th>
+                    <th>État</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="{{ path('odysseus_front_user_my_order_details', {'id' : 10}) }}">C154878</a></td>
+                    <td>Vente</td>
+                    <td>22/02/2015</td>
+                    <td>Thug Life</td>
+                    <td>En attente de paiement</td>
+                </tr>
+                <tr>
+                    <td><a href="{{ path('odysseus_front_user_my_order_details', {'id' : 10}) }}">C189754</a></td>
+                    <td>Achat</td>
+                    <td>21/12/2014</td>
+                    <td>Derpina Derp</td>
+                    <td>Préparation de la commande</td>
+                </tr>
+                <tr>
+                    <td><a href="{{ path('odysseus_front_user_my_order_details', {'id' : 10}) }}">C002827</a></td>
+                    <td>Achat</td>
+                    <td>04/10/2014</td>
+                    <td>Nope Elnope</td>
+                    <td>Commande expediée</td>
+                </tr>
+                <tr>
+                    <td><a href="{{ path('odysseus_front_user_my_order_details', {'id' : 10}) }}">C002827</a></td>
+                    <td>Achat</td>
+                    <td>04/10/2014</td>
+                    <td>Nope Elnope</td>
+                    <td>Commande expediée</td>
+                </tr>
+                <tr>
+                    <td><a href="{{ path('odysseus_front_user_my_order_details', {'id' : 10}) }}">C002827</a></td>
+                    <td>Achat</td>
+                    <td>04/10/2014</td>
+                    <td>Nope Elnope</td>
+                    <td>Commande expediée</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custompager">
+        <ul class="pagination">
+            <li class="disabled"><span>&laquo;</span></li>
+            <li class="active"><span>1</span></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

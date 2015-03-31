@@ -1,0 +1,18 @@
+{% extends 'OdysseusAdminBundle:Article:form.html.twig' %}
+{% block title %}Nouvel Article{% endblock %}
+{% block form_title %}Nouvel Article{% endblock %}
+{% block form_submit %}Ajouter{% endblock %}
+
+{% block operations %}
+    <li class="list-group-item">
+        <a href="{{ path('odysseus_admin_article') }}">Nouvel article</a>
+    </li>
+
+    <li class="list-group-item">
+        <a href="{{ path('odysseus_admin_category') }}">Voir les catégories</a>
+    </li>
+
+    <li class="list-group-item">
+        <a href="{{ path('odysseus_admin_category') }}">Nouvelle catégorie</a>
+    </li>
+{% endblock operations %}

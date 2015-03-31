@@ -1,0 +1,10 @@
+{% extends 'OdysseusAdminBundle:User:form.html.twig' %}
+{% block title %}Nouvel utilisateur{% endblock %}
+{% block form_title %}Nouvel utilisateur{% endblock %}
+{% block form_submit %}Ajouter{% endblock %}
+
+{% block operations %}
+    <li class="list-group-item">
+        <a href="{{ path('odysseus_admin_user') }}"><span class="glyphicon glyphicon-list" ></span> Voir les utilisateurs</a>
+    </li>
+{% endblock operations %}

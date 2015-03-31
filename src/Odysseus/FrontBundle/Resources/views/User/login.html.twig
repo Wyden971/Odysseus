@@ -1,0 +1,40 @@
+{% extends 'OdysseusFrontBundle::layout.html.twig' %}
+{% block content %}
+<div class="row">
+	<!-- Titre de la page -->
+	<div class="col-lg-12">
+		<h2>Connexion</h2>
+	</div>
+	<!-- Lien pour l'inscription -->
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">	
+		<div class="login-form">
+			<h3>Inscription</h3>
+			<p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
+			<div class="actions"><a href="{{ path('odysseus_front_user_signup') }}" class="btn btn-greend btn-long">Accéder au formulaire</a></div>
+		</div>
+	</div>
+	<!-- Formulaire de connexion -->
+	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		<div class="login-form">
+			<h3>Connexion</h3>
+			<form method="POST" action="{{ path("fos_user_security_front_check") }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+				<div class="controls">
+					<div class="form-group">
+						<label for="clientmail">Votre E-mail</label> <span class="text-error">*</span></label>
+						<input name="_username" type="text" class="form-control" id="clientmail" placeholder="Entrez votre E-mail" value="{{ last_username }}" required>
+					</div>
+					<div class="form-group">
+						<label for="clientpwd">Votre Mot de passe</label> <span class="text-error">*</span></label>
+						<input name="_password" type="password" class="form-control" id="clientpwd" placeholder="Entrez votre mot de passe" required>
+					</div>
+					<label class="checkbox">
+						<input name="_remember_me" type="checkbox"> Se souvenir de moi
+					</label>
+					<div class="actions"><button type="submit" class="btn btn-greend btn-long">Se connecter</button></div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

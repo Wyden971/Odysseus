@@ -1,0 +1,78 @@
+Article:
+    type: entity
+    table: article
+    indexes:
+        fk_article_User_idx:
+            columns:
+                - User_id
+        fk_article_article_category1_idx:
+            columns:
+                - category_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 256
+            fixed: false
+        description:
+            type: text
+            nullable: false
+            length: 65535
+            fixed: false
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        modifiedAt:
+            type: datetime
+            nullable: false
+            column: modified_at
+        validatedAt:
+            type: datetime
+            nullable: true
+            column: validated_at
+    manyToOne:
+        category:
+            targetEntity: ArticleCategory
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                User_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        image:
+            targetEntity: Image
+            cascade: {  }
+            mappedBy: null
+            inversedBy: article
+            joinTable:
+                name: article_has_image
+                joinColumns:
+                    -
+                        name: article_id
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: Image_id
+                        referencedColumnName: id
+            orderBy: null
+    lifecycleCallbacks: {  }

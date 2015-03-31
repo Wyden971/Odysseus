@@ -1,0 +1,119 @@
+{% extends 'OdysseusFrontBundle:User:column2.html.twig' %}
+
+{% block content_title %}MON COMPTE - VOS VENTES{% endblock content_title %}
+
+{% block column_content %}
+<div class="row">
+    <!-- Tableau Achats/Ventes -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:20px">
+        <table class="table table-condensed table-hover orderList">
+            <thead>
+                <tr>
+                    <th>N° de commande</th>
+                    <th>Date de commande</th>
+                    <th>Acheteur</th>
+                    <th>Nb. Articles</th>
+                    <th>Prix TTC</th>
+                    <th>État</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="account_order.html">C154878</a></td>
+                    <td>22/02/2015</td>
+                    <td>Thug Life</td>
+                    <td>4</td>
+                    <td>42,02 €</td>
+                    <td>En attente de paiement</td>
+                </tr>
+                <tr>
+                    <td><a href="account_order.html">C189754</a></td>
+                    <td>21/12/2014</td>
+                    <td>Derpina Derp</td>
+                    <td>8</td>
+                    <td>42,02 €</td>
+                    <td>Préparation de la commande</td>
+                </tr>
+                <tr>
+                    <td><a href="account_order.html">C002827</a></td>
+                    <td>04/10/2014</td>
+                    <td>Nope Elnope</td>
+                    <td>2</td>
+                    <td>42,02 €</td>
+                    <td>Commande expediée</td>
+                </tr>
+                <tr>
+                    <td><a href="account_order.html">C002827</a></td>
+                    <td>04/10/2014</td>
+                    <td>Nope Elnope</td>
+                    <td>5</td>
+                    <td>42,02 €</td>
+                    <td>Commande expediée</td>
+                </tr>
+                <tr>
+                    <td><a href="account_order.html">C002827</a></td>
+                    <td>04/10/2014</td>
+                    <td>Nope Elnope</td>
+                    <td>1</td>
+                    <td>42,02 €</td>
+                    <td>Commande expediée</td>
+                </tr>
+                <tr>
+                    <td><a href="account_order.html">C002827</a></td>
+                    <td>04/10/2014</td>
+                    <td>Nope Elnope</td>
+                    <td>8</td>
+                    <td>42,02 €</td>
+                    <td>Commande expediée</td>
+                </tr>
+                <tr>
+                    <td><a href="account_order.html">C002827</a></td>
+                    <td>04/10/2014</td>
+                    <td>Nope Elnope</td>
+                    <td>2</td>
+                    <td>42,02 €</td>
+                    <td>Commande expediée</td>
+                </tr>
+                <tr>
+                    <td><a href="account_order.html">C002827</a></td>
+                    <td>04/10/2014</td>
+                    <td>Nope Elnope</td>
+                    <td>2</td>
+                    <td>42,02 €</td>
+                    <td>Commande expediée</td>
+                </tr>
+                <tr>
+                    <td><a href="account_order.html">C002827</a></td>
+                    <td>04/10/2014</td>
+                    <td>Nope Elnope</td>
+                    <td>2</td>
+                    <td>42,02 €</td>
+                    <td>Commande expediée</td>
+                </tr>
+                <tr>
+                    <td><a href="account_order.html">C002827</a></td>
+                    <td>04/10/2014</td>
+                    <td>Nope Elnope</td>
+                    <td>2</td>
+                    <td>42,02 €</td>
+                    <td>Commande expediée</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custompager">
+        <ul class="pagination">
+            <li class="disabled"><span>&laquo;</span></li>
+            <li class="active"><span>1</span></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

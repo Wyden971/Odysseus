@@ -1,0 +1,47 @@
+Contact:
+    type: entity
+    table: contact
+    indexes:
+        fk_contact_User1_idx:
+            columns:
+                - User_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        subject:
+            type: text
+            nullable: false
+            length: 65535
+            fixed: false
+        message:
+            type: text
+            nullable: false
+            length: 65535
+            fixed: false
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+        isRead:
+            type: integer
+            nullable: false
+            unsigned: false
+            default: '0'
+            column: is_read
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                User_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

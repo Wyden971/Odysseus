@@ -1,0 +1,226 @@
+{% extends 'OdysseusAdminBundle::column2.layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 class="page-header">{{ block('form_title') }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            {{ form_start(form, {'method' : 'POST'}) }}
+            {{ form_errors(form) }}
+
+            <div class="form-group">
+                <label for="article_name">Nom du nouvel article :</label>
+                {{ 
+                    form_widget(form.name, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Nom du nouvel article'
+                        },
+                        'id' : 'article_name'
+                    })
+                }}
+                {{ form_errors(form.name) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="article_brand">Marque du nouvel article :</label>
+                {{ 
+                    form_widget(form.brand, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Marque du nouvel article'
+                        },
+                        'id' : 'article_brand'
+                    })
+                }}
+                {{ form_errors(form.brand) }}
+            </div>
+
+            <div class="form-group">
+                <label for="article_description">Nom du nouvel article :</label>
+                {{ 
+                    form_widget(form.description, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Description du nouvel article',
+                            'rows' : '10'
+                        },
+                        'id' : 'article_description'
+                    })
+                }}
+                {{ form_errors(form.description) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="article_category">Catégorie du nouvel article :</label>
+                {{ 
+                    form_widget(form.category, {
+                        'attr' : {
+                            'class' : 'form-control'
+                        },
+                        'empty_value' : 'Selectionnez une catégorie',
+                        'id' : 'article_category'
+                    })
+                }}
+                {{ form_errors(form.category) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="article_status">Etat du nouvel article :</label>
+                {{ 
+                    form_widget(form.models[0].status, {
+                        'attr' : {
+                            'class' : 'form-control'
+                        },
+                        'empty_value' : 'Selectionnez un état',
+                        'id' : 'article_status'
+                    })
+                }}
+                {{ form_errors(form.models[0].status) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="article_price">Prix du nouvel article :</label>
+                {{ 
+                    form_widget(form.models[0].price, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Prix du nouvel article',
+                        },
+                        'id' : 'article_price'
+                    })
+                }}
+                {{ form_errors(form.models[0].price) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="article_weight">Poids du nouvel article :</label>
+                {{ 
+                    form_widget(form.models[0].weight, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Poids du nouvel article'
+                        },
+                        'id' : 'article_weight',
+                    })
+                }}
+                {{ form_errors(form.models[0].weight) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="article_width">Longueur du nouvel article :</label>
+                {{ 
+                    form_widget(form.models[0].width, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Longueur du nouvel article'
+                        },
+                        'id' : 'article_width',
+                    })
+                }}
+                {{ form_errors(form.models[0].width) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="article_height">Largeur du nouvel article :</label>
+                {{ 
+                    form_widget(form.models[0].height, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Largeur du nouvel article'
+                        },
+                        'id' : 'article_height',
+                    })
+                }}
+                {{ form_errors(form.models[0].height) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="article_depth">Epaisseur du nouvel article :</label>
+                {{ 
+                    form_widget(form.models[0].depth, {
+                        'attr' : {
+                            'class' : 'form-control',
+                            'placeholder' : 'Epaisseur du nouvel article'
+                        },
+                        'id':'article_depth',
+                    })
+                }}
+                {{ form_errors(form.models[0].depth) }}
+            </div>
+            
+            {% if article is defined %}
+            <div class="row">
+                {% for key,image in form.models[0].image %}
+                <div class="col-xs-3">
+                    <div class="article-img" style="background-image:url('{{ image.vars.value.url }}');">
+                        <div class="article-img-hidden-content">
+                            {{ form_widget(form.models[0].image[key]) }}
+                            <img src="{{ image.vars.value.url }}" alt="{{ image.vars.value.name }}" title="{{ image.vars.value.name }}" />
+                        </div>
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if form.models[0].image[0] is defined %}
+            <div class="form-group">
+                <label for="article_image_1">Image 1 :</label>
+                {{ 
+                    form_widget(form.models[0].image[0].file, {
+                        'attr' : {
+                            'class' : 'form-control',
+                        },
+                        'id':'article_image_1',
+                    })
+                }}
+                {{ form_errors(form.models[0].image[0]) }}
+            </div>
+            {% endif %}
+            
+            {% if form.models[0].image[1] is defined %}
+            <div class="form-group">
+                <label for="article_image_2">Image 2 :</label>
+                {{ 
+                    form_widget(form.models[0].image[1].file, {
+                        'attr' : {
+                            'class' : 'form-control',
+                        },
+                        'id':'article_image_2',
+                        'required':false
+                    })
+                }}
+                {{ form_errors(form.models[0].image[1]) }}
+            </div>
+            {% endif %}
+            
+            {% if form.models[0].image[2] is defined %}
+            <div class="form-group">
+                <label for="article_image_3">Image 3 :</label>
+                {{ 
+                    form_widget(form.models[0].image[2].file, {
+                        'attr' : {
+                            'class' : 'form-control',
+                        },
+                        'id':'article_image_3',
+                        'required':false
+                    })
+                }}
+                {{ form_errors(form.models[0].image[2]) }}
+            </div>
+            {% endif %}
+            
+            <div class="form-group">
+                <center>
+                    <button class="btn btn-default" type="submit">{{ block('form_submit') }}</button>
+                </center>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+

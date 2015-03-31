@@ -1,0 +1,205 @@
+{% extends 'OdysseusFrontBundle::layout.html.twig' %}
+{% block content %}
+<div class="row">
+	<!-- Titre de la page -->
+	<div class="col-lg-12">
+		<h2>FICHE PRODUIT</h2>
+	</div>
+	
+	<!-- Images du produit -->
+	<div class="col-sm-6">
+		<div class="product-image-large slider slider-for">
+			<div><img src="http://placehold.it/700x360/009900/eeeeee"/></div>
+			<div><img src="http://placehold.it/700x360/990000/eeeeee"/></div>
+			<div><img src="http://placehold.it/700x360/000099/eeeeee"/></div>
+			<div><img src="http://placehold.it/700x360/999900/eeeeee"/></div>
+		</div>
+		<div id="product_gallery" class="slider slider-nav">
+			<div><img src="http://placehold.it/194x100/009900/eeeeee"/></div>
+			<div><img src="http://placehold.it/194x100/990000/eeeeee"/></div>
+			<div><img src="http://placehold.it/194x100/000099/eeeeee"/></div>
+			<div><img src="http://placehold.it/194x100/999900/eeeeee"/></div>
+		</div>
+	</div>
+	<!-- Détails & Options du produit -->
+	<div class="col-sm-6 product-details">
+		<h4>LOREM IPSUM DOLOR</h4>
+		<div class="price">
+			<span class="price-was">$959.99</span> $999.99
+		</div>
+		<h5>Quick Overview</h5>
+		<p>
+			Morbi eleifend congue elit nec sagittis. Praesent aliquam lobortis tellus, nec consequat massa ornare vitae. Ut fermentum justo vel venenatis eleifend. Fusce id magna eros.
+		</p>
+		<table class="shop-item-selections">
+			<!-- Option 1 -->
+			<tbody><tr>
+				<td><b>Option 1</b></td>
+				<td>
+					<div class="select-grey">
+						<select>
+							<option>Aucune</option>
+							<option>Option 1</option>
+							<option>Option 2</option>
+							<option>Option 3</option>
+							<option>Option 4</option>
+						</select>
+					</div>
+				</td>
+			</tr>
+			<!-- Option 2 -->
+			<tr>
+				<td><b>Option 2</b></td>
+				<td>
+					<div class="select-grey">
+						<select>
+							<option>Aucune</option>
+							<option>Option 1</option>
+							<option>Option 2</option>
+							<option>Option 3</option>
+							<option>Option 4</option>
+						</select>
+					</div>
+				</td>
+			</tr>
+			<!-- Quantité -->
+			<tr>
+				<td><b>Quantité</b></td>
+				<td>
+					<input class="form-control input-sm input-micro" value="1" type="text">
+				</td>
+			</tr>
+			<!-- Boutons -->
+			<tr>
+				<td>&nbsp;</td>
+				<td style="text-align:right">
+					<a href="#" class="btn btn-greend"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Ajouter au panier</a>
+				</td>
+			</tr>
+		</tbody></table>
+	</div>
+	
+	<!-- Onglets -->
+	<div class="col-sm-12">
+		<div>
+			<!-- Onglets -->
+			<ul class="nav nav-tabs product-details-nav">
+				<li class="active"><a href="#tab1" data-toggle="tab">Description</a></li>
+				<li class=""><a href="#tab2" data-toggle="tab">Fiche technique</a></li>
+				<li class=""><a href="#tab3" data-toggle="tab">Commentaires</a></li>
+			</ul>
+			<!-- Description -->
+			<div class="tab-content product-detail-info">
+				<div class="tab-pane active" id="tab1">
+					<h4>Description du produit</h4>
+					<p>
+						Donec hendrerit massa metus, a ultrices elit iaculis eu. Pellentesque ullamcorper augue lacus. Phasellus et est quis diam iaculis fringilla id nec sapien. Sed tempor ornare felis, non vulputate dolor. Etiam ornare diam vitae ligula malesuada tempor. Vestibulum nec odio vel libero ullamcorper euismod et in sapien. Suspendisse potenti.
+					</p>
+					<h4>Fonctionalités</h4>
+					<ul>
+						<li>Nullam dictum augue nec iaculis rhoncus. Aenean lobortis fringilla orci, vitae varius purus eleifend vitae.</li>
+						<li>Nunc ornare, dolor a ultrices ultricies, magna dolor convallis enim, sed volutpat quam sem sed tellus.</li>
+						<li>Aliquam malesuada cursus urna a rutrum. Ut ultricies facilisis suscipit.</li>
+						<li>Duis a magna iaculis, aliquam metus in, luctus eros.</li>
+						<li>Aenean nisi nibh, imperdiet sit amet eleifend et, gravida vitae sem.</li>
+						<li>Donec quis nisi congue, ultricies massa ut, bibendum velit.</li>
+					</ul>
+					<h4>Informations d'utilisation</h4>
+					<p>
+						Donec hendrerit massa metus, a ultrices elit iaculis eu. Pellentesque ullamcorper augue lacus. Phasellus et est quis diam iaculis fringilla id nec sapien. Sed tempor ornare felis, non vulputate dolor. Etiam ornare diam vitae ligula malesuada tempor. Vestibulum nec odio vel libero ullamcorper euismod et in sapien. Suspendisse potenti.
+					</p>
+				</div>
+				<!-- Fiche technique -->
+				<div class="tab-pane" id="tab2">
+					<table>
+						<tbody><tr>
+							<td>Appareil photo (Arrière)</td>
+							<td>16 Megapixels</td>
+						</tr>
+						<tr>
+							<td>Appareil photo (Avant)</td>
+							<td>8 Megapixels</td>
+						</tr>
+						<tr>
+							<td>Balance auto. des blancs</td>
+							<td>Oui</td>
+						</tr>
+						<tr>
+							<td>Batterie</td>
+							<td>Lithium Ion - 5400 ampères</td>
+						</tr>
+						<tr>
+							<td>Mémoire vive (RAM)</td>
+							<td>2 Go</td>
+						</tr>
+						<tr>
+							<td>Mémoire extensible</td>
+							<td>Non</td>
+						</tr>
+						<tr>
+							<td>Resolution d'écran</td>
+							<td>1280x800</td>
+						</tr>
+						<tr>
+							<td>Thug life</td>
+							<td>Oui</td>
+						</tr>
+					</tbody></table>
+				</div>
+				<!-- Commentaires -->
+				<div class="tab-pane" id="tab3">
+					<div class="product-review">
+						<div class="review-header">
+							<ul class="rating">
+								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+							</ul>
+							<h4>Ichigodu73</h4>
+							<small>Posté le 26/11/2012</small>
+						</div>
+						<div class="review-body">
+							<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+						</div>
+					</div>
+					<div class="product-review">
+						<div class="review-header">
+							<ul class="rating">
+								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+							</ul>
+							<h4>Marine Le Stylo</h4>
+							<small>Posté le 26/11/2012</small>
+						</div>
+						<div class="review-body">
+							<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+						</div>
+					</div>
+
+					<div class="product-review">
+						<div class="review-header">
+							<ul class="rating">
+								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+							</ul>
+							<h4>Morsay T2LG</h4>
+							<small>Posté le 26/11/2012</small>
+						</div>
+						<div class="review-body">
+							<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

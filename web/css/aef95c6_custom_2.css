@@ -1,0 +1,90 @@
+/* Fix pour le oveflow du body */
+html, body { overflow-x: hidden;}
+
+body { margin: 0px auto; }
+a { color: #009900; }
+a:hover { color: #006600; }
+
+.text-center { text-align: center; }
+.logo-margin { margin-bottom: 15px; }
+
+header {
+	text-align: center;
+	background-color: #333;
+	padding-top: 5px;
+}
+
+.header-links {
+	color:#eee;
+	font-size:10px;
+	text-align:right;
+}
+.header-links a { color: #eee; text-decoration: none; }
+.header-links a:hover { color: #ccc; }
+
+.navbar-inverse {
+	background-color: #00AA00;
+	border: 0px solid black;
+	border-radius: 0px;
+}
+
+.navbar-inverse .navbar-nav li a {
+	color: #EEE;
+}
+.navbar-inverse .navbar-nav li { border-right: 1px solid #009900;}
+.navbar-inverse .navbar-nav li.active { border-right: 1px solid #333; }
+.navbar-inverse .navbar-nav li a:hover,
+.navbar-inverse .navbar-nav li.active a,
+.navbar-inverse .navbar-nav li.active a:hover
+{
+	background-color: #333;
+}
+
+
+
+footer {
+    margin: 50px 0;
+}
+
+#artcleImages{
+	padding-top:4px;
+}
+
+#artcleImages img{
+	width:24%;
+	margin:0px;
+}
+
+#articleContent{
+	padding-top:0px;
+}
+
+@media (min-width: 970px) and (max-width: 1200px) { 
+	#artcleImages{
+		padding-top:0px;
+		padding-left:0px;
+	}
+
+	#artcleImages img{
+		width:100%;
+		margin:7.5px 0px;
+	}
+
+	#artcleImages img:first-child{
+		margin-top:0px;
+	}
+
+	#articleContent{
+		padding-top:15px;
+	}
+}
+
+.od-informations th{
+	max-width:250px;
+	width:33.33%;
+}
+/*
+.btn {
+    border-radius: 0px;
+}
+*/

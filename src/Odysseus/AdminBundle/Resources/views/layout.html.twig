@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <title>{% block title %}{% endblock title %}</title>
+        
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+        
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+        
+        <script type="text/javascript"
+          src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
+          
+          
+  
+        {% javascripts 
+            '@OdysseusAdminBundle/Resources/public/js/bootstrap.min.js'
+            '@OdysseusAdminBundle/Resources/public/js/bootstrap-hover-dropdown.min.js'
+            '@OdysseusAdminBundle/Resources/public/js/dropzone.js'
+            '@OdysseusAdminBundle/Resources/public/js/index.js'
+        %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        {% stylesheets 
+        'bundles/odysseusadmin/css/bootstrap.min.css' 
+        'bundles/odysseusadmin/css/custom.css'
+        'bundles/odysseusadmin/css/style.css'
+        filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+        
+        {% stylesheets filter="sass"
+            "@OdysseusAdminBundle/Resources/public/sass/style.scss"
+            output="main.css"
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+        
+        
+    </head>
+    
+    <body style="overflow:hidden;">
+        <header>
+            <div class="row" style="margin:0px;">
+                <div class="col-md-3 logo-margin">
+                    <a href="#">
+                        {% image '@OdysseusAdminBundle/Resources/public/images/logo_back.png' output='/images/logo_back.png' %}
+                        <img class="img-responsive" src="{{ asset_url }}" alt="">
+                        {% endimage %}
+                    </a>
+                </div>
+                <div class="col-md-3 col-md-offset-6">
+                    <div class="header-links">
+                    {% if app.user is not null %}
+                        {{ app.user.username }}
+                        ( <a href="{{ path('fos_user_security_admin_logout') }}"><small>Déconnexion</small></a> ) | 
+                        <a href="#">Paramétres</a> | 
+                        <a href="#">Visiter la boutique</a>
+                    {% endif %}
+                    </div>
+                    <div>Recherche</div>
+                </div>
+            </div>
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') %}
+                        <ul class="nav navbar-nav">
+                        	{% set m_menu = admin_menu.getValues(app.request) %}
+                        	{% for m_item in m_menu %}
+                        		{% if m_item.label is defined %}
+	                        	<li class="{{ m_item.isActive is defined and m_item.isActive ? 'active' : '' }} {{ m_item.items is defined and m_item.items is not empty ? 'dropdown' : '' }}">
+	                                <a href="{{ m_item.url }}" {{ m_item.items is defined and m_item.items is not empty ? 'class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"':'' }}>{{ (m_item.icon is not defined or m_item.icon is null) ? '' : (m_item.icon ~ '&nbsp;')|raw }}{{ m_item.label }}</a>
+	                                {% if m_item.items is defined and m_item.items is not empty %}
+	                                <ul class="dropdown-menu" role="menu">
+	                                	{% for s_item in m_item.items %}
+	                                		{% if s_item.label is defined %}
+	                                    		<li class="{{ s_item.isActive is defined and s_item.isActive ? 'active' : '' }}"><a href="{{ s_item.url }}">{{ (s_item.icon is not defined or s_item.icon is null) ? '' : (s_item.icon ~ '&nbsp;')|raw  }}{{ s_item.label }}</a></li>
+                                    		{% elseif s_item.divider is defined and s_item.divider %}
+	                                   			<li class="divider"></li>
+	                                   		{% else %}
+	                                   		
+	                                   		{% endif %}
+	                                    {% endfor %}  
+	                                </ul>
+	                                {% endif %}
+	                            </li>
+	                            {% endif %}
+                        	{% endfor %}
+                            
+                        </ul>
+                        {% endif %}
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container -->
+            </nav>
+
+        </header>
+        {% block body %}
+        {% endblock body %}
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+                    <hr style="margin:20px auto;">
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>Copyright &copy; odysseus.wyden.fr 2014</p>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </footer>
+        {{ tinymce_init() }}
+    </body>
+
+</html>

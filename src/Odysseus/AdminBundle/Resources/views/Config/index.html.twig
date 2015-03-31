@@ -1,0 +1,24 @@
+{% extends 'OdysseusAdminBundle::column2.layout.html.twig' %}
+
+{% block title %}Configurations{% endblock %}
+
+{% block content %}
+   configurations {{ path(app.request.attributes.get('_route')) }}
+   
+{% endblock %}
+
+{% block operations %}
+
+     <li class="list-group-item">
+         <a href="#">Supprimer</a>
+     </li>
+     <li class="list-group-item">
+         <a href="#">Désactiver</a>
+     </li>
+     <li class="list-group-item">
+         <a href="#">Ajouter un article</a>
+     </li>
+     <li class="list-group-item">
+         <a href="#">Ajouter une catégorie</a>
+     </li>
+ {% endblock operations %}

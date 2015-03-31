@@ -1,0 +1,17 @@
+{% extends 'OdysseusAdminBundle:User:form.html.twig' %}
+{% block title %}Modification Utilisateur #{{ user.id }}{% endblock %}
+{% block form_title %}Modification Utilisateur #{{ user.id }}{% endblock %}
+{% block form_submit %}Sauvegarder{% endblock %}
+
+{% block operations %}
+    <li class="list-group-item">
+        <a onclick="return confirm('Voulez-vous vraiment supprimer?');" href="{{ path('odysseus_admin_user_delete', {'id' : user.id}) }}"><span class="glyphicon glyphicon-trash" ></span> Supprimer</a>
+    </li>
+    <li class="list-group-item">
+        <a href="{{ path('odysseus_admin_user_' ~ (user.isEnabled ? 'disable' : 'enable'), {'id':user.id}) }}"><span class="glyphicon glyphicon-{{user.isEnabled ? 'ban-circle' : 'ok' }}" ></span> {{user.isEnabled ? 'Désactiver' : 'Activer' }}</a>
+    </li>
+    <li class="list-group-item">
+        <a href="{{ path('odysseus_admin_user_create') }}"><span class="glyphicon glyphicon-plus" ></span> Nouvel utilisateur</a>
+    </li>
+    
+{% endblock operations %}
