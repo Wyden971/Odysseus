@@ -43,7 +43,27 @@ class ShippingMethod
     private $pricePerM3;
 
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="duration", type="string", nullable=false)
+     */
+    private $duration;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", nullable=false)
+     */
+    private $description;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order", type="integer")
+     */
+    private $order = 0;
+    
     /**
      * Get id
      *
@@ -121,5 +141,78 @@ class ShippingMethod
     public function getPricePerM3()
     {
         return $this->pricePerM3;
+    }
+    
+    public function __toString(){
+        return $this->name;
+    }
+
+    /**
+     * Set duration
+     *
+     * @param string $duration
+     * @return ShippingMethod
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return string 
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return ShippingMethod
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     * @return ShippingMethod
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer 
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }

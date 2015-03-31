@@ -3,7 +3,8 @@
 namespace Odysseus\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Odysseus\AdminBundle\Entity\ShippingMethod;
+        
 /**
  * ArticleModel
  *
@@ -406,5 +407,13 @@ class ArticleModel
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+    
+    public function getShippingPrice(ShippingMethod $shipping){
+        $m3 = ($this->width * $this->height * $this->depth)/100;
+        $weight = $this->weight;
+        $price = ($weight * $shipping->getPricePerWeight()) + ($m3 * $shipping->getPricePerM3()) + ($this->price * 0.01);
+    
+        return ($price/2);
     }
 }

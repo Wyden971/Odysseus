@@ -15,6 +15,7 @@ class OrderDetailsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('company')
             ->add('firstName')
             ->add('lastName')
             ->add('address1')

@@ -28,8 +28,20 @@ class PaymentMethod
      */
     private $name;
 
-
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", nullable=false)
+     */
+    private $description;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order", type="integer")
+     */
+    private $order = 0;
+    
     /**
      * Get id
      *
@@ -61,5 +73,55 @@ class PaymentMethod
     public function getName()
     {
         return $this->name;
+    }
+    
+    public function __toString(){
+        return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return PaymentMethod
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     * @return PaymentMethod
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer 
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }

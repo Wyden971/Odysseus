@@ -34,6 +34,13 @@ class OrderDetails
      * @ORM\Column(name="last_name", type="string", length=256, nullable=false)
      */
     private $lastName;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="company", type="string", length=100, nullable=true)
+     */
+    private $company;
 
     /**
      * @var string

@@ -89,7 +89,12 @@
                     </div>
 
                     <div class="actions">
-                        <a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+                        <a href="#" class="btn btn-default">
+                            <i class="icon-shopping-cart icon-white"></i> Plus de détails
+                        </a> 
+                        <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.article.name|forUri|raw), 'product_id' : row.id}) }}" class="btn btn-greend">
+                            <i class="icon-shopping-cart icon-white"></i> Ajouter au panier
+                        </a>
                     </div>
                 </div>
             </div>

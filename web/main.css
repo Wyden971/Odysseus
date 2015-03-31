@@ -19,7 +19,7 @@ body #mainPanel.locked {
 body .dropdown-menu > li > a {
   text-align: left; }
 body th.actions:last-child {
-  width: 150px;
+  min-width: 150px;
   text-align: center; }
 body .nowrap {
   white-space: nowrap; }

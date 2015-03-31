@@ -34,6 +34,13 @@ class OrderDetails
      * @ORM\Column(name="last_name", type="string", length=256, nullable=false)
      */
     private $lastName;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="company", type="string", length=100, nullable=true)
+     */
+    private $company;
 
     /**
      * @var string
@@ -274,5 +281,28 @@ class OrderDetails
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * Set company
+     *
+     * @param string $company
+     * @return OrderDetails
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get company
+     *
+     * @return string 
+     */
+    public function getCompany()
+    {
+        return $this->company;
     }
 }

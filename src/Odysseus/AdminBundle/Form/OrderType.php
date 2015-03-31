@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Odysseus\AdminBundle\Form\OrderDetailsType;
+
 class OrderType extends AbstractType
 {
     /**
@@ -15,14 +17,20 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('createdAt')
-            ->add('validatedAt')
-            ->add('user')
-            ->add('paymentMethod')
-            ->add('builling')
-            ->add('shipping')
-            ->add('shippingMethod')
-            ->add('status')
+            //->add('createdAt')
+            //->add('validatedAt')
+            //->add('user')
+            ->add('paymentMethod', 'entity', array(
+                'class' => 'OdysseusAdminBundle:PaymentMethod',
+                'expanded' => true,
+            ))
+            //->add('builling', new OrderDetailsType())
+            ->add('shipping', new OrderDetailsType())
+            ->add('shippingMethod', 'entity', array(
+                'class' => 'OdysseusAdminBundle:ShippingMethod',
+                'expanded' => true,
+            ))
+            //->add('status')
         ;
     }
     

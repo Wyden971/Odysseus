@@ -14,6 +14,10 @@ odysseus_admin_order_routes:
     resource: "@OdysseusFrontBundle/Controller/OrderController.php"
     type:     annotation
     
+odysseus_admin_cart_routes:
+    resource: "@OdysseusFrontBundle/Controller/CartController.php"
+    type:     annotation
+    
 odysseus_admin_category_routes:
     resource: "@OdysseusFrontBundle/Controller/CategoryController.php"
     type:     annotation

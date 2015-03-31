@@ -3,6 +3,7 @@
 namespace Odysseus\AdminBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Odysseus\AdminBundle\Entity\Cart;
 
 /**
  * User
@@ -81,6 +82,11 @@ class User extends BaseUser
     private $createdAt;
     
     /**
+    * @ORM\OneToMany(targetEntity="Cart", mappedBy="user", cascade={"persist", "remove"})
+    */
+    protected $carts;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -125,6 +131,7 @@ class User extends BaseUser
         parent::__construct();
         $this->infos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->carts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -393,5 +400,61 @@ class User extends BaseUser
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+   
+
+    /**
+     * Add carts
+     *
+     * @param \Odysseus\AdminBundle\Entity\Cart $carts
+     * @return User
+     */
+    public function addCart(\Odysseus\AdminBundle\Entity\Cart $carts)
+    {
+        $this->carts[] = $carts;
+
+        return $this;
+    }
+
+    /**
+     * Remove carts
+     *
+     * @param \Odysseus\AdminBundle\Entity\Cart $carts
+     */
+    public function removeCart(\Odysseus\AdminBundle\Entity\Cart $carts)
+    {
+        $this->carts->removeElement($carts);
+    }
+
+    /**
+     * Get carts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCarts()
+    {
+        return $this->carts;
+    }
+    
+    public function getActiveCart(){
+
+        if(count($this->carts) == 0){
+            $cart = new Cart();
+            $cart->setIsVisible(true);
+            $cart->setUser($this);
+            $cart->setCreatedAt(new \DateTime());
+            $cart->setModifiedAt(new \DateTime());
+            $cart->setName('Mon premier panier');
+            $this->carts[] = $cart;
+            
+            return $cart;
+        }
+        
+        foreach($this->carts as $cart){
+            if($cart->getIsVisible()){
+                return $cart;
+            }
+        }
+        return $this->carts[0];
     }
 }

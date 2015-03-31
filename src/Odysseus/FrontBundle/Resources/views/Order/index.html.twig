@@ -1,198 +1,428 @@
 {% extends 'OdysseusFrontBundle::layout.html.twig' %}
 {% block content %}
-<div class="row">
-	<!-- Titre de la page -->
-	<div class="col-lg-12">
-		<h2>Commande</h2>
-	</div>
-	<!-- Commande -->
-	<div class="col-lg-12">
-		<div class="row form-group">
-			<div class="col-xs-12">
-				<ul class="nav nav-pills nav-justified thumbnail setup-panel">
-					<li class="active"><a href="#step-1">
-						<h4 class="list-group-item-heading">ADRESSE</h4>
-						<p class="list-group-item-text">Choix d'adresse</p>
-					</a></li>
-					<li class="disabled"><a href="#step-2">
-						<h4 class="list-group-item-heading">LIVRAISON</h4>
-						<p class="list-group-item-text">Méthode de livraison</p>
-					</a></li>
-					<li class="disabled"><a href="#step-3">
-						<h4 class="list-group-item-heading">PAIEMENT</h4>
-						<p class="list-group-item-text">Moyen de paiement</p>
-					</a></li>
-					<li class="disabled"><a href="#step-4">
-						<h4 class="list-group-item-heading">VALIDATION</h4>
-						<p class="list-group-item-text">Dernière vérification</p>
-					</a></li>
-					<li class="disabled"><a href="#step-5">
-						<h4 class="list-group-item-heading">CONFIRMATION</h4>
-						<p class="list-group-item-text">Merci pour votre achat !</p>
-					</a></li>
-				</ul>
-			</div>
-		</div>
-		<!-- ETAPE 1 -->
-		<form class="form-horizontal">
-		<div class="row setup-content" id="step-1">
-			<div class="col-lg-12">
-					<div class="titleHeader clearfix">
-						<h3>Informations de livraison</h3>
-					</div>
-					<div class="form-group">
-						<label for="societe" class="col-sm-3 control-label">Societe</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="societe" name="societe" placeholder="Entrez le nom de votre societe">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="adresse" class="col-sm-3 control-label">Adresse *</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="adresse" name="adresse" placeholder="Entrez votre adresse" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="adressecomp" class="col-sm-3 control-label">Complément d'Adresse</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="adressecomp" name="adresscomp" placeholder="Entrez, si besoin, un complement d'adresse">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="codepostal" class="col-sm-3 control-label">Code Postal *</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="codepostal" name="codepostal" placeholder="Entrez votre code postal" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="ville" class="col-sm-3 control-label">Ville *</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="ville" name="ville" placeholder="Entrez votre ville" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="pays" class="col-sm-3 control-label">Pays *</label>
-						<div class="col-sm-9">
-							<select class="form-control" id="pays" name="pays" required>
-									<option value="" disabled selected>Entrez votre pays de résidence</option>
-									<option>France</option>
-									<option>Corée du Nord</option>
-									<option>Russie</option>
-									<option>Westeros</option>
-									<option>Middle Earth</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="telfixe" class="col-sm-3 control-label">Téléphone Fixe *</label>
-						<div class="col-sm-9">
-							<input type="phone" class="form-control" id="telfixe" name="telfixe" placeholder="Entrez votre numéro de téléphone fixe" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="telport" class="col-sm-3 control-label">Téléphone Portable</label>
-						<div class="col-sm-9">
-							<input type="phone" class="form-control" id="telport" name="telport" placeholder="Entrez votre numéro de téléphone portable">
-						</div>
-					</div>
-					<button id="activate-step-2" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
-			</div>
-		</div>
-		<!-- ETAPE 2 -->
-		<div class="row setup-content" id="step-2">
-			<form>
-				<!-- Methode de livraison 1 -->
-				<div class="col-xs-12 col-md-4">
-					<div class="panel panel-default panel-shipping">
-						<div class="panel-heading basic">
-							<h3 class="panel-title">Livraison normale</h3>
-						</div>
-						<div class="panel-body">
-							<div class="the-price">
-								<h1>GRATUIT</h1>
-								<p>Livraison en 4 à 7 jours ouvrées</p>
-								<p><em>La solution économique<br />Colis non suivi envoyé par un transporteur tiers. N'inclus pas de service après vente.</em></p>
-							</div>
-						</div>
-						<div class="panel-footer">
-							<label class="btn" style>
-								<input type="radio" name="transporteur" id="transporteur1" value="1" /> Choisir la livraison normale
-							</label>
-						</div>
-					</div>
-				</div>
-				<!-- Methode de livraison 2 -->
-				<div class="col-xs-12 col-md-4">
-					<div class="panel panel-default panel-shipping">
-						<div class="panel-heading rapid">
-							<h3 class="panel-title">Livraison rapide</h3>
-						</div>
-						<div class="panel-body">
-							<div class="the-price">
-								<h1>7,99 €</h1>
-								<p>Livraison en 48h ouvrées</p>
-								<p><em>Colis suivi par internet<br />Profitez d'une livraison au meilleur prix. Inclus un service après vente par mail.</em></p>
-							</div>
-						</div>
-						<div class="panel-footer">
-							<label class="btn" style>
-								<input type="radio" name="transporteur" id="transporteur2" value="2" /> Choisir la livraison rapide
-							</label>
-						</div>
-					</div>
-				</div>
-				<!-- Methode de livraison 3 -->
-				<div class="col-xs-12 col-md-4">
-					<div class="panel panel-default panel-shipping">
-						<div class="panel-heading express">
-							<h3 class="panel-title">Livraison express</h3>
-						</div>
-						<div class="panel-body">
-							<div class="the-price">
-								<h1>15,99 €</h1>
-								<p>Livraison en 24h</p>
-								<p><em>Recevez votre commande en 24h chrono !<br />Beneficiez d'un suivi et d'un service après vente intégral et à tout heure.</em></p>
-							</div>
-						</div>
-						<div class="panel-footer">
-							<label class="btn" style>
-								<input type="radio" name="transporteur" id="transporteur2" value="2" /> Choisir la livraison express
-							</label>
-						</div>
-					</div>
-				</div>
-			</form>
-			<div class="col-xs-12">
-				<button id="activate-step-3" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
-			</div>
-		</div>
-		<!-- ETAPE 3 -->
-		<div class="row setup-content" id="step-3">
-			<div class="col-xs-12">
-				<div class="col-md-12 well text-center">
-					<h1 class="text-center"> STEP 3</h1>
-					<button id="activate-step-4" class="btn btn-greend btn-long">Passer à l'étape suivante</button>
-				</div>
-			</div>
-		</div>
-		<!-- ETAPE 4 -->
-		<div class="row setup-content" id="step-4">
-			<div class="col-xs-12">
-				<div class="col-md-12 well text-center">
-					<h1 class="text-center"> STEP 4</h1>
-					<button id="activate-step-5" class="btn btn-greend btn-long">Confirmer la commande</button>
-				</div>
-			</div>
-		</div>
-		</form>
-		<!-- ETAPE 5 -->
-		<div class="row setup-content" id="step-5">
-			<div class="col-xs-12">
-				<div class="col-md-12 well text-center">
-					<h1 class="text-center"> STEP 5</h1>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+    <div class="row">
+        <!-- Titre de la page -->
+        <div class="col-lg-12">
+            <h2>Commande</h2>
+        </div>
+        <!-- Commande -->
+        <div class="col-lg-12">
+            <div class="row form-group">
+                <div class="col-xs-12">
+                    <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                        <li class="active"><a href="#step-1">
+                                <h4 class="list-group-item-heading">ADRESSE</h4>
+                                <p class="list-group-item-text">Choix d'adresse</p>
+                            </a></li>
+                        <li class="disabled"><a href="#step-2">
+                                <h4 class="list-group-item-heading">LIVRAISON</h4>
+                                <p class="list-group-item-text">Méthode de livraison</p>
+                            </a></li>
+                        <li class="disabled"><a href="#step-3">
+                                <h4 class="list-group-item-heading">PAIEMENT</h4>
+                                <p class="list-group-item-text">Moyen de paiement</p>
+                            </a></li>
+                        <li class="disabled"><a href="#step-4">
+                                <h4 class="list-group-item-heading">VALIDATION</h4>
+                                <p class="list-group-item-text">Dernière vérification</p>
+                            </a></li>
+                    </ul>
+                </div>
+            </div>
+            {{ form_start(form) }}
+                <!-- ETAPE 1 -->
+                <div class="row setup-content" id="step-1">
+                    <div class="col-lg-12">
+                        <div class="titleHeader clearfix">
+                            <h3>Informations de livraison</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="societe" class="col-sm-3 control-label">Societe</label>
+                            <div class="col-sm-9">
+                                {{ 
+                                    form_widget(form.shipping.company, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Société'
+                                        },
+                                        'id' : 'societe'
+                                    })
+                                }}
+                                {{ form_errors(form.shipping.company) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom" class="col-sm-3 control-label">Nom</label>
+                            <div class="col-sm-9">
+                                {{ 
+                                    form_widget(form.shipping.lastName, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Nom'
+                                        },
+                                        'id' : 'nom'
+                                    })
+                                }}
+                                {{ form_errors(form.shipping.lastName) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom" class="col-sm-3 control-label">Prénom</label>
+                            <div class="col-sm-9">
+                                {{ 
+                                    form_widget(form.shipping.firstName, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Prénom'
+                                        },
+                                        'id' : 'prenom'
+                                    })
+                                }}
+                                {{ form_errors(form.shipping.firstName) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adresse" class="col-sm-3 control-label">Adresse *</label>
+                            <div class="col-sm-9">
+                                {{ 
+                                    form_widget(form.shipping.address1, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Nom'
+                                        },
+                                        'id' : 'adresse'
+                                    })
+                                }}
+                                {{ form_errors(form.shipping.address1) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adressecomp" class="col-sm-3 control-label">Complément d'Adresse</label>
+                            <div class="col-sm-9">
+                                {{ 
+                                    form_widget(form.shipping.address2, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : "Complément d'Adresse"
+                                        },
+                                        'id' : 'adressecomp'
+                                    })
+                                }}
+                                {{ form_errors(form.shipping.address2) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="codepostal" class="col-sm-3 control-label">Code Postal *</label>
+                            <div class="col-sm-9">
+                                {{ 
+                                    form_widget(form.shipping.zipCode, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Code Postal'
+                                        },
+                                        'id' : 'codepostal'
+                                    })
+                                }}
+                                {{ form_errors(form.shipping.zipCode) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ville" class="col-sm-3 control-label">Ville *</label>
+                            <div class="col-sm-9">
+                                {{ 
+                                    form_widget(form.shipping.city, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Ville'
+                                        },
+                                        'id' : 'ville'
+                                    })
+                                }}
+                                {{ form_errors(form.shipping.city) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pays" class="col-sm-3 control-label">Pays *</label>
+                            <div class="col-sm-9">
+                                {{ 
+                                    form_widget(form.shipping.country, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Pays'
+                                        },
+                                        'id' : 'pays'
+                                    })
+                                }}
+                                {{ form_errors(form.shipping.country) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telport" class="col-sm-3 control-label">Téléphone Portable</label>
+                            <div class="col-sm-9">
+                                {{ 
+                                    form_widget(form.shipping.telephone, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Téléphone Portable'
+                                        },
+                                        'id' : 'telport'
+                                    })
+                                }}
+                                {{ form_errors(form.shipping.telephone) }}
+                            </div>
+                        </div>
+                        <button type="button" id="activate-step-2" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
+                    </div>
+                </div>
+                <!-- ETAPE 2 -->
+                <div class="row setup-content" id="step-2">
+                    {% for key, method in methods %}
+                    <!-- Methode de livraison {{ key }} -->
+                    <div class="col-xs-12 col-md-4">
+                        <div class="panel panel-default panel-shipping">
+                            <div class="panel-heading basic">
+                                <h3 class="panel-title">Livraison {{ method.data.name }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="the-price">
+                                    <h1>{{ method.price|number_format(2,'.', ',') }}€</h1>
+                                    <p>Livraison en {{ method.data.duration }}</p>
+                                    <p><em>{{ method.data.description }}</em></p>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <label class="btn" style>
+                                    {{ form_widget(form.shippingMethod[method.data.id]) }} Choisir la livraison {{ method.data.name }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="col-xs-12">
+                        <button type="button" id="activate-step-3" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
+                    </div>
+                </div>
+                <!-- ETAPE 3 -->
+                <div class="row setup-content" id="step-3">
+                    <div class="col-xs-12">
+                        <div class="policy">	
+                            <div class="panel-group" id="accordion">
+                                {% for key,method in paymentMethods %}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a class="accordion-toggle collapsed radiopanel" data-toggle="collapse" data-parent="#accordion" href="#collapse{{key}}">
+                                            {{ form_widget(form.paymentMethod[method.id]) }} <strong>Paiement par {{ method.name }}</strong>
+                                        </a>
+                                    </div>
+                                    <div id="collapse{{key}}" class="accordion-body collapse">
+                                        <div class="accordion-inner" style="padding:10px">
+                                            {% if method.id == 1 %}
+                                            <div class="form-group">
+                                                <label for="cardname" class="col-sm-2 control-label">Nom du porteur</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" autocomplete="off" pattern="\w+ \w+.*" id="cardname" name="cardname" placeholder="Entrez le nom inscrit sur la carte" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cardnum" class="col-sm-2 control-label">Numéro de la carte</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" autocomplete="off" pattern="\d{4}-\d{4}-\d{4}-\d{4}" id="cardnum" name="cardnum" placeholder="Entrez votre numéro de carte (xxxx-xxxx-xxxx-xxxx)" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pays" class="col-sm-2 control-label">Date d'expiration</label>
+                                                <div class="col-sm-10">
+                                                    <div class="row-fluid">
+                                                        <div class="col-sm-8" style="padding-left:0">
+                                                            <select class="form-control" id="expmonth" name="expmonth" required>
+                                                                <option value="" disabled selected>Mois d'expiration</option>
+                                                                <option value="01">Janvier</option>
+                                                                <option value="02">Février</option>
+                                                                <option value="03">Mars</option>
+                                                                <option value="04">Avril</option>
+                                                                <option value="05">Mai</option>
+                                                                <option value="06">Juin</option>
+                                                                <option value="07">Juillet</option>
+                                                                <option value="08">Août</option>
+                                                                <option value="09">Septembre</option>
+                                                                <option value="10">Octobre</option>
+                                                                <option value="11">Novembre</option>
+                                                                <option value="12">Décembre</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-4" style="padding:0">
+                                                            <select class="form-control" id="expyear" name="expyear" required>
+                                                                <option value="" disabled selected>Année d'expiration</option>
+                                                                <option>2015</option>
+                                                                <option>2016</option>
+                                                                <option>2017</option>
+                                                                <option>2018</option>
+                                                                <option>2019</option>
+                                                                <option>2020</option>
+                                                                <option>2021</option>
+                                                                <option>2022</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="securitynum" class="col-sm-2 control-label">Code de sécurité</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" autocomplete="off" pattern="\d{3}" id="securitynum" name="securitynum" placeholder="Entrez les 3 chiffres de sécurité" required>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <p>{{ method.description }}</p>
+                                        {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <p style="margin:20px 0px;">Toutes nos transactions sont cryptées et sécurisées, et vos informations bancaires ne sont pas stockées. Pour en savoir plus veuillez consulter notre <a href="policy.html">Charte de confidentialité</a>.</p>
+                        <button type="button" id="activate-step-4" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
+                    </div>
+
+                </div>
+                <!-- ETAPE 4 -->
+                <div class="row setup-content" id="step-4">
+                    <!-- Informations générales -->
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <h4 style="margin-top:19px">Informations générales</h4>
+                        <table class="table table-condensed userInfo">
+                            <tbody>
+                                <tr>
+                                    <td width="25%">N° Commande</td>
+                                    <td width="25%">C025874</td>
+                                    <td width="25%">Date de Commande</td>
+                                    <td width="25%">14/08/2014</td>
+                                </tr>
+                                <tr>
+                                    <td>Type de commande</td>
+                                    <td>Achat</td>
+                                    <td>Vendeur / Acheteur</td>
+                                    <td>Thug life</td>
+                                </tr>
+                                <tr>
+                                    <td>Nb. Articles</td>
+                                    <td>4</td>
+                                    <td>Prix total TTC</td>
+                                    <td>84,93 €</td>
+                                </tr>
+                        </table>
+                    </div>
+
+                    <!-- Paiement & Livraison -->
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <h4 style="margin-top:19px">Paiement &amp; Livraison</h4>
+                        <table class="table table-condensed userInfo">
+                            <tbody>
+                                <tr>
+                                    <td width="25%">Méthode de paimement</td>
+                                    <td width="25%">PayPal</td>
+                                    <td width="25%">Méthode de livraison</td>
+                                    <td width="25%">Rapide</td>
+                                </tr>
+                                <tr>
+                                    <td>Adresse de Livraison</td>
+                                    <td>69, Avenue du derp</td>
+                                    <td>Code Postal / Ville</td>
+                                    <td>75018 / PARIS</td>
+                                </tr>
+                        </table>
+                    </div>
+
+                    <!-- Articles -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h4 style="margin-top:19px">Articles (4)</h4>
+                        <table class="table table-condensed table-hover orderList" id="accProductList">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Produit</th>
+                                    <th>Quantité</th>
+                                    <th>Prix</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td width="10%"><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
+                                    <td width="60%">
+                                        Nom de l'article<br>
+                                        <ul class="rating hidden-xs">
+                                            <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+                                        </ul>
+                                    </td>
+                                    <td width="10%">22</td>
+                                    <td width="20%">14,53 €</td>
+                                </tr>
+                                <tr>
+                                    <td><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
+                                    <td>
+                                        Nom de l'article<br>
+                                        <ul class="rating hidden-xs">
+                                            <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+                                        </ul>
+                                    </td>
+                                    <td>21</td>
+                                    <td>52,21 €</td>
+                                </tr>
+                                <tr>
+                                    <td><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
+                                    <td>
+                                        Nom de l'article<br>
+                                        <ul class="rating hidden-xs">
+                                            <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+                                        </ul>
+                                    </td>
+                                    <td>4</td>
+                                    <td>2,99 €</td>
+                                </tr>
+                                <tr>
+                                    <td><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
+                                    <td>
+                                        Nom de l'article<br>
+                                        <ul class="rating hidden-xs">
+                                            <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
+                                            <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
+                                        </ul>
+                                    </td>
+                                    <td>14</td>
+                                    <td>63,25 €</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>TOTAL TTC</td>
+                                    <td>157,89 €</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Bouton de confirmation -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="submit" id="activate-step-5" class="btn btn-greend btn-long pull-right">Confirmer la commande</button>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

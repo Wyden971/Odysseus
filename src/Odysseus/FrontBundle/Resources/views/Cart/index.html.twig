@@ -1,0 +1,133 @@
+{% extends 'OdysseusFrontBundle::layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <!-- Titre de la page -->
+        <div class="col-lg-12">
+            <h2>Panier d'achats ({{ app.user.getActiveCart().model|length }})</h2>
+        </div>
+        <!-- Panier d'achats -->
+        <div class="col-lg-12">	
+            <!--<div class="row">
+                    <div class="col-md-12">
+                            <div class="pull-right">
+                                    <a href="#" class="btn btn-lg btn-default"><i class="glyphicon glyphicon-refresh"></i> UPDATE</a>
+                                    <a href="#" class="btn btn-lg btn-greend"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> CHECK OUT</a>
+                            </div>
+                    </div>
+            </div>-->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Shopping Cart Items -->
+                    <table class="shopping-cart">
+                        <!-- Shopping Cart Item -->
+                        <tbody>
+                            {% for row in app.user.getActiveCart().model %}
+                                {% if row.image is not empty %}
+                                    {% set src = row.image[0].url %}
+                                {% elseif row.article.image is not empty %}
+                                    {% set src = row.article.image[0].url %}
+                                {% else %}
+                                    {% set src = asset('/bundles/odysseusfront/images/product1.jpg') %}
+                                {% endif %}
+                                <tr>
+                                    <!-- Shopping Cart Item Image -->
+                                    <td class="image">
+                                        <a href="product_detail.html">
+                                            <div style="background:url('{{ src }}') no-repeat center;background-size:cover;width:150px;height:77px;border:1px solid #EEE;">
+                                                <img src="{{ src }}" alt="{{ row.article.name }}" title="{{ row.article.name }}" height="77" style="opacity:0">
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <!-- Shopping Cart Item Description & Features -->
+                                    <td>
+                                        <div class="item-title">
+                                            <a href="product_detail.html">{{ row.article.name }}</a>
+                                        </div>
+                                        <div class="feature">Vendu par 
+                                            <a href="#">{{ row.article.user.getDefaultInfos().firstName }}</a>
+                                        </div>
+                                        <div class="feature">Disponible depuis le
+                                            <a href="#">{{ row.createdAt|date('d/m/Y') }}</a>
+                                        </div>
+                                    </td>
+                                    <!-- Shopping Cart Item Price -->
+                                    <td class="price">{{ row.price|number_format(2,'.',',') }} €</td>
+                                    <!-- Shopping Cart Item Actions -->
+                                    <td class="actions">
+                                        <a onclick="return confirm('Voulez-vous vraiment supprimer?');" href="{{ path('odysseus_front_cart_remove', {'product_name':row.article.name|forUri, 'product_id':row.id}) }}" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <!-- End Shopping Cart Item -->
+                                <tr>
+                                    <td align="center" colspan="4">
+                                        Vous n'avec aucun article dans votre panier.
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- End Shopping Cart Items -->
+                </div>
+            </div>
+            <div class="row">
+                <form method="POST" action="{{ path('odysseus_front_order_step1') }}">
+                    <!-- Promotion Code -->
+                    <div class="col-md-4">
+
+                    </div>
+                    <!-- Shipment Options -->
+                    <div class="col-md-4">
+
+                    </div>
+
+                    <!-- Shopping Cart Totals -->
+                    <div class="col-md-4">
+                        <div class="cart-shippment-options">
+                            <h6><i class="glyphicon glyphicon-plane"></i> Méthode de livraison</h6>
+                            <div class="input-append">
+                                <select name="shipping_method" class="form-control input-sm" id="shippingPrices">
+                                    {% for method in methods %}
+                                        <option value="{{ method.data.id }}" data-price-text="{{ method.price|number_format(2,'.',',') }}" data-price="{{ method.price }}">{{ method.data.name }} - {{ method.price|number_format(2,'.',',') }} €</option>
+                                    {% endfor %}
+                                </select>
+                                <script>
+                                    $('#shippingPrices').change(function () {
+                                        var option = $(this).find('>option:selected');
+                                        var price = option.data('price');
+                                        var priceText = option.data('price-text');
+                                        var total = {{ totalPriceWithoutShipping }};
+                                                $('#visiblePrice').html(priceText + ' €');
+                                        $('#totalPrice').html('<b>' + (total + price) + ' €</b>');
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        <table class="cart-totals">
+                            <tbody>
+                                <tr>
+                                    <td><b>Livraison</b></td>
+                                    <td id="visiblePrice">{{ methods[0].price|number_format(2,'.',',') }} €</td>
+                                </tr>
+                                <tr class="cart-grand-total">
+                                    <td><b>Total</b></td>
+                                    <td id="totalPrice"><b>{{ totalPrice|number_format(2,'.',',') }} €</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-lg btn-greend">
+                                <i class="glyphicon glyphicon-shopping-cart icon-white"></i> COMMANDER
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
