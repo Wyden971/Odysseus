@@ -449,7 +449,7 @@ class UserController extends Controller {
     }
 
     private function getCommandesCount($userId) {
-        return $this->getDoctrine()->getEntityManager()->createQueryBuilder()->select('COUNT(a)')->from('OdysseusAdminBundle:Order', 'a')->where('a.user = ' . $userId)->getQuery()->getSingleScalarResult();
+        return $this->getDoctrine()->getManager()->getRepository('OdysseusAdminBundle:Order')->createQueryBuilder('a')->select('COUNT(a)')->where('a.user = ' . $userId)->getQuery()->getSingleScalarResult();
     }
 
     private function getSells($userId, $page, $count) {
