@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Symfony Standard Edition
 ========================
 
@@ -168,3 +169,7 @@ Enjoy!
 [11]: http://symfony.com/doc/2.5/cookbook/logging/monolog.html
 [12]: http://symfony.com/doc/2.5/cookbook/assetic/asset_management.html
 [13]: http://symfony.com/doc/2.5/bundles/SensioGeneratorBundle/index.html
+=======
+# Odysseus
+Projet scolaire
+>>>>>>> 89a0128e73a6bbdd22f5702034da241c588220d8
