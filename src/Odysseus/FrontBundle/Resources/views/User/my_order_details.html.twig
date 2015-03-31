@@ -18,15 +18,15 @@
                         <td width="25%">Date de Commande</td>
                         <td width="25%">14/08/2014</td>
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <td>Type de commande</td>
                         <td>Achat</td>
                         <td>Vendeur / Acheteur</td>
                         <td>Thug life</td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <td>Nb. Articles</td>
-                        <td>4</td>
+                        <td>{{articles|length}}</td>
                         <td>Prix total TTC</td>
                         <td>84,93 €</td>
                     </tr>
@@ -61,75 +61,23 @@
 
         <!-- Articles -->
         <div>
-            <h4 style="margin-top:19px">Articles (4)</h4>
+            <h4 style="margin-top:19px">Articles ({{articles|length}})</h4>
             <table class="table table-condensed table-hover orderList" id="accProductList">
                 <thead>
                     <tr>
                         <th colspan="2">Produit</th>
-                        <th>Quantité</th>
                         <th>Prix</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td width="10%"><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
-                        <td width="60%">
-                            Nom de l'article<br>
-                            <ul class="rating hidden-xs">
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                            </ul>
-                        </td>
-                        <td width="10%">22</td>
-                        <td width="20%">14,53 €</td>
-                    </tr>
+                    {%for article in articles %}
                     <tr>
                         <td><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
                         <td>
-                            Nom de l'article<br>
-                            <ul class="rating hidden-xs">
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                            </ul>
+                            {{article.name}}<br>
+                            
                         </td>
-                        <td>21</td>
-                        <td>52,21 €</td>
-                    </tr>
-                    <tr>
-                        <td><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
-                        <td>
-                            Nom de l'article<br>
-                            <ul class="rating hidden-xs">
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                            </ul>
-                        </td>
-                        <td>4</td>
-                        <td>2,99 €</td>
-                    </tr>
-                    <tr>
-                        <td><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
-                        <td>
-                            Nom de l'article<br>
-                            <ul class="rating hidden-xs">
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                            </ul>
-                        </td>
-                        <td>14</td>
-                        <td>63,25 €</td>
+                        <td>{{article.model.price|number_format(2,'.',',')}} €</td>
                     </tr>
                     <tr>
                         <td></td>
@@ -137,6 +85,11 @@
                         <td>TOTAL TTC</td>
                         <td>157,89 €</td>
                     </tr>
+                    {%else%}
+                        <td colspan="7" align="center">
+                            Aucun article dans cette commande
+                        </td>
+                    {%endfor%}
                 </tbody>
             </table>
         </div>

@@ -183,7 +183,7 @@ class UserController extends Controller {
 
     /**
      * @Route("/mon-compte/mes-achats", name="odysseus_front_user_my_orders")
-     * @Route("/mon-compte/mes-achats/{page}", name="odysseus_front_user_my_orders_page")
+     * @Route("/mon-compte/mes-achats/page/{page}", name="odysseus_front_user_my_orders_page")
      */
     public function myOrdersAction($page = 1) {
         $user = $this->getUser();
@@ -289,7 +289,19 @@ class UserController extends Controller {
      * @Route("/mon-compte/mes-achats/{id}", name="odysseus_front_user_my_order_details", requirements={"id"="\d+"})
      */
     public function myOrderDetailsAction($id) {
+
+        $orderDetail = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('OdysseusAdminBundle:OrderArticle')
+                ->createQueryBuilder('oa')
+                ->select('oa')
+                ->join('oa.order', 'o')
+                ->where('o.id = ' . $id)
+                ->getQuery()
+                ->getResult();
+
         return $this->render('OdysseusFrontBundle:User:my_order_details.html.twig', array(
+                    'articles' => $orderDetail,
                     'accountMenu' => $this->getMenu(),
                     'breadcrumb' => $this->getBreadcrumb('Détails de la commandes'),
         ));
@@ -335,8 +347,86 @@ class UserController extends Controller {
     }
 
     /**
+     * @Route("/mon-compte/ajout-article", name="odysseus_front_user_add_article_model")
+     * @Route("/mon-compte/ajout-article/{idArticle}", name="odysseus_front_user_add_article_model_exist")
+     */
+    public function addArticleModelAction(Request $request, $idArticle = null) {
+        $article = new \Odysseus\AdminBundle\Entity\Article();
+        $model = new \Odysseus\AdminBundle\Entity\ArticleModel();
+        if (is_null($idArticle)) {
+            $article->setCreatedAt(new \DateTime());
+            $article->setModifiedAt(new \DateTime());
+            $article->setUser($this->getUser());
+            $article->addModel($model);
+            $model->setCreatedAt(new \DateTime());
+            $model->setUser($this->getUser());
+
+            $model->addImage(new \Odysseus\AdminBundle\Entity\Image());
+            $model->addImage(new \Odysseus\AdminBundle\Entity\Image());
+            $model->addImage(new \Odysseus\AdminBundle\Entity\Image());
+
+            $model->setArticle($article);
+            $form = $this->createForm(new \Odysseus\AdminBundle\Form\ArticleType(), $article);
+        } else {
+            $article = $this->getDoctrine()->getManager()->getRepository('OdysseusAdminBundle:Article')->find($idArticle);
+            $model->setCreatedAt(new \DateTime());
+            $model->setUser($this->getUser());
+            $article->addModel($model);
+            $model->addImage(new \Odysseus\AdminBundle\Entity\Image());
+            $model->addImage(new \Odysseus\AdminBundle\Entity\Image());
+            $model->addImage(new \Odysseus\AdminBundle\Entity\Image());
+
+            $model->setArticle($article);
+            $form = $this->createForm(new \Odysseus\AdminBundle\Form\ArticleType(), $article);
+            $form->remove('models');
+            $form->add('model', new \Odysseus\AdminBundle\Form\ArticleModelType(), array(
+                'mapped' => false,
+                'data' => $model
+            ));
+        }
+        
+        
+       
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            $images = $model->getImage();
+            if ($images[0]->file === null) {
+                $form->get('model')->get('image')->get(0)->addError(new FormError('Image obligatoire'));
+            }
+
+            if ($images[1]->file === null) {
+                $model->removeImage($images[1]);
+            }
+
+            if ($images[2]->file === null) {
+                $model->removeImage($images[2]);
+            }
+
+            if ($form->isValid()) {
+                
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($article);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('odysseus_front_user_add_article_model', 'Votre article a été ajouté avec succès');
+
+                $this->redirect($this->generateUrl('odysseus_front_user_add_article_model', array(
+                            'id' => $article->getId()
+                )));
+            }
+        }
+
+        return $this->render('OdysseusFrontBundle:User:add_article_model.html.twig', array(
+                    'accountMenu' => $this->getMenu(),
+                    'breadcrumb' => $this->getBreadcrumb('Ajout d\'un article'),
+                    'form' => $form->createView(),
+        ));
+    }
+
+    /**
      * @Route("/mon-compte/mes-ventes", name="odysseus_front_user_my_sales")
-     * @Route("/mon-compte/mes-ventes/{page}", name="odysseus_front_user_my_sales_page")
+     * @Route("/mon-compte/mes-ventes/page/{page}", name="odysseus_front_user_my_sales_page")
      */
     public function mySalesAction($page = 1) {
         $user = $this->getUser();
