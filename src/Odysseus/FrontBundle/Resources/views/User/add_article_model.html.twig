@@ -5,17 +5,7 @@
 {% block column_content %}
     <!-- Page Content -->
     <div>
-        {{ 
-            form_start(form, {
-                'method':'POST',
-                'attrs':{
-                    'class' : 'form-horizontal form-register'
-                }
-            }) 
-        }}
-        {{ form_errors(form) }}
-        
-        {{ form_end(form) }}
+
         <div class="row">
             <!-- Commande -->
             <div class="col-lg-12">
@@ -33,118 +23,113 @@
                         </ul>
                     </div>
                 </div>
-                <form class="form-horizontal" method="POST" action="confirmation.html" enctype="multipart/form-data">
-                    <!-- ETAPE 1 -->
-                    <div class="row setup-content" id="step-1">
-                        <div class="col-lg-12">
-                            <div class="titleHeader clearfix">
-                                <h3>Informations de livraison</h3>
-                            </div>
-                            <div class="form-group">
-                                <label for="article" class="col-sm-3 control-label">Nom de l'article *</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="article" name="article" placeholder="Entrez le nom de l'article" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="description" class="col-sm-3 control-label">Description *</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="description" name="description" placeholder="Entrez la description de l'article" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="categorie" class="col-sm-3 control-label">Catégorie *</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" id="categorie" name="categorie" required>
-                                        <option value="" disabled selected>Entrez la catégorie de l'article</option>
-                                        <option>TV / Vidéo</option>
-                                        <option>Informatique</option>
-                                        <option>Téléphonie</option>
-                                        <option>Electroménager</option>
-                                        <option>Maison / Déco</option>
-                                        <option>Prêt à porter</option>
-                                        <option>Livres</option>
-                                        <option>Billeterie</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="telfixe" class="col-sm-3 control-label">Images *</label>
-                                <div class="col-sm-9">
-                                    <input name="userfile[]" type="file" required />
-                                    <input name="userfile[]" type="file" required />
-                                    <input name="userfile[]" type="file" required />
-                                    <p style="font-style:italic; color: #666; margin-top:5px">(format recommandé: 700x360)</p>
-                                </div>
-                            </div>
-                            <button type="button" id="activate-step-2" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
+
+                {{ form_start(form, {'method':'POST','attrs':{'class' : 'form-horizontal form-register'} })}}
+                <!-- ETAPE 1 -->
+                <div class="row setup-content" id="step-1">
+                    <div class="col-lg-12">
+                        <div class="titleHeader clearfix">
+                            <h3>Informations de livraison</h3>
                         </div>
-                    </div>
-                    <!-- ETAPE 2 -->
-                    <div class="row setup-content" id="step-2">
-                        <div class="col-lg-12">
-                            <div class="titleHeader clearfix">
-                                <h3>Détails de votre vente</h3>
+                        <div class="form-group">
+                            {{ form_label(form.name, 'Nom de l\'article *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
+                            <div class="col-sm-9">
+                                {{form_widget(form.name, {'attr' : {'class' : 'form-control','placeholder' : 'Entrez le nom de l\'article'} })}}
+                                {{ form_errors(form.name) }}
                             </div>
-                            <div class="form-group">
-                                <label for="modele" class="col-sm-3 control-label">Modèle *</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="modele" name="modele" placeholder="Entrez le modèle">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="prix" class="col-sm-3 control-label">Prix (en €) *</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="prix" name="prix" placeholder="Entrez le prix de l'article" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="poids" class="col-sm-3 control-label">Poids (en kg) *</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="poids" name="poids" placeholder="Entrez le poids de l'article" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="longueur" class="col-sm-3 control-label">Longueur (en cm) *</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="longueur" name="longueur" placeholder="Entrez la longueur de l'article" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="largeur" class="col-sm-3 control-label">Largeur (en cm) *</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="largeur" name="largeur" placeholder="Entrez la largeur de l'article" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="epaisseur" class="col-sm-3 control-label">Epaisseur (en cm) *</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="epaisseur" name="epaisseur" placeholder="Entrez l'epaisseur de l'article" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="etat" class="col-sm-3 control-label">État *</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" id="etat" name="etat" required>
-                                        <option value="" disabled selected>Entrez l'état de l'article</option>
-                                        <option>Comme neuf</option>
-                                        <option>Très bon état</option>
-                                        <option>Bon état</option>
-                                        <option>État correct</option>
-                                        <option>Usé</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button type="submit" id="activate-step-3" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
                         </div>
+                        <div class="form-group">
+                            {{ form_label(form.brand, 'Marque *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
+                            <div class="col-sm-9">
+                                {{form_widget(form.brand, {'attr' : {'class' : 'form-control','placeholder' : 'Entrez la marque de l\'article'} })}}
+                                {{ form_errors(form.brand) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.description, 'Description *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
+                            <div class="col-sm-9">
+                                {{form_widget(form.description, {'attr' : {'class' : 'form-control','placeholder' : 'Entrez la description de l\'article'} })}}
+                                {{ form_errors(form.description) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.category, 'Catégorie *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
+                            <div class="col-sm-9">
+                                {{form_widget(form.category, {'attr' : {'class' : 'form-control'} })}}
+                                {{ form_errors(form.category) }}
+                            </div>
+                        </div>
+                        <button type="button" id="activate-step-2" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
                     </div>
-                </form>
+                </div>
+                <!-- ETAPE 2 -->
+                <div class="row setup-content" id="step-2">
+                    <div class="col-lg-12">
+                        <div class="titleHeader clearfix">
+                            <h3>Détails de votre vente</h3>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.models.price, 'Prix (en €) *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
+                            <div class="col-sm-9">
+                                {{form_widget(form.models.price, {'attr' : {'class' : 'form-control','placeholder' : 'Entrez le prix de l\'article'} })}}
+                                {{ form_errors(form.models.price) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.models.weight, 'Poids (en kg) *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
+                            <div class="col-sm-9">
+                                {{form_widget(form.models.weight, {'attr' : {'class' : 'form-control','placeholder' : 'Entrez le poids de l\'article'} })}}
+                                {{ form_errors(form.models.weight) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.models.height, 'Longueur (en cm) *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
+                            <div class="col-sm-9">
+                                {{form_widget(form.models.height, {'attr' : {'class' : 'form-control','placeholder' : 'Entrez la longueur de l\'article'} })}}
+                                {{ form_errors(form.models.height) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.models.width, 'Largeur (en cm) *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
+                            <div class="col-sm-9">
+                                {{form_widget(form.models.width, {'attr' : {'class' : 'form-control','placeholder' : 'Entrez la largeur de l\'article'} })}}
+                                {{ form_errors(form.models.width) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.models.depth, 'Epaisseur (en cm) *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
+                            <div class="col-sm-9">
+                                {{form_widget(form.models.depth, {'attr' : {'class' : 'form-control','placeholder' : 'Entrez l\épaisseur de l\'article'} })}}
+                                {{ form_errors(form.models.depth) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.models.status, 'État *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
+                            <div class="col-sm-9">
+                                {{form_widget(form.models.status, {'attr' : {'class' : 'form-control'} })}}
+                                {{ form_errors(form.models.status) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.models.image, 'Images *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
+                            <div class="col-sm-9">
+                                {%for image in form.models.image%}
+                                    {{form_widget(image['file'], {'attr' : {'class' : ''} })}}
+                                {%endfor%}
+                                <p style="font-style:italic; color: #666; margin-top:5px">(format recommandé: 700x360)</p>
+                                {{ form_errors(form.models.image) }}
+                            </div>
+                        </div>
+                        <button type="submit" id="activate-step-3" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
                 <!-- ETAPE 3 -->
                 <div class="row setup-content" id="step-3">
                     <div class="col-xs-12">
                         <div class="col-md-12 well text-center">
                             <h1 class="text-center" style="margin:10px 0px 15px">Votre article à été ajouté !</h1>
-                            <h4 class="text-center">Retrouvez tous les détails de votre article dans votre <a href="account_index.html">espace personnel</a>.</h4>
+                            <h4 class="text-center">Retrouvez tous les détails de votre article dans votre <a href="{{ path('odysseus_front_user_my_summary')}}">espace personnel</a>.</h4>
                         </div>
                     </div>
                 </div>

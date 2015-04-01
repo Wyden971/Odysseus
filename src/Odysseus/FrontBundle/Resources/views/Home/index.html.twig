@@ -71,7 +71,7 @@
                 <div class="shop-item">
                     <img src="{{ asset('/bundles/odysseusfront/images/ruban.png') }}" class="ribbon"/>
                     <div class="image">
-                        <a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">
+                        <a href="{{ path('odysseus_front_product_details',{'id':row.article.id,'name':row.article.name|forUri|raw,'category':row.article.category.name|forUri|raw}) }}">
 
                             <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:191px;border:1px solid #EEE;">
                                 <img src="{{ src }}" alt="{{ row.article.name }}" title="{{ row.article.name }}" height="191" style="opacity:0">
@@ -89,12 +89,8 @@
                     </div>
 
                     <div class="actions">
-                        <a href="#" class="btn btn-default">
-                            <i class="icon-shopping-cart icon-white"></i> Plus de détails
-                        </a> 
-                        <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.article.name|forUri|raw), 'product_id' : row.id}) }}" class="btn btn-greend">
-                            <i class="icon-shopping-cart icon-white"></i> Ajouter au panier
-                        </a>
+                        <a href="#" class="btn btn-default">Choisir un modèle</a>
+                        <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.article.name|forUri|raw), 'product_id' : row.id}) }}" class="btn btn-primary">Vendre cet article</a>
                     </div>
                 </div>
             </div>

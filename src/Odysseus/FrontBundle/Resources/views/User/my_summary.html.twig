@@ -75,7 +75,37 @@
                             </tbody>
                         </table>
                     </div>
-
+                    <!-- Tableau des articles ajoutés -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h4 style="margin-top:19px">Derniers articles ajoutés</h4>
+                        <table class="table table-condensed table-hover orderList">
+                            <thead>
+                                <tr>
+                                    <th>Nom de l'article</th>
+                                    <th>Marque</th>
+                                    <th>Catégorie</th>
+                                    <th>Prix TTC</th>
+                                    <th>État</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in lastAddedArticle %}
+                                    <tr>
+                                        <td><a href="">{{product.article.name}}</a></td>
+                                        <td>{{ product.article.brand }}</td>
+                                        <td>{{ product.article.category.name }}</td>
+                                        <td>{{ product.price }} €</td>
+                                        <td>{{ product.status.name }}</td>
+                                    </tr>
+                                    {% else %}
+                                    <td colspan="7" align="center">
+                                        Aucun Article
+                                    </td>
+                                    {% endfor %}
+                                        </tbody>
+                        </table>
+                        <a href="{{ path('odysseus_front_user_add_article_model')}}" class="btn btn-greend" style="vertical-align:top;">Ajouter / Vendre un nouvel article</a>
+                    </div>
                 </div>
 
                 {% endblock %}
