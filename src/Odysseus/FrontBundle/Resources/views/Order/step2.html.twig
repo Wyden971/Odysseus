@@ -1,0 +1,31 @@
+
+
+<!-- ETAPE 2 -->
+<div class="row setup-content" id="step-2">
+    {% for key, method in methods %}
+        <!-- Methode de livraison {{ key }} -->
+        <div class="col-xs-12 col-md-4">
+            <div class="panel panel-default panel-shipping">
+                <div class="panel-heading basic">
+                    <h3 class="panel-title">Livraison {{ method.data.name }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="the-price">
+                        <h1>{{ method.price|number_format(2,'.', ',') }}€</h1>
+                        <p>Livraison en {{ method.data.duration }}</p>
+                        <p><em>{{ method.data.description }}</em></p>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <label class="btn" style>
+                        {{ form_widget(form.shippingMethod[method.data.id]) }} Choisir la livraison {{ method.data.name }}
+                    </label>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="col-xs-12">
+        <button type="submit" id="activate-step-3" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
+    </div>
+</div>

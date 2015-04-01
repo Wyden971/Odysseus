@@ -82,6 +82,12 @@ h2 {
 .btn-default:hover, .btn-default:focus, .btn-default.active {
 	background-color: #CCC;
 }
+.btn-primary {
+	background-color: #777777;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary.active {
+	background-color: #666666;
+}
 .btn-radio {
 	margin-right: 5px
 }
@@ -216,6 +222,19 @@ select.form-control {
 .sidebar .accordion-toggle.collapsed:after {
     content: "\e080";
 }
+
+/* ---------- Espace/Informations client ---------- */
+table.orderList, table.userInfo { background-color: #E0E0E0; }
+table.orderList thead tr { background-color: #CCC; }
+table.orderList thead tr th { border: none; }
+table.orderList tbody tr:hover td { background-color: #E9E9E9; }
+table.userInfo tr td:nth-child(odd) { font-weight: bold; }
+
+table#accProductList tr td img { width: 100px; }
+table#accProductList tr td { vertical-align: middle; }
+table#accProductList tr:last-child td { font-weight: bold; padding: 10px 0px; background-color: #eee; }
+table#accProductList tr th:nth-child(n+2), table#accProductList tr td:nth-child(n+3)  { text-align: center; }
+
 
 /* ---------- Formulaire de connexion / Inscription / Termes & Conditions ---------- */
 
@@ -374,10 +393,6 @@ select.form-control {
 }
 .shop-item .actions .btn-default:hover {
 	background-color: #aaa;
-}
-.shop-item .actions span {
-  font-size: 0.8em;
-  white-space: nowrap;
 }
 
 /* Affichage en ligne */
@@ -883,10 +898,4 @@ footer button.visible-xs {
 	.collapse.in{
 		display:block !important;
 	}
-}
-
-.flash-notice{
-    text-align:center;
-    font-size:12px;
-    color:green;
 }

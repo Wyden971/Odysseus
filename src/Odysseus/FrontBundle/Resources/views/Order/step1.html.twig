@@ -1,0 +1,145 @@
+
+<!-- ETAPE 1 -->
+<div class="row setup-content" id="step-1">
+    <div class="col-lg-12">
+        <div class="titleHeader clearfix">
+            <h3>Informations de livraison</h3>
+        </div>
+        <div class="form-group">
+            <label for="societe" class="col-sm-3 control-label">Societe</label>
+            <div class="col-sm-9">
+                {{ 
+                                    form_widget(form.shipping.company, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Société'
+                                        },
+                                        'id' : 'societe'
+                                    })
+                }}
+                {{ form_errors(form.shipping.company) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nom" class="col-sm-3 control-label">Nom</label>
+            <div class="col-sm-9">
+                {{ 
+                                    form_widget(form.shipping.lastName, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Nom'
+                                        },
+                                        'id' : 'nom'
+                                    })
+                }}
+                {{ form_errors(form.shipping.lastName) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="prenom" class="col-sm-3 control-label">Prénom</label>
+            <div class="col-sm-9">
+                {{ 
+                                    form_widget(form.shipping.firstName, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Prénom'
+                                        },
+                                        'id' : 'prenom'
+                                    })
+                }}
+                {{ form_errors(form.shipping.firstName) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="adresse" class="col-sm-3 control-label">Adresse *</label>
+            <div class="col-sm-9">
+                {{ 
+                                    form_widget(form.shipping.address1, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Nom'
+                                        },
+                                        'id' : 'adresse'
+                                    })
+                }}
+                {{ form_errors(form.shipping.address1) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="adressecomp" class="col-sm-3 control-label">Complément d'Adresse</label>
+            <div class="col-sm-9">
+                {{ 
+                                    form_widget(form.shipping.address2, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : "Complément d'Adresse"
+                                        },
+                                        'id' : 'adressecomp'
+                                    })
+                }}
+                {{ form_errors(form.shipping.address2) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="codepostal" class="col-sm-3 control-label">Code Postal *</label>
+            <div class="col-sm-9">
+                {{ 
+                                    form_widget(form.shipping.zipCode, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Code Postal'
+                                        },
+                                        'id' : 'codepostal'
+                                    })
+                }}
+                {{ form_errors(form.shipping.zipCode) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ville" class="col-sm-3 control-label">Ville *</label>
+            <div class="col-sm-9">
+                {{ 
+                                    form_widget(form.shipping.city, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Ville'
+                                        },
+                                        'id' : 'ville'
+                                    })
+                }}
+                {{ form_errors(form.shipping.city) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pays" class="col-sm-3 control-label">Pays *</label>
+            <div class="col-sm-9">
+                {{ 
+                                    form_widget(form.shipping.country, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Pays'
+                                        },
+                                        'id' : 'pays'
+                                    })
+                }}
+                {{ form_errors(form.shipping.country) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="telport" class="col-sm-3 control-label">Téléphone Portable</label>
+            <div class="col-sm-9">
+                {{ 
+                                    form_widget(form.shipping.telephone, {
+                                        'attr' : {
+                                            'class' : 'form-control',
+                                            'placeholder' : 'Téléphone Portable'
+                                        },
+                                        'id' : 'telport'
+                                    })
+                }}
+                {{ form_errors(form.shipping.telephone) }}
+            </div>
+        </div>
+        <button type="submit" id="activate-step-2" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
+    </div>
+</div>

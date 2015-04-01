@@ -38,7 +38,7 @@ class Order
     /**
      * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="orders", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="User_id", referencedColumnName="id")
      * })
@@ -58,7 +58,7 @@ class Order
     /**
      * @var \OrderDetails
      *
-     * @ORM\ManyToOne(targetEntity="OrderDetails")
+     * @ORM\ManyToOne(targetEntity="OrderDetails", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="builling_id", referencedColumnName="id")
      * })
@@ -68,7 +68,7 @@ class Order
     /**
      * @var \OrderDetails
      *
-     * @ORM\ManyToOne(targetEntity="OrderDetails")
+     * @ORM\ManyToOne(targetEntity="OrderDetails", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="shipping_id", referencedColumnName="id")
      * })
@@ -96,7 +96,11 @@ class Order
     private $status;
 
 
-
+    /**
+    * @ORM\OneToMany(targetEntity="OrderArticle", mappedBy="order", cascade={"persist", "remove"})
+    */
+    protected $articles;
+    
     /**
      * Get id
      *
@@ -289,5 +293,45 @@ class Order
     public function getStatus()
     {
         return $this->status;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add articles
+     *
+     * @param \Odysseus\AdminBundle\Entity\OrderArticle $articles
+     * @return Order
+     */
+    public function addArticle(\Odysseus\AdminBundle\Entity\OrderArticle $articles)
+    {
+        $this->articles[] = $articles;
+
+        return $this;
+    }
+
+    /**
+     * Remove articles
+     *
+     * @param \Odysseus\AdminBundle\Entity\OrderArticle $articles
+     */
+    public function removeArticle(\Odysseus\AdminBundle\Entity\OrderArticle $articles)
+    {
+        $this->articles->removeElement($articles);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }

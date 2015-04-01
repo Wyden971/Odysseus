@@ -24,7 +24,7 @@ class OrderArticle
     /**
      * @var \ArticleModel
      *
-     * @ORM\ManyToOne(targetEntity="ArticleModel")
+     * @ORM\ManyToOne(targetEntity="ArticleModel", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="model_id", referencedColumnName="id")
      * })
@@ -34,7 +34,7 @@ class OrderArticle
     /**
      * @var \Order
      *
-     * @ORM\ManyToOne(targetEntity="Order")
+     * @ORM\ManyToOne(targetEntity="Order", inversedBy="articles", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      * })

@@ -62,7 +62,7 @@ class Cart
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="ArticleModel", inversedBy="cart")
+     * @ORM\ManyToMany(targetEntity="ArticleModel", inversedBy="cart", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="cart_has_article_model",
      *   joinColumns={
      *     @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
@@ -239,5 +239,15 @@ class Cart
     public function getModel()
     {
         return $this->model;
+    }
+    
+
+    public function getTotal($shipping = 0){
+        $total = 0;
+        foreach($this->model as $model){
+            $total+=$model->getPrice();
+        }
+
+        return $total + $shipping;
     }
 }
