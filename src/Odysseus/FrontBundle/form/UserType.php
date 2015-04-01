@@ -18,8 +18,35 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sellerInfos', new SellerInfosType())
-            ->add('birthdate')
+            ->add('email')
+            ->add('receiveSpecialOffers')
+            ->add('receivePartnersSpecialOffers')
+            //->add('sellerInfos', new SellerInfosType())
+            ->add('birthdate', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy'
+            ))
+            ->add('plainPassword', 'repeated', array(
+                'type' => 'password',
+                'first_options' => array(
+                    'label' => false
+                ),
+                'second_options' => array(
+                    'label' => false
+                ),
+                'invalid_message' => 'Les mots de passe ne correspondent pas.',
+                'required' => false
+            ))
+            ->add('infos', 'collection', array(
+                'type' => new UserInfosType(),
+                'allow_add' => false,
+                'by_reference' => true,
+                'cascade_validation' => true,
+                'prototype' => false,
+                'options' => array(
+                    'data_class' => 'Odysseus\AdminBundle\Entity\UserInfos'
+                )
+            ))
         ;
     }
     
