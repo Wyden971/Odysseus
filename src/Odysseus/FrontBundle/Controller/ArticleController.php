@@ -7,14 +7,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/produits/")
+ * @Route("/{category}", requirements={"category"="[^/]+"})
  */
 class ArticleController extends Controller {
 
     /**
-     * @Route("/", name="odysseus_front_product_details")
+     * @Route("/{name}-{id}", name="odysseus_front_product_details", requirements={"name"=".+", "id"="\d+"})
      */
-    public function indexAction() {
+    public function indexAction($name, $id) {
         return $this->render('OdysseusFrontBundle:Article:details.html.twig');
     }
 

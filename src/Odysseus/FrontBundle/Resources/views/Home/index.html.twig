@@ -80,7 +80,7 @@
                     </div>
                     <div class="title">
                         <h3>
-                            <a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">{{ row.article.name }}</a>
+                            <a href="{{ path('odysseus_front_product_details',{'id':row.article.id,'name':row.article.name|forUri|raw,'category':row.article.category|forUri|raw}) }}">{{ row.article.name }}</a>
                         </h3>
                     </div>
                     <div class="price">
@@ -89,8 +89,8 @@
                     </div>
 
                     <div class="actions">
-                        <a href="#" class="btn btn-default">Choisir un modèle</a>
-                        <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.article.name|forUri|raw), 'product_id' : row.id}) }}" class="btn btn-primary">Vendre cet article</a>
+                        <a href="{{ path('odysseus_front_product_details',{'id':row.article.id,'name':row.article.name|forUri|raw,'category':row.article.category|forUri|raw}) }}" class="btn btn-default">Choisir un modèle</a> 
+                        <a href="{{ path('odysseus_front_user_add_article_model_exist',{'idArticle':row.article.id}) }}" class="btn btn-primary">Vendre cet article</a>
                     </div>
                 </div>
             </div>

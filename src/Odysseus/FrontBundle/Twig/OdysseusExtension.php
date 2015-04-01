@@ -35,8 +35,9 @@ class OdysseusExtension extends \Twig_Extension
     }
     
     public function forUri($text){
-        $text = preg_replace('#([àâä])#', 'a', $text);
+        
         $text = preg_replace('#([éèêë])#', 'e', $text);
+        $text = preg_replace('#([àâä])#', 'a', $text);
         $text = preg_replace('#([ìïî])#', 'i', $text);
         $text = preg_replace('#([ôöò])#', 'o', $text);
         $text = preg_replace('#([ùüû])#', 'u', $text);

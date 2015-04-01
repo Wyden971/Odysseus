@@ -106,7 +106,7 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="shop-item">
                     <div class="image">
-                        <a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">
+                        <a href="{{ path('odysseus_front_product_details',{'id':row.id,'name':row.name|forUri|raw,'category':row.category|forUri|raw}) }}">
                             
                             <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:191px;border:1px solid #EEE;">
                                 <img src="{{ src }}" alt="{{ row.name }}" title="{{ row.name }}" height="191" style="opacity:0">
@@ -115,7 +115,7 @@
                     </div>
                     <div class="title">
                         <h3>
-                            <a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">{{ row.name }}</a>
+                            <a href="{{ path('odysseus_front_product_details',{'id':row.id,'name':row.name|forUri|raw,'category':row.category|forUri|raw}) }}">{{ row.name }}</a>
                         </h3>
                     </div>
                     <div class="price">
@@ -126,7 +126,8 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</p>
                     </div>-->
                     <div class="actions">
-                        <a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+                        <a href="{{ path('odysseus_front_product_details',{'id':row.id,'name':row.name|forUri|raw,'category':row.category|forUri|raw}) }}" class="btn btn-default">Choisir un modèle</a> 
+                        <a href="{{ path('odysseus_front_user_add_article_model_exist',{'idArticle':row.id}) }}" class="btn btn-primary">Vendre cet article</a>
                     </div>
                 </div>
             </div>
@@ -136,7 +137,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="shop-item line-item">
                     <div class="image">
-                        <a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">
+                        <a href="{{ path('odysseus_front_product_details',{'id':row.id,'name':row.name|forUri|raw,'category':row.category|forUri|raw}) }}">
                             <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:131px;width:254px;border:1px solid #EEE;">
                                 <img src="{{ src }}" alt="{{ row.name }}" title="{{ row.name }}" height="131" width="254" style="opacity:0">
                             </div>
@@ -145,7 +146,7 @@
                     --><div class="inline-div">
                         <div class="title">
                             <h3>
-                                <a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">{{ row.name }}</a>
+                                <a href="{{ path('odysseus_front_product_details',{'id':row.id,'name':row.name|forUri|raw,'category':row.category|forUri|raw}) }}">{{ row.name }}</a>
                             </h3>
                         </div>
                         <div class="price">
@@ -154,7 +155,8 @@
                         </div>
                     </div><!--
                     --><div class="actions">
-                        <a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+                        <a href="{{ path('odysseus_front_product_details',{'id':row.id,'name':row.name|forUri|raw,'category':row.category|forUri|raw}) }}" class="btn btn-default">Choisir un modèle</a> 
+                        <a href="{{ path('odysseus_front_user_add_article_model_exist',{'idArticle':row.id}) }}" class="btn btn-primary">Vendre cet article</a>
                     </div>
                 </div>
             </div>

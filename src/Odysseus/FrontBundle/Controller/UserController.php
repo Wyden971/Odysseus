@@ -225,11 +225,12 @@ class UserController extends Controller {
                 ->getSingleScalarResult();
         // derniers articles vendu/achetés
         $lastTransactArticle = $em->createQueryBuilder('oa')
-                ->select('COUNT(oa)')
+                ->select('oa')
                 ->join('oa.order', 'o')
                 ->join('oa.model', 'm')
                 #->where('o.user = ' . $user->getId())
-                ->where('m.user = ' . $user->getId());
+                ->where('m.user = ' . $user->getId())
+                ->getQuery()->getResult();
         // derniers articles ajoutés
         $lastAddedArticle = $this->getUserProducts($user->getId(), 1, 5);
         return $this->render('OdysseusFrontBundle:User:my_summary.html.twig', array(
