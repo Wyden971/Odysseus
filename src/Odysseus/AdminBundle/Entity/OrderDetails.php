@@ -305,4 +305,8 @@ class OrderDetails
     {
         return $this->company;
     }
+    
+    public function __toString(){
+        return ucfirst($this->firstName).' '.strtoupper($this->lastName);
+    }
 }

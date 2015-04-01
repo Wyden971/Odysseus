@@ -1,0 +1,66 @@
+
+<!-- ETAPE 4 -->
+<div class="row setup-content" id="step-4">
+
+    <!-- Paiement & Livraison -->
+    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <h4 style="margin-top:19px">Paiement &amp; Livraison</h4>
+        <table class="table table-condensed userInfo">
+            <tbody>
+                <tr>
+                    <td width="25%">Méthode de paimement</td>
+                    <td width="25%" class="payment_method_view"><![PAYMENT_METHOD]></td>
+                    <td width="25%">Méthode de livraison</td>
+                    <td width="25%" class="shipping_method_view"><![SHIPPING_METHOD]></td>
+                </tr>
+                <tr>
+                    <td width="25%">Nom</td>
+                    <td width="25%" class="payment_method_view"><![FULL_NAME]></td>
+                    <td width="25%">Société</td>
+                    <td width="25%" class="shipping_method_view"><![COMPANY]></td>
+                </tr>
+                <tr>
+                    <td>Adresse de Livraison</td>
+                    <td class="shipping_address"><![SHIPPING_ADDRESS]></td>
+                    <td>Code Postal / Ville</td>
+                    <td class="shipping_city"><![PAYMENT_METHOD]> / <![PAYMENT_METHOD]></td>
+                </tr>
+        </table>
+    </div>
+
+    <!-- Articles -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h4 style="margin-top:19px">Articles ({{ order.articles|length }})</h4>
+        <table class="table table-condensed table-hover orderList" id="accProductList">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th></th>
+                    <th>Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in order.articles %}
+                <tr>
+                    <td width="60%" colspan="2">
+                        <strong>{{ row.model.article.brand|capitalize }} - {{ row.model.article.name|capitalize }}</strong><br>
+                        Vendu par <span>{{ row.model.user.getFullName() }}</span>
+                    </td>
+                    <td width="20%" align="center">{{ row.model.price|number_format(2,'.', ',') }} €</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td align="right">TOTAL TTC</td>
+                    <td align="right">157,89 €</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bouton de confirmation -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <button type="submit" id="activate-step-5" class="btn btn-greend btn-long pull-right">Confirmer la commande</button>
+    </div>
+</div>
+

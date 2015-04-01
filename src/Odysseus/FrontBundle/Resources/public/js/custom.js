@@ -60,11 +60,15 @@ $(document).ready(function(){
 		$('ul.setup-panel li a[href="#step-'+stepNb+'"]').trigger('click');
 
 		// Si dernière étape, griser les autre étapes
-		if($('ul.setup-panel li a[href="#step-'+stepLast+'"]').length == 0) {
-			for (var i = stepMinus1-1; i >= 0; i--) {
-				$('ul.setup-panel li:eq('+i+')').addClass('disabled');
-			};
-		}
+		//if($('ul.setup-panel li a[href="#step-'+stepLast+'"]').length == 0) {
+		//	for (var i = stepMinus1-1; i >= 0; i--) {
+		//		$('ul.setup-panel li:eq('+i+')').addClass('disabled');
+		//	};
+		//}
 	});
 
+	// Panel-radio pour les paiements (Page de commande / Paiement)
+	$(".radiopanel").click(function() {
+    	$(this).children().prop("checked", true);
+	});
 });

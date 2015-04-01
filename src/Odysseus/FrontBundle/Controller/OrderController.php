@@ -11,50 +11,63 @@ use Odysseus\AdminBundle\Entity\Order;
 use Odysseus\AdminBundle\Form\OrderType;
 use Odysseus\AdminBundle\Entity\OrderDetails;
 use Odysseus\AdminBundle\Entity\UserInfos;
+use Odysseus\AdminBundle\Entity\OrderArticle;
+
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 /**
  * @Route("/commande")
  */
 class OrderController extends Controller {
     
+    private $serializer;
+    
+    function __construct(){
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+
+        $this->serializer = new Serializer($normalizers, $encoders);
+    }
     /**
      * @Route("/", name="odysseus_front_order_index")
-     * 
      */
-    public function indexAction(){
-        return $this->redirect($this->generateURL('odysseus_front_cart_index'));
-    }
-    
-    /**
-     * @Route("/etape-1", name="odysseus_front_order_step1")
-     */
-    public function step1Action(Request $request) {
+    public function indexAction(Request $request){
         if(!$request->request->has('shipping_method')){
-            throw $this->createNotFoundException('Vous devez définir une méthode d\'expédition');
+            return $this->redirect($this->generateURL('odysseus_front_cart_index'));
         }
         
         $shippingMethod = $this->getRepository('ShippingMethod')->find($request->request->get('shipping_method'));
         
         if(!$shippingMethod){
-            throw $this->createNotFoundException('La méthode d\'expédition n\'existe pas');
+            return $this->redirect($this->generateURL('odysseus_front_cart_index'));
         }
         
-        $user=$this->getUser();
-        $cart = $user->getActiveCart();
-        
         $order = new Order();
-        $form = $this->createForm(new OrderType(), $order, array(
-            'method' => 'POST'
-        ));
-        
-        $shipping = $this->getActualShippingDetails();
-        $builling = $this->getActualBuillingDetails();
-        
-        $order->setShipping($shipping);
-        $order->setBuilling($builling);
+        $order->setShippingMethod($shippingMethod);
+        $order->setPaymentMethod($this->getDefaultPaymentMethod());
+        $order->setBuilling($this->getActualBuillingDetails());
+        $order->setShipping($this->getActualShippingDetails());
         $order->setUser($this->getUser());
         $order->setCreatedAt(new \DateTime());
-        $order->setStatus($this->getDoctrine()->getRepository('OdysseusAdminBundle:OrderStatus')->find(1));
+        $order->setStatus($this->getDefaultOrderStatus());
+        
+        $cart = $this->getUser()->getActiveCart();
+        
+        foreach($cart->getModel() as $model){
+            $orderArticle = new OrderArticle();
+            $orderArticle->setModel($model);
+            $orderArticle->setStatus($this->getDoctrine()->getRepository('OdysseusAdminBundle:OrderArticleStatus')->find(1));
+            $orderArticle->setOrder($order);
+            
+            $order->addArticle($orderArticle);
+        }
+        
+        
+        $form = $this->createForm(new OrderType(), $order);
+        
         if($request->getMethod() == 'POST'){
             $form->handleRequest($request);
             
@@ -64,11 +77,23 @@ class OrderController extends Controller {
                 $em->persist($order);
                 $em->flush();
                 
+                
             }
         }
-        
+        return $this->render('OdysseusFrontBundle:Order:index.html.twig', array(
+            'form' => $form->createView(),
+            'methods' => $this->getShippingMethods($cart),
+            'paymentMethods' => $this->getPaymentMethods(),
+            'order' => $order
+        ));
+    }
+    
+    private function getShippingMethods($cart){
         $methods = array();
-        foreach($this->getRepository('ShippingMethod')->findBy(array(), array('order'=>'ASC')) as $method){
+        $data = $this->getRepository('ShippingMethod')->findBy(array(), array(
+            'order'=>'ASC'
+            ));
+        foreach($data as $method){
             $total = 0;
             foreach($cart->getModel() as $model){
                 $total += round($model->getShippingPrice($method)*100)/100;
@@ -78,14 +103,23 @@ class OrderController extends Controller {
                 'data' => $method
             );
         }
-        $paymentMethods = $this->getRepository('PaymentMethod')->findBy(array(), array('order'=>'ASC'));
-        return $this->render('OdysseusFrontBundle:Order:index.html.twig', array(
-            'form' => $form->createView(),
-            'methods' => $methods,
-            'paymentMethods' => $paymentMethods
-        ));
+        return $methods;
     }
     
+    private function getPaymentMethods(){
+        return $this->getRepository('PaymentMethod')->findBy(array(), array(
+            'order'=>'ASC'
+            ));
+    }
+    
+    private function getDefaultPaymentMethod(){
+        return $this->getRepository('PaymentMethod')->find(1);
+    }
+    
+    private function getDefaultOrderStatus(){
+        return $this->getRepository('OrderStatus')->find(1);
+    }
+
     private function getRepository($model){
         return $this->getDoctrine()->getRepository("OdysseusAdminBundle:$model");
     }
@@ -94,7 +128,7 @@ class OrderController extends Controller {
         $shippingInfos = $this->getUser()->getDefaultInfos();
         $orderShipping = new OrderDetails();
         
-        $orderShipping->setCompagny($shippingInfos->getCompany());
+        $orderShipping->setCompany($shippingInfos->getCompany());
         $orderShipping->setFirstName($shippingInfos->getFirstName());
         $orderShipping->setLastName($shippingInfos->getLastName());
         $orderShipping->setAddress1($shippingInfos->getAddress1());

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Order
  *
- * @ORM\Table(name="order", indexes={@ORM\Index(name="fk_order_User1_idx", columns={"User_id"}), @ORM\Index(name="fk_order_payment_method1_idx", columns={"payment_method_id"}), @ORM\Index(name="fk_order_order_details1_idx", columns={"builling_id"}), @ORM\Index(name="fk_order_order_details2_idx", columns={"shipping_id"}), @ORM\Index(name="fk_order_shipping_method1_idx", columns={"shipping_method_id"}), @ORM\Index(name="fk_order_order_status1_idx", columns={"status_id"})})
+ * @ORM\Table(name="`order`", indexes={@ORM\Index(name="fk_order_User1_idx", columns={"User_id"}), @ORM\Index(name="fk_order_payment_method1_idx", columns={"payment_method_id"}), @ORM\Index(name="fk_order_order_details1_idx", columns={"builling_id"}), @ORM\Index(name="fk_order_order_details2_idx", columns={"shipping_id"}), @ORM\Index(name="fk_order_shipping_method1_idx", columns={"shipping_method_id"}), @ORM\Index(name="fk_order_order_status1_idx", columns={"status_id"})})
  * @ORM\Entity
  */
 class Order
@@ -38,7 +38,7 @@ class Order
     /**
      * @var \User
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="orders", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="User_id", referencedColumnName="id")
      * })
@@ -96,7 +96,11 @@ class Order
     private $status;
 
 
-
+    /**
+    * @ORM\OneToMany(targetEntity="OrderArticle", mappedBy="order", cascade={"persist", "remove"})
+    */
+    protected $articles;
+    
     /**
      * Get id
      *
