@@ -91,7 +91,7 @@
                             <tbody>
                                 {% for product in lastAddedArticle %}
                                     <tr>
-                                        <td><a href="">{{product.article.name}}</a></td>
+                                        <td><a href="{{path('odysseus_front_product_details',{'category':product.article.category.name|forUri|raw,'name':product.article.name|forUri|raw,'id':product.article.id})}}">{{product.article.name}}</a></td>
                                         <td>{{ product.article.brand }}</td>
                                         <td>{{ product.article.category.name }}</td>
                                         <td>{{ product.price }} €</td>
@@ -104,7 +104,7 @@
                                     {% endfor %}
                                         </tbody>
                         </table>
-                        <a href="{{ path('odysseus_front_user_add_article_model')}}" class="btn btn-greend" style="vertical-align:top;">Ajouter / Vendre un nouvel article</a>
+                        
                     </div>
                 </div>
 

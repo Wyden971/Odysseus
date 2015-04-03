@@ -1,36 +1,189 @@
 {% extends 'OdysseusFrontBundle::layout.html.twig' %}
 {% block content %}
-<div class="row">
-	<!-- Titre de la page -->
-	<div class="col-lg-12">
-		<h2>FICHE PRODUIT</h2>
-	</div>
-	
-	<!-- Images du produit -->
-	<div class="col-sm-6">
-		<div class="product-image-large slider slider-for">
-			<div><img src="http://placehold.it/700x360/009900/eeeeee"/></div>
-			<div><img src="http://placehold.it/700x360/990000/eeeeee"/></div>
-			<div><img src="http://placehold.it/700x360/000099/eeeeee"/></div>
-			<div><img src="http://placehold.it/700x360/999900/eeeeee"/></div>
-		</div>
-		<div id="product_gallery" class="slider slider-nav">
-			<div><img src="http://placehold.it/194x100/009900/eeeeee"/></div>
-			<div><img src="http://placehold.it/194x100/990000/eeeeee"/></div>
-			<div><img src="http://placehold.it/194x100/000099/eeeeee"/></div>
-			<div><img src="http://placehold.it/194x100/999900/eeeeee"/></div>
-		</div>
-	</div>
-	<!-- Détails & Options du produit -->
-	<div class="col-sm-6 product-details">
-		<h4>{{article.brand}} - {{article.name}}</h4>
-		
-		<h5>Description : </h5>
-		<p>
-			{{article.description}}
-		</p>
-		
-	</div>
-	
-</div>
-{% endblock %}
+    <div class="row">
+        <!-- Titre de la page -->
+        <div class="col-lg-12">
+            <h2>FICHE PRODUIT</h2>
+        </div>
+
+        <!-- Images du produit -->
+        <div class="col-sm-6">
+            <div class="product-image-large slider slider-for">
+                {% for row in article.models %}
+                    {% for img in row.image%}
+                        <div><img src="{{img.url}}" style="max-width:760px;max-height: 360px;"/></div>
+                            {%else%}
+                            <div><img src="{{asset('/bundles/odysseusfront/images/product1.jpg')}}" style="max-width:760px;max-height: 360px;"/></div>
+                                {%endfor%}
+
+                                {%endfor%}
+                                </div>
+                                <div id="product_gallery" class="slider slider-nav">
+                                    {% for row in article.models %}
+                                        {% for img in row.image%}
+                                            <div><img src="{{img.url}}" style="max-width:194px;max-height: 100px;"/></div>
+                                            {%endfor%}
+                                    {%endfor%}
+                                </div>
+                            </div>
+                            <!-- Détails & Options du produit -->
+                            <div class="col-sm-6 product-details">
+                                <h4>{{article.brand}} - {{article.name}}</h4>
+                                <h5>Description : </h5>
+                                <p>
+                                    {{article.description}}
+                                </p>
+                                <a href="{{ path('odysseus_front_user_add_article_model_exist',{'idArticle':article.id}) }}" class="btn btn-primary">Vendre cet article</a>
+                            </div>
+                            <!-- LISTING DES MODELS -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+
+                                    <!-- Parametres d'affichage -->
+                                    <div class="col-lg-12">	
+                                        <div class="productFilter clearfix">
+                                            <div class="sortBy inline pull-left">
+                                                <form method="GET">
+                                                    Trier par
+                                                    <select name="sort" id="models_sort">
+                                                        <option value="name-asc" {{ sort=='name-asc' ? 'selected':'' }}>Nom (A-Z)</option>
+                                                        <option value="name-desc" {{ sort=='name-desc' ? 'selected':'' }}>Nom (Z-A)</option>
+                                                        <option value="price-asc" {{ sort=='price-asc' ? 'selected':'' }}>Prix (Moins cher)</option>
+                                                        <option value="price-desc" {{ sort=='price-desc' ? 'selected':'' }}>Prix (Plus cher)</option>
+                                                        <option value="date-asc" {{ sort=='date-asc' ? 'selected':'' }}>Date (Moins récent)</option>
+                                                        <option value="date-desc" {{ sort=='date-desc' ? 'selected':'' }}>Date (Plus récent)</option>
+                                                    </select>
+                                                </form>
+                                                <script>
+                                                    $(function() {
+                                                        $('#models_sort').change(function() {
+                                                            $(this).parent().submit();
+                                                        });
+                                                    });
+                                                </script>
+                                            </div>
+
+                                            <div class="showItem inline pull-left">
+                                                <form method="GET">
+                                                    Afficher
+                                                    <select name="npp" id="models-npp">
+                                                        <option value="5" {{ npp==5 ? 'selected':'' }}>5 produits</option>
+                                                        <option value="10" {{ npp==10 ? 'selected':'' }}>10 produits</option>
+                                                        <option value="20" {{ npp==20 ? 'selected':'' }}>20 produits</option>
+                                                    </select>
+                                                </form>
+                                                <script>
+                                                    $(function() {
+                                                        $('#models-npp').change(function() {
+                                                            $(this).parent().submit();
+                                                        });
+                                                    });
+                                                </script>
+                                            </div><!--end sortBy-->
+
+                                            <div class="displaytBy inline pull-right">
+                                                <div class="btn-group">
+                                                    <a href="{{ listView=='grid' ? '#' : path('odysseus_front_product_details_page', {'category':article.category.name,'name':article.name|forUri|raw,'id':article.id, 'list_view':'grid', 'page':(page==1?null:page)}) }}" class="btn btn-{{listView=='grid' ? 'greend active':'default' }}"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+                                                    <a href="{{ listView=='list' ? '#' : path('odysseus_front_product_details_page', {'category':article.category.name,'name':article.name|forUri|raw,'id':article.id , 'list_view':'list', 'page':(page==1?null:page)}) }}" class="btn btn-{{listView=='list' ? 'greend active':'default' }}"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+                                                </div>
+                                            </div><!--end displaytBy-->
+                                        </div>
+                                    </div>
+
+                                    {% for row in article.models %}
+                                        {% if row.image is not empty %}
+                                            {% set src = row.image[0].url %}
+                                        {% else %}
+                                            {% set src = asset('/bundles/odysseusfront/images/product1.jpg') %}
+                                        {% endif %}
+                                        {% if listView == 'grid' %}
+                                            <!-- Article -->
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <div class="shop-item">
+                                                    <div class="image">
+
+                                                        <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:191px;border:1px solid #EEE;">
+                                                            <img src="{{ src }}" alt="{{ row.article.name }}" title="{{ row.article.name }}" height="191" style="opacity:0">
+                                                        </div>
+                                                    </div>
+                                                    <div class="title">
+                                                        <h3>{{ row.article.name }}</h3>
+                                                    </div>
+                                                    <div class="price">
+                                                        {{ row.price }} €
+                                                    </div>
+                                                    <div class="title"><h3>{{row.status.name}}</h3></div>
+                                                    <!--<div class="description">
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</p>
+                                                    </div>-->
+                                                    <div class="actions">
+                                                        <a href="{{path('odysseus_front_cart_add',{'product_name':row.article.name,'product_id':row.article.id})}}" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% else %}
+
+                                            <!-- Article ligne -->
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="shop-item line-item">
+                                                    <div class="image">
+                                                            <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:131px;width:254px;border:1px solid #EEE;">
+                                                                <img src="{{ src }}" alt="{{ row.article.name }}" title="{{ row.article.name }}" height="131" width="254" style="opacity:0">
+                                                            </div>
+                                                    </div><!--
+                                                    --><div class="inline-div">
+                                                        <div class="title">
+                                                            <h3>
+                                                                {{ row.article.name }}
+                                                            </h3>
+                                                        </div>
+                                                        <div class="price">
+                                                            <span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
+                                                            {{ row.price }} €
+                                                        </div>
+                                                    </div><!--
+                                                    --><div class="actions">
+                                                        <a href="{{path('odysseus_front_cart_add',{'product_name':row.article.name,'product_id':row.article.id})}}" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        {% else %}
+                                            <div class="col-xs-12">
+                                                <center>
+                                                    Aucun modèle disponible pour cet Article.
+                                                </center>
+                                            </div>
+                                            {% endfor %}
+
+                                                {% if article.models is not empty %}
+                                                    <!-- Pagination -->
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custompager">
+                                                        <ul class="pagination">
+                                                            {% if pagination is not null %}
+                                                                <ul class="pagination">
+                                                                    {% if pagination.min > 1 %}
+                                                                        <li>
+                                                                            <a href="{{ path('odysseus_front_product_details_page', {'id':article.id,'name':article.name|forUri|raw,'category':article.category|forUri|raw,'page' : pagination.min-1}) }}">&laquo;</a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                    {% for i in pagination.min..pagination.max %}
+                                                                        <li class="{{ pagination.page == i ? 'active' : '' }}">
+                                                                            <a href="{{ path('odysseus_front_product_details_page', {'id':article.id,'name':article.name|forUri|raw,'category':article.category|forUri|raw,'page' : i}) }}">{{ i }}</a>
+                                                                        </li>
+                                                                    {% endfor %}
+                                                                    {% if pagination.max < pagination.total %}
+                                                                        <li>
+                                                                            <a href="{{ path('odysseus_front_product_details_page', {'id':article.id,'name':article.name|forUri|raw,'category':article.category|forUri|raw,'page' : pagination.max+1}) }}">&raquo;</a>
+                                                                        </li>
+                                                                    {% endif %}
+                                                                </ul>
+                                                            {% endif %}
+                                                        </ul>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    {% endblock %}

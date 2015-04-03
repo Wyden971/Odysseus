@@ -50,7 +50,7 @@
                     <div class="sortBy inline pull-left">
                         <form method="GET">
                             Trier par
-                            <select name="sort" id="category-order">
+                            <select name="sort" id="category_sort">
                                 <option value="name-asc" {{ sort=='name-asc' ? 'selected':'' }}>Nom (A-Z)</option>
                                 <option value="name-desc" {{ sort=='name-desc' ? 'selected':'' }}>Nom (Z-A)</option>
                                 <option value="price-asc" {{ sort=='price-asc' ? 'selected':'' }}>Prix (Moins cher)</option>
@@ -61,7 +61,7 @@
                         </form>
                         <script>
                             $(function() {
-                                $('#category-order').change(function() {
+                                $('#category_sort').change(function() {
                                     $(this).parent().submit();
                                 });
                             });

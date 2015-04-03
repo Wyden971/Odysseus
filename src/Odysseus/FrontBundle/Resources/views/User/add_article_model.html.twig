@@ -9,6 +9,17 @@
         <div class="row">
             <!-- Commande -->
             <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        {% for flashMessage in app.session.flashbag.get('odysseus_front_user_add_article_model') %}
+
+                            <div class="well text-center" style='margin-top: 20px;'>
+                                <h1 class="text-center" style="margin:10px 0px 15px">{{ flashMessage }}</h1>
+                                <h4 class="text-center">Retrouvez tous les détails de votre article dans votre <a href="{{path('odysseus_front_user_my_summary',{'id':app.user.id})}}">espace personnel</a>.</h4>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
                 <div class="row form-group">
                     <div class="col-xs-12">
                         <ul class="nav nav-pills nav-justified thumbnail setup-panel">
@@ -24,13 +35,19 @@
                     </div>
                 </div>
 
-                {{ form_start(form, {'method':'POST','attrs':{'class' : 'form-horizontal form-register'} })}}
+                {{ form_start(form, {'method':'POST','attr':{'class' : 'form-horizontal form-register'} })}}
                 <!-- ETAPE 1 -->
                 <div class="row setup-content" id="step-1">
                     <div class="col-lg-12">
                         <div class="titleHeader clearfix">
-                            <h3>Informations de livraison</h3>
+                            <h3>Informations de l'article</h3>
                         </div>
+                        {%if article is not null%}
+                        <div class="well text-center hidden">
+                                <h1 class="text-center" style="margin:10px 0px 15px">Article déja sélectionné</h1>
+                                <h4 class="text-center"> Vous avez sélectionné {{article.brand}} {{article.name}}.</h4>
+                            </div>
+                            {%endif%}
                         <div class="form-group">
                             {{ form_label(form.name, 'Nom de l\'article *', {'label_attr': {'class': 'col-sm-3 control-label'} })}}
                             <div class="col-sm-9">
@@ -136,5 +153,15 @@
             </div>
         </div>
     </div>
+
+    {%if app.request.attributes.get('idArticle') is not empty%}
+        {%set tabdisabled = ['name','brand','description','category']%}
+        <script type="text/javascript">
+            {%for item in tabdisabled%}
+                $("form [name='odysseus_adminbundle_article[{{item}}]']").parent().parent().hide();
+                $("div.well.text-center.hidden").removeClass('hidden');
+            {%endfor%}
+        </script>
+    {%endif%}
     <!-- /.page content -->
 {% endblock %}

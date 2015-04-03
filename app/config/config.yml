@@ -94,4 +94,8 @@ stfalcon_tinymce:
             plugins: ["bbcode, code, link, preview, insertdatetime, textcolor, paste, print, lists, hr"]
             toolbar: ["undo redo | styleselect | bold italic underline | link image, alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor emoticons | cleanup , print preview fullpage ,code "]
 
-            
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
+        options:    []            

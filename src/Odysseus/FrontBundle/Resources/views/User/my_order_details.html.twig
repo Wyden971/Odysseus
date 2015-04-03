@@ -3,103 +3,108 @@
 {% block content_title %}MON COMPTE - COMMANDE{% endblock content_title %}
 
 {% block column_content %}
-<div class="row">
+    <div class="row">
 
-    <!-- Tableau Achats/Ventes -->
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <!-- Informations générales -->
-        <div>
-            <h4 style="margin-top:19px">Informations générales</h4>
-            <table class="table table-condensed userInfo">
-                <tbody>
-                    <tr>
-                        <td width="25%">N° Commande</td>
-                        <td width="25%">C025874</td>
-                        <td width="25%">Date de Commande</td>
-                        <td width="25%">14/08/2014</td>
-                    </tr>
-                    <!--<tr>
-                        <td>Type de commande</td>
-                        <td>Achat</td>
-                        <td>Vendeur / Acheteur</td>
-                        <td>Thug life</td>
-                    </tr>-->
-                    <tr>
-                        <td>Nb. Articles</td>
-                        <td>{{articles|length}}</td>
-                        <td>Prix total TTC</td>
-                        <td>84,93 €</td>
-                    </tr>
-                    <tr>
-                        <td>Etat de la commande</td>
-                        <td>En attente de paimement</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-            </table>
-        </div>
+        <!-- Tableau Achats/Ventes -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <!-- Informations générales -->
+            <div>
+                <h4 style="margin-top:19px">Informations générales</h4>
+                <table class="table table-condensed userInfo">
+                    <tbody>
+                        <tr>
+                            <td width="25%">N° Commande</td>
+                            <td width="25%">C025874</td>
+                            <td width="25%">Date de Commande</td>
+                            <td width="25%">14/08/2014</td>
+                        </tr>
+                        <!--<tr>
+                            <td>Type de commande</td>
+                            <td>Achat</td>
+                            <td>Vendeur / Acheteur</td>
+                            <td>Thug life</td>
+                        </tr>-->
+                        <tr>
+                            <td>Nb. Articles</td>
+                            <td>{{articles|length}}</td>
+                            <td>Prix total TTC</td>
+                            <td>84,93 €</td>
+                        </tr>
+                        <tr>
+                            <td>Etat de la commande</td>
+                            <td>En attente de paimement</td>
+                            {% if articles is not empty%}
+                                <td>Facture</td>
+                                <td><a target="_blank" href="{{path('odysseus_front_order_pdf',{'id':})}}">Télécharger</a></td>
+                            {%else%}
+                                <td></td>
+                                <td></td>
+                            {%endif%}
+                        </tr>
+                </table>
+            </div>
 
-        <!-- Paiement & Livraison -->
-        <div>
-            <h4 style="margin-top:19px">Paiement &amp; Livraison</h4>
-            <table class="table table-condensed userInfo">
-                <tbody>
-                    <tr>
-                        <td width="25%">Méthode de paimement</td>
-                        <td width="25%">PayPal</td>
-                        <td width="25%">Méthode de livraison</td>
-                        <td width="25%">Rapide</td>
-                    </tr>
-                    <tr>
-                        <td>Adresse de Livraison</td>
-                        <td>69, Avenue du derp</td>
-                        <td>Code Postal / Ville</td>
-                        <td>75018 / PARIS</td>
-                    </tr>
-            </table>
-        </div>
+            <!-- Paiement & Livraison -->
+            <div>
+                <h4 style="margin-top:19px">Paiement &amp; Livraison</h4>
+                <table class="table table-condensed userInfo">
+                    <tbody>
+                        <tr>
+                            <td width="25%">Méthode de paimement</td>
+                            <td width="25%">PayPal</td>
+                            <td width="25%">Méthode de livraison</td>
+                            <td width="25%">Rapide</td>
+                        </tr>
+                        <tr>
+                            <td>Adresse de Livraison</td>
+                            <td>69, Avenue du derp</td>
+                            <td>Code Postal / Ville</td>
+                            <td>75018 / PARIS</td>
+                        </tr>
+                </table>
+            </div>
 
-        <!-- Articles -->
-        <div>
-            <h4 style="margin-top:19px">Articles ({{articles|length}})</h4>
-            <table class="table table-condensed table-hover orderList" id="accProductList">
-                <thead>
-                    <tr>
-                        <th colspan="2">Produit</th>
-                        <th>Prix</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {%for article in articles %}
-                    <tr>
-                        <td><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
-                        <td>
-                            {{article.name}}<br>
-                            
-                        </td>
-                        <td>{{article.model.price|number_format(2,'.',',')}} €</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>TOTAL TTC</td>
-                        <td>157,89 €</td>
-                    </tr>
-                    {%else%}
-                        <td colspan="7" align="center">
-                            Aucun article dans cette commande
-                        </td>
-                    {%endfor%}
-                </tbody>
-            </table>
-        </div>
-    </div>
+            <!-- Articles -->
+            <div>
+                <h4 style="margin-top:19px">Articles ({{articles|length}})</h4>
+                <table class="table table-condensed table-hover orderList" id="accProductList">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Produit</th>
+                            <th>Prix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for article in articles %}
+                            <tr>
+                                <td><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
+                                <td>
+                                    {{article.name}}<br>
 
-    <!-- Pagination -->
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <button type="submit" class="btn btn-greend btn-long pull-right" style="margin-left: 10px">Imprimer la facture</button>
-        <a href="{{ path('odysseus_front_user_my_orders') }}" class="btn btn-default btn-long pull-right">Revenir à la liste des commandes</a>
-    </div>
-</div>
+                                </td>
+                                <td>{{article.model.price|number_format(2,'.',',')}} €</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>TOTAL TTC</td>
+                                <td>157,89 €</td>
+                            </tr>
+                            {%else%}
+                            <td colspan="7" align="center">
+                                Aucun article dans cette commande
+                            </td>
+                            {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-{% endblock %}
+                    <!-- Pagination -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="submit" class="btn btn-greend btn-long pull-right" style="margin-left: 10px">Imprimer la facture</button>
+                        <a href="{{ path('odysseus_front_user_my_orders') }}" class="btn btn-default btn-long pull-right">Revenir à la liste des commandes</a>
+                    </div>
+                </div>
+
+                {% endblock %}

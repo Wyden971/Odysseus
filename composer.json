@@ -21,7 +21,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "genemu/form-bundle": "2.2.*",
         "stfalcon/tinymce-bundle": "dev-master",
-        "coresphere/console-bundle": "dev-master"
+        "coresphere/console-bundle": "dev-master",
+        "knplabs/knp-snappy-bundle": "~1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

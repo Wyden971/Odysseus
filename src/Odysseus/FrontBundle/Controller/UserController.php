@@ -394,10 +394,10 @@ class UserController extends Controller {
                 $em->persist($article);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('odysseus_front_user_add_article_model', 'Votre article a été ajouté avec succès');
+                $this->get('session')->getFlashBag()->add('odysseus_front_user_add_article_model', 'Votre article a été ajouté avec succès !');
 
                 $this->redirect($this->generateUrl('odysseus_front_user_add_article_model', array(
-                            'id' => $article->getId()
+                    
                 )));
             }
         }
@@ -406,6 +406,7 @@ class UserController extends Controller {
                     'accountMenu' => $this->getMenu(),
                     'breadcrumb' => $this->getBreadcrumb('Ajout d\'un article'),
                     'form' => $form->createView(),
+                    'article' => $article,
         ));
     }
 
@@ -472,6 +473,12 @@ class UserController extends Controller {
                 'label' => 'Mes articles',
                 'url' => $this->generateURL('odysseus_front_user_my_products'),
                 'isActive' => ($route == 'odysseus_front_user_my_products' || $route == 'odysseus_front_user_my_products_page'),
+                'isVisible' => true
+            ),
+            (Object) array(
+                'label' => 'Ajouter / Vendre un nouvel article',
+                'url' => $this->generateURL('odysseus_front_user_add_article_model'),
+                'isActive' => ($route == 'odysseus_front_user_add_article_model'),
                 'isVisible' => true
             ),
             (Object) array(
