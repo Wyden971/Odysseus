@@ -620,5 +620,12 @@ class UserController extends Controller {
                     'total' => $total_page
         );
     }
+    private function getTotalPrice($OrderArticleArray) {
+        $totalprice = floatval(0.00);
+        foreach ($OrderArticleArray as $value) {
+            $totalprice += floatval($value->getModel()->getPrice());
+        }
+        return $totalprice;
+    }
 
 }
