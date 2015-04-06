@@ -10,6 +10,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Odysseus\FrontBundle\Form\UserType;
 use Odysseus\FrontBundle\Form\UserInfosType;
 use Odysseus\AdminBundle\Entity\UserInfos;
+use Odysseus\AdminBundle\Entity\Article;
+use Odysseus\AdminBundle\Entity\ArticleModel;
+use Odysseus\AdminBundle\Entity\Image;
+use Odysseus\FrontBundle\Form\ArticleType;
+use Odysseus\FrontBundle\Form\ArticleModelType;
 
 /**
  * @Route("/")
@@ -50,7 +55,9 @@ class UserController extends Controller {
 
         $user->addInfo($shippingInfos);
         $user->addInfo($buillingInfos);
-
+        
+        $user->setCreatedAt(new \DateTime());
+        
         $form = $this->createForm(new UserType(), $user);
 
         if ($request->getMethod() == 'POST') {
@@ -68,6 +75,7 @@ class UserController extends Controller {
                 $user->setEnabled(false);
                 $user->setUserName($user->getEmail());
                 $user->addRole('ROLE_USER');
+                
                 $this->sendEmailConfirmation($user);
                 $userManager->updateUser($user);
 
@@ -180,6 +188,26 @@ class UserController extends Controller {
                     'form' => $form->createView()
         ));
     }
+    
+    /**
+     * @Route("/mon-compte/mes-articles", name="odysseus_front_user_my_articles")
+     * @Route("/mon-compte/mes-articles/{page}", name="odysseus_front_user_my_articles_page")
+     */
+    public function myArticlesAction($page = 1) {
+        $user = $this->getUser();
+        $ppp = 10;
+        $models = $this->getArticles($user->getId(), $page, $ppp);
+        
+        $count = $this->getArticlesCount($user->getId());
+
+        return $this->render('OdysseusFrontBundle:User:my_articles.html.twig', array(
+            'accountMenu' => $this->getMenu(),
+            'breadcrumb' => $this->getBreadcrumb('Vos articles en vente'),
+            'models' => $models,
+            'count' => $count,
+            'pagination' => $this->getPagination($page, $ppp, $count),
+        ));
+    }
 
     /**
      * @Route("/mon-compte/mes-achats", name="odysseus_front_user_my_orders")
@@ -189,24 +217,17 @@ class UserController extends Controller {
         $user = $this->getUser();
         $ppp = 10;
         $orders = $this->getCommandes($user->getId(), $page, $ppp);
-        $articlePerOrder = array();
         $totalPrice = array();
-        $em = $this->getDoctrine()->getManager()->getRepository('OdysseusAdminBundle:OrderArticle');
-        foreach ($orders as $order) {
-            $tempOrderArticle = $em->findBy(array('order' => $order->getId()));
-            $articlePerOrder[$order->getId()] = sizeof($tempOrderArticle) >= 1 ? sizeof($tempOrderArticle) : 0;
-            $totalPrice[$order->getId()] = $this->getTotalPrice($tempOrderArticle);
-        }
+        
         $count = $this->getCommandesCount($user->getId());
 
         return $this->render('OdysseusFrontBundle:User:my_orders.html.twig', array(
-                    'accountMenu' => $this->getMenu(),
-                    'breadcrumb' => $this->getBreadcrumb('Vos achats'),
-                    'orders' => $orders,
-                    'count' => $count,
-                    'pagination' => $this->getPagination($page, $ppp, $count),
-                    'articlePerCommand' => $articlePerOrder,
-                    'prices' => $totalPrice,
+            'accountMenu' => $this->getMenu(),
+            'breadcrumb' => $this->getBreadcrumb('Vos achats'),
+            'orders' => $orders,
+            'count' => $count,
+            'pagination' => $this->getPagination($page, $ppp, $count),
+            'prices' => $totalPrice,
         ));
     }
 
@@ -286,12 +307,24 @@ class UserController extends Controller {
     }
 
     /**
-     * @Route("/mon-compte/mes-achats/{id}", name="odysseus_front_user_my_order_details", requirements={"id"="\d+"})
+     * @Route("/mon-compte/mes-achats/commande/{id}", name="odysseus_front_user_my_order_details", requirements={"id"="\d+"})
      */
     public function myOrderDetailsAction($id) {
+        $order = $this->getDoctrine()->getRepository('OdysseusAdminBundle:Order')->find($id);
+        if(!$order){
+            throw $this->createNotFoundException();
+        }
+        
+        $breadcrumb = $this->getBreadcrumb('Détails de la commandes', array(
+            array(
+                'label' => 'Vos achats',
+                'url' => $this->generateURL('odysseus_front_user_my_orders')
+            )
+        ));
         return $this->render('OdysseusFrontBundle:User:my_order_details.html.twig', array(
-                    'accountMenu' => $this->getMenu(),
-                    'breadcrumb' => $this->getBreadcrumb('Détails de la commandes'),
+            'accountMenu' => $this->getMenu(),
+            'breadcrumb' => $breadcrumb,
+            'order' => $order
         ));
     }
 
@@ -351,6 +384,77 @@ class UserController extends Controller {
                     'pagination' => $this->getPagination($page, $ppp, $count),
         ));
     }
+    
+    /**
+     * @Route("/mon-compte/ajouter-un-article", name="odysseus_front_user_add_article")
+     */
+    public function addAction(Request $request) {
+        
+        $article = new Article();
+        $article->setCreatedAt(new \DateTime());
+        $article->setModifiedAt(new \DateTime());
+        $article->setUser($this->getUser());
+        
+        $model = new ArticleModel();
+        $model->addImage(new Image());
+        $model->addImage(new Image());
+        $model->addImage(new Image());
+        $model->setArticle($article);
+        $model->setCreatedAt(new \DateTime());
+        $model->setUser($this->getUser());
+        
+        $article->addModel($model);
+        
+        $form = $this->createForm(new ArticleType(), $article, array(
+            'method' => 'POST',
+            'attr' => array(
+                'class' => 'form-horizontal'
+            )
+        ));
+       
+        
+        if($request->getMethod() == 'POST'){
+            $form->handleRequest($request);
+            
+            $imageData = $form->get('models')->get(0)->get('image')->getData();
+            $image1 = $imageData[0];
+            
+            if($image1->file == NULL){
+                $form->get('image')->addError(new FormError('Vous devez obligatoirement uploader au moins une photo'));
+            }else{
+                $image2 = $imageData[1];
+                $image3 = $imageData[2];
+                
+                if($image2->file == NULL){
+                    $model->removeImage($image2);
+                }
+                
+                if($image3->file == NULL){
+                    $model->removeImage($image3);
+                }
+            }
+  
+            if($form->isValid()){
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($article);
+                $em->flush();
+                
+                $this->get('session')->getFlashBag()->add('odysseus_front_product_details', 'Article ajouté avec succès');
+                return $this->redirect($this->generateURL('odysseus_front_product_details', array(
+                    'category' => $article->getCategory()->getUrl(),
+                    'name' => $this->get('odysseus.twig.odysseus_extension')->forUri($article->getName()),
+                    'id' => $model->getId()
+                )));
+            }
+        }
+        
+        return $this->render('OdysseusFrontBundle:User:add_article.html.twig', array(
+            'form' => $form->createView(),
+            'model' => $model,
+            'article' => $article,
+        ));
+    }
 
     private function getMenu() {
         $request = $this->container->get('request');
@@ -364,15 +468,21 @@ class UserController extends Controller {
                 'isVisible' => true
             ),
             (Object) array(
+                'label' => 'Mes articles',
+                'url' => $this->generateURL('odysseus_front_user_my_articles'),
+                'isActive' => (in_array($route, array('odysseus_front_user_my_articles', 'odysseus_front_user_my_articles_page'))),
+                'isVisible' => true
+            ),
+            (Object) array(
                 'label' => 'Mes achats',
                 'url' => $this->generateURL('odysseus_front_user_my_orders'),
-                'isActive' => ($route == 'odysseus_front_user_my_orders'),
+                'isActive' => (in_array($route, array('odysseus_front_user_my_orders', 'odysseus_front_user_my_orders_page'))),
                 'isVisible' => true
             ),
             (Object) array(
                 'label' => 'Mes ventes',
                 'url' => $this->generateURL('odysseus_front_user_my_sales'),
-                'isActive' => ($route == 'odysseus_front_user_my_sales'),
+                'isActive' => (in_array($route, array('odysseus_front_user_my_sales', 'odysseus_front_user_my_sales_page'))),
                 'isVisible' => true
             ),
             (Object) array(
@@ -396,9 +506,10 @@ class UserController extends Controller {
         );
     }
 
-    private function getBreadcrumb($label = '') {
+    private function getBreadcrumb($label = '', $items = NULL) {
         $request = $this->container->get('request');
-        return array(
+        
+        $breadcrumb =  array(
             (Object) array(
                 'label' => 'Accueil',
                 'url' => $request->getBaseUrl()
@@ -406,11 +517,18 @@ class UserController extends Controller {
             (Object) array(
                 'label' => 'Mon compte',
                 'url' => $this->generateUrl('odysseus_front_user_my_summary')
-            ),
-            (Object) array(
-                'label' => $label
             )
         );
+        if(is_array($items)){
+            foreach ($items as $item){
+                $breadcrumb[] = (Object)$item;
+            }
+        }
+        
+        $breadcrumb[] = (Object) array(
+            'label' => $label
+        );
+        return $breadcrumb;
     }
 
     private function sendEmailConfirmation($user) {
@@ -451,6 +569,19 @@ class UserController extends Controller {
     private function getCommandesCount($userId) {
         return $this->getDoctrine()->getManager()->getRepository('OdysseusAdminBundle:Order')->createQueryBuilder('a')->select('COUNT(a)')->where('a.user = ' . $userId)->getQuery()->getSingleScalarResult();
     }
+    
+    private function getArticles($userId, $page, $count) {
+        $page--;
+        if ($page < 0)
+            $page = 0;
+        return $this->getDoctrine()->getManager()
+                        ->getRepository('OdysseusAdminBundle:ArticleModel')
+                        ->findBy(array('user' => $userId), null, $count, $page * $count);
+    }
+
+    private function getArticlesCount($userId) {
+        return $this->getDoctrine()->getManager()->getRepository('OdysseusAdminBundle:ArticleModel')->createQueryBuilder('am')->select('COUNT(am)')->where('am.user = ' . $userId)->getQuery()->getSingleScalarResult();
+    }
 
     private function getSells($userId, $page, $count) {
         $page--;
@@ -460,7 +591,7 @@ class UserController extends Controller {
                         ->getRepository('OdysseusAdminBundle:OrderArticle')
                         ->createQueryBuilder('oa')
                         ->select('oa')
-                        ->join('oa.model', 'm')
+                        ->leftJoin('oa.model', 'm')
                         ->where('m.user = ' . $userId)
                         ->setFirstResult($page * $count)
                         ->setMaxResults($count);
@@ -471,7 +602,7 @@ class UserController extends Controller {
                         ->getRepository('OdysseusAdminBundle:OrderArticle')
                         ->createQueryBuilder('oa')
                         ->select('COUNT(oa)')
-                        ->join('oa.model', 'm')
+                        ->leftJoin('oa.model', 'm')
                         ->where('m.user = ' . $userId)
                         ->getQuery()
                         ->getSingleScalarResult();

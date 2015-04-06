@@ -1,59 +1,197 @@
 {% extends 'OdysseusAdminBundle::column1.layout.html.twig' %}
 
-{% block title %}My cool blog posts{% endblock %}
+{% block title %}Tableau de bord{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-xs-6">
-            <div class="curve_chart" style="width: 100%; height: 300px"></div>
-        </div>
-        <div class="col-xs-6">
-            <div class="curve_chart" style="width: 100%; height: 300px"></div>
-        </div>
-        
-        <div class="col-xs-6">
-            <div class="curve_chart" style="width: 100%; height: 300px"></div>
-        </div>
-        
-        <div class="col-xs-6">
-            <div class="curve_chart" style="width: 100%; height: 300px"></div>
-        </div>
-        
-        <div class="col-xs-6">
-            <div class="curve_chart" style="width: 100%; height: 300px"></div>
-        </div>
-        
-        <div class="col-xs-6">
-            <div class="curve_chart" style="width: 100%; height: 300px"></div>
-        </div>
-        
+<div class="row">
+    <div class="col-xs-6">
+        <fieldset>
+            <legend>Derniers articles ajoutés en attente de validation</legend>
+            <table style="width:100%;" class="table">
+                <thead>
+                    <tr>
+                        <th>Désignation</th>
+                        <th style="text-align:center;">Date</th>
+                        <th style="text-align:center;">Prix</th>
+                        <th style="text-align:right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for article in lastUnvalidatedProducts %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('odysseus_admin_article_update', {'id':article.models[0].id}) }}">{{ article.getFullName() }}</a>
+                        </td>
+                        <td align="center">{{ article.createdAt|date('d/m/Y') }}</td>
+                        <td align="right">{{ article.models[0].price|number_format(2,'.', ',') }} €</td>
+                        <td>
+                            <a onclick="return confirm('Voulez-vous vraiment confirmer ce produit');" href="{{ path('odysseus_admin_article_validate', {'id':article.models[0].id}) }}" class="btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                        {% else %}  
+                    <tr>
+                        <td colspan="4" align="center">
+                            Aucun article en attente de validation
+                        </td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </fieldset>
     </div>
-    <script type="text/javascript">
-        google.setOnLoadCallback(drawChart);
+    <div class="col-xs-6">
+        <fieldset>
+            <legend>Derniers articles validés</legend>
+            <table style="width:100%;" class="table">
+                <thead>
+                    <tr>
+                        <th>Désignation</th>
+                        <th >Vendeur</th>
+                        <th style="text-align:center;">Date</th>
+                        <th style="text-align:right;">Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for article in lastValidatedProducts %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('odysseus_admin_article_update', {'id':article.models[0].id}) }}">{{ article.getFullName() }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('odysseus_admin_user_update', {'id' : article.models[0].user.id}) }}">{{ article.models[0].user.getFullName() }}</a>
+                        </td>
+                        <td align="center">{{ article.createdAt|date('d/m/Y') }}</td>
+                        <td align="right">{{ article.models[0].price|number_format(2,'.', ',') }} €</td>
+                    </tr>
+                        {% else %}  
+                    <tr>
+                        <td colspan="4" align="center">
+                            Aucun article validés
+                        </td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <fieldset>
+            <legend>Derniers articles ajoutés</legend>
+            <table style="width:100%;" class="table">
+                <thead>
+                    <tr>
+                        <th>Désignation</th>
+                        <th >Vendeur</th>
+                        <th style="text-align:center;">Date</th>
+                        <th style="text-align:right;">Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for model in lastProducts %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('odysseus_admin_article_update', {'id':model.id}) }}">{{ model.getFullName() }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('odysseus_admin_user_update', {'id' : model.user.id}) }}">{{ model.user.getFullName() }}</a>
+                        </td>
+                        <td align="center">{{ model.createdAt|date('d/m/Y') }}</td>
+                        <td align="right">{{ model.price|number_format(2,'.', ',') }} €</td>
+                    </tr>
+                        {% else %}  
+                    <tr>
+                        <td colspan="4" align="center">
+                            Aucun article ajouté
+                        </td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
 
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses'],
-                ['2004', 1000, 400],
-                ['2005', 1170, 460],
-                ['2006', 660, 1120],
-                ['2007', 1030, 540]
-            ]);
+    <div class="col-xs-6">
+        <fieldset>
+            <legend>Derniers utilisateurs inscrit</legend>
+            <table style="width:100%;" class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th style="text-align:center;">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for user in lastUsers %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('odysseus_admin_user_update', {'id':user.id}) }}">{{ user.getFullName() }}</a>
+                        </td>
+                        <td>{{ user.email }}</td>
+                        <td align="center">{{ user.createdAt|date('d/m/Y') }}</td>
+                    </tr>
+                        {% else %}  
+                    <tr>
+                        <td colspan="3" align="center">
+                            Aucun utilisateur inscrit
+                        </td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <fieldset>
+            <legend>Dernières commandes </legend>
+            <table style="width:100%;" class="table">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Acheteur</th>
+                        <th style="text-align:center;">Nombre d'articles</th>
+                        <th>Type de livraison</th>
+                        <th>Type de paiement</th>
+                        <th>Statut</th>
+                        <th style="text-align:center;">Date</th>
+                        <th style="text-align:right;">Prix livraison</th>
+                        <th style="text-align:right;">Total</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for order in lastOrders %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('odysseus_admin_user_update', {'id':order.user.id}) }}">{{ order.id }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('odysseus_admin_user_update', {'id':order.user.id}) }}">{{ order.user.getFullName() }}</a>
+                        </td>
+                        <td align="center">{{ order.articles|length }}</td>
+                        <td>{{ order.shippingMethod.name|capitalize }}</td>
+                        <td>{{ order.paymentMethod.name|capitalize }}</td>
+                        <td>{{ order.status.name }}</td>
+                        <td align="center">{{ order.createdAt|date('d/m/Y') }}</td>
+                        <td align="right">{{ order.getShippingCost()|number_format(2, '.', ',') }}</td>
+                        <td align="right">{{ order.getTotal()|number_format(2, '.', ',') }}</td>
+                    </tr>
+                        {% else %}  
+                    <tr>
+                        <td colspan="9" align="center">
+                            Aucune commandes
+                        </td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
 
-            var options = {
-                title: 'Company Performance',
-                curveType: 'function',
-                legend: {position: 'bottom'}
-            };
-            
-            $('.curve_chart').each(function(){
-                var chart = new google.visualization.LineChart(this);
+</div>
 
-                chart.draw(data, options);
-            });
-            
-        }
-        
-   
-    </script>
 {% endblock %}

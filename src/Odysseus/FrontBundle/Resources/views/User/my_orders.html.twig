@@ -11,7 +11,6 @@
                     <tr>
                         <th>N° de commande</th>
                         <th>Date de commande</th>
-                        <th>Vendeur</th>
                         <th>Nb. Articles</th>
                         <th>Prix TTC</th>
                         <th>État</th>
@@ -20,11 +19,13 @@
                 <tbody>
                     {% for order in orders %}
                         <tr>
-                            <td><a href="{{ path('odysseus_front_user_my_order_details', {'id' : order.id}) }}">C{{order.id}}</a></td>
-                            <td>{{ order.createdAt|date('d/m/Y') }}</td>
-                            <td>{{ articlePerCommand[order.id] }}</td>
-                            <td>{{ prices[order.id] }} €</td>
-                            <td>{{ order.status.name }}</td>
+                            <td>
+                                <a href="{{ path('odysseus_front_user_my_order_details', {'id' : order.id}) }}">C{{order.id}}</a>
+                            </td>
+                            <td align="center">{{ order.createdAt|date('d/m/Y') }}</td>
+                            <td align="center">{{ order.articles|length }}</td>
+                            <td align="center">{{ order.getTotal() }} €</td>
+                            <td align="center">{{ order.status.name }}</td>
                         </tr>
                         {% else %}
                         <td colspan="7" align="center">

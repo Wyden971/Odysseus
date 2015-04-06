@@ -28,7 +28,7 @@
                                 <p class="list-group-item-text">Moyen de paiement</p>
                             </a>
                         </li>
-                        <li class="disabled">
+                        <li class="disabled" id="validationTab">
                             <a href="#step-4">
                                 <h4 class="list-group-item-heading">VALIDATION</h4>
                                 <p class="list-group-item-text">Dernière vérification</p>
@@ -37,7 +37,7 @@
                     </ul>
                 </div>
             </div>
-            {{ form_start(form) }}
+            {{ form_start(form, {'attr':{'class':'form-horizontal'}}) }}
             
             {% include "OdysseusFrontBundle:Order:step1.html.twig" %}
             {% include "OdysseusFrontBundle:Order:step2.html.twig" %}

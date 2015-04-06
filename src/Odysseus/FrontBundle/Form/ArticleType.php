@@ -1,12 +1,12 @@
 <?php
 
-namespace Odysseus\AdminBundle\Form;
+namespace Odysseus\FrontBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-use Odysseus\AdminBundle\Form\ArticleModelType;
+use Odysseus\FrontBundle\Form\ArticleModelType;
 
 class ArticleType extends AbstractType
 {
@@ -24,7 +24,7 @@ class ArticleType extends AbstractType
             //->add('modifiedAt')
             //->add('validatedAt')
             ->add('category')
-            /*->add('models', 'collection', array(
+            ->add('models', 'collection', array(
                 'type' => new ArticleModelType(),
                 'allow_add' => false,
                 'by_reference' => true,
@@ -33,7 +33,7 @@ class ArticleType extends AbstractType
                 'options' => array(
                     'data_class' => 'Odysseus\AdminBundle\Entity\ArticleModel'
                 )
-            ))*/
+            ))
             //->add('user')
             //->add('image')
         ;

@@ -35,61 +35,6 @@ class ArticleController extends Controller {
         ));
     }
     
-    /**
-     * @Route("/create", name="odysseus_admin_article_create")
-     */
-    public function createAction(Request $request) {
-        $article = new Article();
-        $model = new ArticleModel();
-        
-        $article->addModel($model);
-        $article->setCreatedAt(new \DateTime());
-        $article->setModifiedAt(new \DateTime());
-        $article->setUser($this->getUser());
-        
-        $model->setCreatedAt(new \DateTime());
-        $model->setUser($this->getUser());
-        
-        $model->addImage(new Image());
-        $model->addImage(new Image());
-        $model->addImage(new Image());
-        
-        $model->setArticle($article);
-        
-        $form = $this->createForm(new ArticleType(), $article);
-        
-        if($request->getMethod() == 'POST'){
-            $form->handleRequest($request);
-            $images = $model->getImage();
-            if($images[0]->file === null){
-                $form->get('model')->get('image')->get(0)->addError(new FormError('Image obligatoire'));
-            }
-            
-            if($images[1]->file === null){
-                $model->removeImage($images[1]);
-            }
-            
-            if($images[2]->file === null){
-                $model->removeImage($images[2]);
-            }
-           
-            if($form->isValid()){
-                
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
-                
-                $this->get('session')->getFlashBag()->add('odysseus_admin_article_update', 'Votre article a été ajouté avec succès');
-            
-                $this->redirect($this->generateUrl('odysseus_admin_article_update', array(
-                    'id' => $article->getId()
-                )));
-            }
-        }
-        return $this->render('OdysseusAdminBundle:Article:create.html.twig', array(
-            'form' => $form->createView()
-        ));
-    }
     
     /**
      * @Route("/update/{id}", name="odysseus_admin_article_update", requirements={"id"="\d+"})
@@ -97,10 +42,11 @@ class ArticleController extends Controller {
     public function updateAction(Request $request, $id) {
         $article = $this->getArticle($id);
         if (!$article) {
-            return $this->createNotFoundException('L\'article n\'existe pas');
+            throw $this->createNotFoundException('L\'article n\'existe pas');
         }
 
-        $form = $this->createForm(new ArticleType(), $article);
+        $form = $this->createForm(new ArticleModelType(), $article);
+
         if($request->getMethod() == 'POST'){
             $form->handleRequest($request);
             $images = $model->getImage();
@@ -121,22 +67,44 @@ class ArticleController extends Controller {
                 )));
             }
         }
+        
         return $this->render('OdysseusAdminBundle:Article:update.html.twig', array(
             'article' => $article,
             'form' => $form->createView()
         ));
+    }
+    
+    /**
+     * @Route("/validate/{id}", name="odysseus_admin_article_validate", requirements={"id"="\d+"})
+     */
+    public function validateAction(Request $request, $id) {
+        $model = $this->getArticle($id);
+        if (!$model) {
+            throw $this->createNotFoundException('L\'article n\'existe pas');
+        }
+        $article = $model->getArticle();
+        
+        if($article->getValidatedAt() == NULL){
+            $article->setValidatedAt(new \DateTime());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+        }
+        
+        return $this->redirect($request->headers->get('referer'));
     }
 
     /**
      * @Route("/delete/{id}", name="odysseus_admin_article_delete", requirements={"id"="\d+"})
      */
     public function deleteAction($id) {
-        $article = $this->getArticle($id);
-        if (!$article) {
+        $model = $this->getArticle($id);
+        if (!$model) {
             return $this->createNotFoundException('L\'article n\'existe pas');
         }
-
-        $this->removeArticle($article);
+        
+        $this->removeArticle($model);
+        
         $this->get('session')->getFlashBag()->add('odysseus_admin_article_delete', 'Votre article a été supprimé');
 
         return $this->redirect($this->generateURL('odysseus_admin_article'));
@@ -146,11 +114,11 @@ class ArticleController extends Controller {
         $page--;
         if ($page < 0)
             $page = 0;
-        return $this->getDoctrine()->getRepository('OdysseusAdminBundle:Article')->findBy(array(), null, $count, $page * $count);
+        return $this->getDoctrine()->getRepository('OdysseusAdminBundle:ArticleModel')->findBy(array(), null, $count, $page * $count);
     }
 
     private function getArticlesCount() {
-        return $this->getDoctrine()->getEntityManager()->createQueryBuilder()->select('COUNT(a)')->from('OdysseusAdminBundle:Article', 'a')->getQuery()->getSingleScalarResult();
+        return $this->getDoctrine()->getEntityManager()->createQueryBuilder()->select('COUNT(a)')->from('OdysseusAdminBundle:ArticleModel', 'a')->getQuery()->getSingleScalarResult();
     }
 
     private function getPagination($page, $ppp, $count) {
@@ -176,19 +144,28 @@ class ArticleController extends Controller {
     }
 
     private function getArticle($id) {
-        return $this->getDoctrine()->getRepository('OdysseusAdminBundle:Article')->find($id);
+        return $this->getDoctrine()->getRepository('OdysseusAdminBundle:ArticleModel')->find($id);
     }
 
     private function removeArticle($id_or_article) {
-        $article = $id_or_article;
+        $model = $id_or_article;
         if (is_numeric($id_or_article))
-            $article = $this->getArticle($id_or_article);
+            $model = $this->getArticle($id_or_article);
 
-        if (!$article)
+        if (!$model)
             return FALSE;
-
+        
+        $article = clone $model->getArticle();
+        
+        $article->remove($model);
+        
         $em = $this->getDoctrine()->getManager();
-        $em->remove($article);
+        $em->persist($article);
+        
+        $models = $article->getModels();
+        if(empty($models))
+            $em->remove($article);
+            
         try {
             $em->flush();
         } catch (Exception $e) {

@@ -4,9 +4,11 @@
 {% block form_submit %}Sauvegarder{% endblock %}
 
 {% block operations %}
-    <li class="list-group-item">
-        <a href="{{ path('odysseus_admin_article') }}">Nouvel article</a>
+    {% if article.article.validatedAt is null %}
+    <li class="list-group-item ">
+        <a onclick="return confirm('Voulez-vous vraiment valider?');" href="{{ path('odysseus_admin_article_delete', {'id' : article.id}) }}">Valider</a>
     </li>
+    {% endif %}
     <li class="list-group-item">
         <a onclick="return confirm('Voulez-vous vraiment supprimer?');" href="{{ path('odysseus_admin_article_delete', {'id' : article.id}) }}">Supprimer</a>
     </li>

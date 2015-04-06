@@ -1,13 +1,12 @@
 <?php
 
-namespace Odysseus\AdminBundle\Form;
+namespace Odysseus\FrontBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Odysseus\AdminBundle\Form\ImageType;
-use Odysseus\AdminBundle\Form\ArticleType;
 
 class ArticleModelType extends AbstractType
 {
@@ -17,14 +16,13 @@ class ArticleModelType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        
         $builder
             ->add('price', 'number')
             ->add('weight', 'number')
             ->add('width', 'number')
             ->add('height', 'number')
             ->add('depth', 'number')
-            ->add('article', new ArticleType())
+            //->add('article')
             //->add('user')
             ->add('status')
             ->add('image', 'collection', array(

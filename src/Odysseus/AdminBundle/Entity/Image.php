@@ -236,13 +236,21 @@ class Image {
      */
     public $file = NULL;
     private $filenameForRemove;
-
+    private $filenameForSave = NULL;
+    
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
     public function preUpload() {
+        $this->filenameForSave = NULL;
         if (null !== $this->file) {
+            $extension = $this->file->guessExtension();
+            if(!in_array(strtolower($extension), array('jpeg', 'jpg', 'png'))){
+                $this->file = NULL;
+                return;
+            }
+               
             $this->createdAt = new \DateTime();
             $this->setName($this->file->getClientOriginalName());
             $this->setPath($this->getFullName());
@@ -281,12 +289,18 @@ class Image {
     }
 
     public function getFileName() {
-        $original = $this->file->getClientOriginalName();
-        $extension = $this->file->guessExtension();
-        if (!$extension) {
-            $extension = 'bin';
+        $filename = $this->filenameForSave;
+        
+        if($this->filenameForSave == NULL){
+            $original = $this->file->getClientOriginalName();
+            $extension = $this->file->guessExtension();
+            if (!$extension) {
+                $extension = 'bin';
+            }
+            $filename = md5(rand(0, 9999999)) . md5($original) . '.' . $extension;
+            $this->filenameForSave = $filename;
         }
-        $filename = md5(rand(0, 9999999)) . md5($original) . md5((new \DateTime())->format('d/m/Y H:i:s')) . '.' . $extension;
+        
         return $filename;
     }
 

@@ -17,28 +17,30 @@
         <table class="table table-striped table-hover table-condensed">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>Catégorie</th>
-                    <th>Etat</th>
-                    <th>Nb vendeurs</th>
-                    <th>Date</th>
+                    <th>Désignation</th>
+                    <th style="text-align:center;">Vendeur</th>
+                    <th style="text-align:center;">Catégorie</th>
+                    <th style="text-align:center;">Etat</th>
+                    <th style="text-align:center;">Date</th>
                     <th class="actions">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {% for article in articles %}
-                    <tr data-id="{{ article.id}}">
-                        <td>{{ article.name|capitalize|truncText(20) }}</td>
-                        <td>{{ article.description|truncText(20) }}{{ article.description|length > 20 ? '...' : '' }}</td>
-                        <td align="center">{{ article.category.name }}</td>
-                        <td align="center">{{ article.validatedAt is null ? 'Validé' : 'Non validé' }}</td>
-                        <td align="center">{{ article.models|length }}</td>
-                        <td align="center">{{ article.createdAt|date('d/m/Y') }}</td>
-                        <td align="center">
+                {% for model in articles %}
+                    <tr data-id="{{ model.article.id}}">
+                        <td style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">{{ model.article.brand|capitalize }} - {{ model.article.name }}</td>
+                        <td style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">
+                            <a href="{{ path('odysseus_admin_user_update', {'id': model.user.id}) }}">{{ model.user.getFullName() }}</a>
+                        </td>
+                        <td align="center" style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">{{ model.article.category.name }}</td>
+                        <td align="center">{{ model.article.validatedAt is not null ? 'Validé' : 'Non validé' }}</td>
+                        <td align="center">{{ model.article.createdAt|date('d/m/Y') }}</td>
+                        <td align="right">
                             <div class="btn-group" role="group" aria-label="...">
-                                <a href="{{ path('odysseus_admin_article_update', {'id':article.id}) }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                <a onclick="return confirm('Voulez-vous vraiment supprimer?');" href="{{ path('odysseus_admin_article_delete', {'id':article.id}) }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                
+                                <a onclick="return confirm('Voulez-vous vraiment confirmer ce produit');" href="{{ path('odysseus_admin_article_validate', {'id':model.id}) }}" class="{{ model.article.validatedAt is null ? '' : 'disabled' }} btn btn-default"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                                <a href="{{ path('odysseus_admin_article_update', {'id':model.id}) }}" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                <a onclick="return confirm('Voulez-vous vraiment supprimer?');" href="{{ path('odysseus_admin_article_delete', {'id':model.id}) }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </td>
                     </tr>
@@ -79,9 +81,6 @@
 {% endblock %}
 
 {% block operations %}
-    <li class="list-group-item">
-        <a href="{{ path('odysseus_admin_article_create') }}">Nouvel article</a>
-    </li>
 
     <li class="list-group-item">
         <a href="{{ path('odysseus_admin_category') }}">Voir les catégories</a>

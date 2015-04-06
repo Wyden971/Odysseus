@@ -31,20 +31,44 @@ class OrderController extends Controller {
 
         $this->serializer = new Serializer($normalizers, $encoders);
     }
+    
+    private function getBreadcrumb($label='', $more = NULL){
+        $request = $this->container->get('request');
+        $data = array(
+            (Object)array(
+                'label' => 'Accueil',
+                'url' => $request->getBaseUrl()
+            )
+        );
+        
+        if(is_array($more)){
+            foreach($more as $item){
+                if(is_array($item))
+                    $item = (Object)$item;
+                $data[] = $item;
+            }
+        }
+        
+        $data[] = (Object)array(
+            'label' => $label
+        );
+        return $data;
+    }
+    
     /**
      * @Route("/", name="odysseus_front_order_index")
      */
     public function indexAction(Request $request){
-        if(!$request->request->has('shipping_method')){
-            return $this->redirect($this->generateURL('odysseus_front_cart_index'));
+        if($request->request->has('shipping_method')){
+            $shippingMethod = $this->getRepository('ShippingMethod')->find($request->request->get('shipping_method'));
+
+            if(!$shippingMethod){
+                return $this->redirect($this->generateURL('odysseus_front_cart_index'));
+            }
+        }else{
+            $shippingMethod = $this->getRepository('ShippingMethod')->find(1);
         }
-        
-        $shippingMethod = $this->getRepository('ShippingMethod')->find($request->request->get('shipping_method'));
-        
-        if(!$shippingMethod){
-            return $this->redirect($this->generateURL('odysseus_front_cart_index'));
-        }
-        
+                
         $order = new Order();
         $order->setShippingMethod($shippingMethod);
         $order->setPaymentMethod($this->getDefaultPaymentMethod());
@@ -55,6 +79,7 @@ class OrderController extends Controller {
         $order->setStatus($this->getDefaultOrderStatus());
         
         $cart = $this->getUser()->getActiveCart();
+        $total = 0;
         
         foreach($cart->getModel() as $model){
             $orderArticle = new OrderArticle();
@@ -63,6 +88,7 @@ class OrderController extends Controller {
             $orderArticle->setOrder($order);
             
             $order->addArticle($orderArticle);
+            $total += $model->getPrice();
         }
         
         
@@ -77,14 +103,49 @@ class OrderController extends Controller {
                 $em->persist($order);
                 $em->flush();
                 
-                
+                $this->get('session')->getFlashBag()->add('order_confirmation', 'OK');
+                return $this->redirect($this->generateURL('odysseus_front_order_confirmation'));
             }
         }
+        $breadcrumb = $this->getBreadcrumb('Ma commande');
         return $this->render('OdysseusFrontBundle:Order:index.html.twig', array(
             'form' => $form->createView(),
             'methods' => $this->getShippingMethods($cart),
             'paymentMethods' => $this->getPaymentMethods(),
-            'order' => $order
+            'order' => $order,
+            'total' => $total,
+            'breadcrumb' => $breadcrumb
+        ));
+    }
+    
+    /**
+     * @Route("/confirmation", name="odysseus_front_order_confirmation")
+     */
+    public function confirmationAction(Request $request){
+        if(!$this->get('session')->getFlashBag()->has('order_confirmation')){
+            return $this->redirect($this->generateURL('odysseus_front_cart_index'));
+        }
+        
+        $order_confirmation = $this->get('session')->getFlashBag()->get('order_confirmation');
+        
+        if(!in_array('OK', $order_confirmation)){
+            return $this->redirect($this->generateURL('odysseus_front_cart_index'));
+        }
+        $this->getUser()->removeActiveCart();
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($this->getUser());
+        $em->flush();
+        
+        $breadcrumb = $this->getBreadcrumb('Confirmation', array(
+            array(
+                'label' => 'Ma commande',
+                'url' => $this->generateURL('odysseus_front_order_index')
+            )
+        ));
+        
+        return $this->render('OdysseusFrontBundle:Order:confirmation.html.twig', array(
+            'breadcrumb' => $breadcrumb
         ));
     }
     

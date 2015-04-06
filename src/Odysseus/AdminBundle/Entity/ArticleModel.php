@@ -416,4 +416,8 @@ class ArticleModel
     
         return ($price/2);
     }
+    
+    public function getFullName(){
+        return $this->article->getFullName();
+    }
 }

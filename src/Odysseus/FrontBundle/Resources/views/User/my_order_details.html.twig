@@ -14,25 +14,19 @@
                 <tbody>
                     <tr>
                         <td width="25%">N° Commande</td>
-                        <td width="25%">C025874</td>
+                        <td width="25%">{{ order.id }}</td>
                         <td width="25%">Date de Commande</td>
-                        <td width="25%">14/08/2014</td>
-                    </tr>
-                    <tr>
-                        <td>Type de commande</td>
-                        <td>Achat</td>
-                        <td>Vendeur / Acheteur</td>
-                        <td>Thug life</td>
+                        <td width="25%">{{ order.createdAt|date('d/m/Y') }}</td>
                     </tr>
                     <tr>
                         <td>Nb. Articles</td>
-                        <td>4</td>
+                        <td>{{ order.articles|length }}</td>
                         <td>Prix total TTC</td>
-                        <td>84,93 €</td>
+                        <td>{{ order.getTotal()|number_format(2, '.', ',') }} €</td>
                     </tr>
                     <tr>
                         <td>Etat de la commande</td>
-                        <td>En attente de paimement</td>
+                        <td>{{ order.status.name }}</td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -46,96 +40,53 @@
                 <tbody>
                     <tr>
                         <td width="25%">Méthode de paimement</td>
-                        <td width="25%">PayPal</td>
+                        <td width="25%">{{ order.paymentMethod.name }}</td>
                         <td width="25%">Méthode de livraison</td>
-                        <td width="25%">Rapide</td>
+                        <td width="25%">{{ order.shippingMethod.name }}</td>
+                    </tr>
+                    <tr>
+                        <td width="25%">Nom et Prénol</td>
+                        <td width="25%">{{ order.shipping.getFullName() }}</td>
+                        <td width="25%">Société</td>
+                        <td width="25%">{{ order.shipping.company }}</td>
                     </tr>
                     <tr>
                         <td>Adresse de Livraison</td>
-                        <td>69, Avenue du derp</td>
-                        <td>Code Postal / Ville</td>
-                        <td>75018 / PARIS</td>
+                        <td>{{ order.shipping.address1 }}{{ order.shipping.address1 is not empty ? '<br />' : '' }}{{ order.shipping.address2 }}</td>
+                        <td>Code Postal / Ville / Pays</td>
+                        <td>{{ order.shipping.zipCode }} {{ order.shipping.city }}, {{ order.shipping.country }}</td>
                     </tr>
             </table>
         </div>
 
         <!-- Articles -->
         <div>
-            <h4 style="margin-top:19px">Articles (4)</h4>
+            <h4 style="margin-top:19px">Articles ({{ order.articles|length }})</h4>
             <table class="table table-condensed table-hover orderList" id="accProductList">
                 <thead>
                     <tr>
-                        <th colspan="2">Produit</th>
-                        <th>Quantité</th>
+                        <th>Produit</th>
+                        <th>Vendeur</th>
                         <th>Prix</th>
                     </tr>
                 </thead>
                 <tbody>
+                    
+                    {% for article in order.articles %}
                     <tr>
-                        <td width="10%"><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
                         <td width="60%">
-                            Nom de l'article<br>
-                            <ul class="rating hidden-xs">
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                            </ul>
+                            {{ article.model.article.brand }} - {{ article.model.article.name }}
                         </td>
-                        <td width="10%">22</td>
-                        <td width="20%">14,53 €</td>
+                        <td width="20%" align="center">{{ article.model.user.getFullName() }}</td>
+                        <td width="20%" align="center">{{ article.model.price|number_format(2,'.', ',') }} €</td>
                     </tr>
+                    {% endfor %}
                     <tr>
-                        <td><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
-                        <td>
-                            Nom de l'article<br>
-                            <ul class="rating hidden-xs">
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                            </ul>
+                        <td width="60%">
+                            &nbsp;&nbsp;Livraison
                         </td>
-                        <td>21</td>
-                        <td>52,21 €</td>
-                    </tr>
-                    <tr>
-                        <td><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
-                        <td>
-                            Nom de l'article<br>
-                            <ul class="rating hidden-xs">
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                            </ul>
-                        </td>
-                        <td>4</td>
-                        <td>2,99 €</td>
-                    </tr>
-                    <tr>
-                        <td><img style="width:100px" src="images/product1.jpg" alt="img_prdct"/></td>
-                        <td>
-                            Nom de l'article<br>
-                            <ul class="rating hidden-xs">
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-                                <li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-                            </ul>
-                        </td>
-                        <td>14</td>
-                        <td>63,25 €</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>TOTAL TTC</td>
-                        <td>157,89 €</td>
+                        <td width="20%" align="center">{{ order.shippingMethod.name }}</td>
+                        <td width="20%" align="center">{{ order.getShippingCost()|number_format(2,'.', ',') }} €</td>
                     </tr>
                 </tbody>
             </table>

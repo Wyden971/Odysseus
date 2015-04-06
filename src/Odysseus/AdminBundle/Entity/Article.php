@@ -375,4 +375,15 @@ class Article
     {
         return $this->brand;
     }
+    
+    public function getFirstModel(){
+        if(empty($this->models)){
+            return NULL;
+        }
+        return $this->models[0];
+    }
+    
+    public function getFullName(){
+        return ucfirst($this->brand).' - '.$this->name;
+    }
 }

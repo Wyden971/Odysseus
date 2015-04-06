@@ -334,4 +334,22 @@ class Order
     {
         return $this->articles;
     }
+    
+    
+    public function getTotal(){
+        $total = 0;
+        foreach($this->articles as $article){
+            $total+=$article->getModel()->getPrice();
+            $total+=$article->getModel()->getShippingPrice($this->shippingMethod);
+        }
+        return $total;
+    }
+    
+    public function getShippingCost(){
+        $total = 0;
+        foreach($this->articles as $article){
+            $total+=$article->getModel()->getShippingPrice($this->shippingMethod);
+        }
+        return $total;
+    }
 }

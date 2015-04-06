@@ -27,33 +27,21 @@ class OrderController extends Controller {
     }
 
     /**
-     * @Route("/update/{id}", name="odysseus_admin_order_update", requirements={"id"="\d+"})
+     * @Route("/view/{id}", name="odysseus_admin_order_view", requirements={"id"="\d+"})
      */
-    public function updateAction($id) {
+    public function viewAction($id) {
         $order = $this->getOrder($id);
         if (!$order) {
-            return $this->createNotFoundException('L\'order n\'existe pas');
+            throw $this->createNotFoundException('La commande n\'existe pas');
         }
 
-
-        return $this->render('OdysseusAdminBundle:Order:update.html.twig', array(
-                    'data' => $order
+        
+        return $this->render('OdysseusAdminBundle:Order:view.html.twig', array(
+            'data' => $order
         ));
     }
 
-    /**
-     * @Route("/delete/{id}", name="odysseus_admin_order_delete", requirements={"id"="\d+"})
-     */
-    public function deleteAction($id) {
-        $order = $this->getOrder($id);
-        if (!$order) {
-            return $this->createNotFoundException('L\'order n\'existe pas');
-        }
-
-        $this->removeOrder($order);
-
-        return $this->redirect($this->generateURL('odysseus_admin_order'));
-    }
+ 
 
     private function getOrders($page, $count) {
         $page--;

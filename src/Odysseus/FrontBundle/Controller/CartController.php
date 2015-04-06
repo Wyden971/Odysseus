@@ -41,12 +41,13 @@ class CartController extends Controller {
         $shippingPrice = $methods[0]->price;
         
         
-        
+        $breadcrumb = $this->getBreadcrumb('Mon panier');
         return $this->render('OdysseusFrontBundle:Cart:index.html.twig', array(
             'methods' => $methods,
             'shippingPrice' => $shippingPrice,
             'totalPrice' => $totalPriceWithoutShipping + $shippingPrice,
-            'totalPriceWithoutShipping' => $totalPriceWithoutShipping
+            'totalPriceWithoutShipping' => $totalPriceWithoutShipping,
+            'breadcrumb' => $breadcrumb
         ));
     }
     
@@ -119,5 +120,28 @@ class CartController extends Controller {
     
     private function addFlashBag($name, $value){
         return $this->getFlashBag()->add($name, $value);
+    }
+    
+    private function getBreadcrumb($label='', $more = NULL){
+        $request = $this->container->get('request');
+        $data = array(
+            (Object)array(
+                'label' => 'Accueil',
+                'url' => $request->getBaseUrl()
+            )
+        );
+        
+        if(is_array($more)){
+            foreach($more as $item){
+                if(is_array($item))
+                    $item = (Object)$item;
+                $data[] = $item;
+            }
+        }
+        
+        $data[] = (Object)array(
+            'label' => $label
+        );
+        return $data;
     }
 }

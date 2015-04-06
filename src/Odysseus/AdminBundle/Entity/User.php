@@ -457,4 +457,14 @@ class User extends BaseUser
         }
         return $this->carts[0];
     }
+    
+    public function removeActiveCart(){
+        try{
+            foreach($this->getCarts() as $cart)
+                $this->removeCart($cart);
+        }catch(Exception $e){
+            return FALSE;
+        }
+        return TRUE;
+    }
 }

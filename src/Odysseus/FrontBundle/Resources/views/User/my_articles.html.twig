@@ -1,0 +1,77 @@
+{% extends 'OdysseusFrontBundle:User:column2.html.twig' %}
+
+{% block content_title %}MON COMPTE - VOS ACHATS{% endblock content_title %}
+
+{% block column_content %}
+<div class="row">
+    <!-- Tableau Achats/Ventes -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:20px">
+        <table class="table table-condensed table-hover orderList">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Catégorie</th>
+                    <th align="center">Ajouté le</th>
+                    <th align="center">Prix TTC</th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for model in models %}
+                <tr>
+                    <td>
+                        <a href="{{ 
+                                path('odysseus_front_product_details',{
+                                    'id':model.id,
+                                    'name':model.article.name|forUri|raw,
+                                    'category':model.article.category.url
+                                }) 
+                            }}">{{ model.article.brand|capitalize }} - {{ model.article.name }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('odysseus_category_index',{'category_name':model.article.category.url}) }}">{{ model.article.category.name|capitalize }}</a>
+                    </td>
+                    <td align="center">{{ model.createdAt|date('d/m/Y') }}</td>
+                    <td align="center">{{ model.price|number_format(2, '.', ',') }} €</td>
+                </tr>
+                        {% else %}
+                <tr>
+                    <td colspan="7" align="center">
+                        Aucun article en base de données
+                    </td>
+                </tr>
+                        {% endfor %}
+            </tbody>
+        </table>
+        <div style="text-align:right;">
+            <a href="{{ path('odysseus_front_user_add_article') }}" class="btn btn-greend"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un article</a>
+        </div>
+    </div>
+
+
+    <!-- Pagination -->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custompager">
+        <ul class="pagination">
+                            {% if pagination is not null %}
+            <ul class="pagination">
+                                    {% if pagination.min > 1 %}
+                <li>
+                    <a href="{{ path('odysseus_front_user_my_articles_page', {'page' : pagination.min-1}) }}">&laquo;</a>
+                </li>
+                                    {% endif %}
+                                    {% for i in pagination.min..pagination.max %}
+                <li class="{{ pagination.page == i ? 'active' : '' }}">
+                    <a href="{{ path('odysseus_front_user_my_articles_page', {'page' : i}) }}">{{ i }}</a>
+                </li>
+                                    {% endfor %}
+                                    {% if pagination.max < pagination.total %}
+                <li>
+                    <a href="{{ path('odysseus_front_user_my_articles_page', {'page' : pagination.max+1}) }}">&raquo;</a>
+                </li>
+                                    {% endif %}
+            </ul>
+                            {% endif %}
+        </ul>
+    </div>
+</div>
+
+                {% endblock %}

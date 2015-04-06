@@ -51,6 +51,7 @@
                         <form method="GET">
                             Trier par
                             <select name="sort" id="category-order">
+                                <option value="pert" {{ sort=='pert' or sort is empty ? 'selected':'' }}>Pertinance</option>
                                 <option value="name-asc" {{ sort=='name-asc' ? 'selected':'' }}>Nom (A-Z)</option>
                                 <option value="name-desc" {{ sort=='name-desc' ? 'selected':'' }}>Nom (Z-A)</option>
                                 <option value="price-asc" {{ sort=='price-asc' ? 'selected':'' }}>Prix (Moins cher)</option>
@@ -88,18 +89,19 @@
 
                     <div class="displaytBy inline pull-right">
                         <div class="btn-group">
-                            <a href="{{ listView=='grid' ? '#' : path('odysseus_category_index_page', {'category_name':category_name, 'list_view':'grid', 'page':(page==1?null:page)}) }}" class="btn btn-{{listView=='grid' ? 'greend active':'default' }}"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
-                            <a href="{{ listView=='list' ? '#' : path('odysseus_category_index_page', {'category_name':category_name, 'list_view':'list', 'page':(page==1?null:page)}) }}" class="btn btn-{{listView=='list' ? 'greend active':'default' }}"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+                            <a href="{{ listView=='grid' ? '#' : path('odysseus_user_homesearch_page', {'list_view':'grid', 'page':(page==1?null:page)}) }}" class="btn btn-{{listView=='grid' ? 'greend active':'default' }}"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+                            <a href="{{ listView=='list' ? '#' : path('odysseus_user_homesearch_page', {'list_view':'list', 'page':(page==1?null:page)}) }}" class="btn btn-{{listView=='list' ? 'greend active':'default' }}"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
                         </div>
                     </div><!--end displaytBy-->
                 </div>
             </div>
-
+            <div class="col-xs-12">
+                {{ products.count }} article(s) trouvé(s).
+            </div>
             {% for row in products.rows %}
+                {% set row = row.articles %}
                 {% if row.image is not empty %}
                     {% set src = row.image[0].url %}
-                {% elseif row.models[0].image is not empty %}
-                    {% set src = row.models[0].image[0].url %}
                 {% else %}
                     {% set src = asset('/bundles/odysseusfront/images/product1.jpg') %}
                 {% endif %}
@@ -110,9 +112,9 @@
                     <div class="image">
                         <a href="{{ 
                                 path('odysseus_front_product_details',{
-                                    'id':row.models[0].id,
-                                    'name':row.name|forUri,
-                                    'category':row.category.url
+                                    'id':row.id,
+                                    'name':row.article.name|forUri|raw,
+                                    'category':row.article.category.url
                                 }) 
                             }}">
                             
@@ -125,9 +127,9 @@
                         <h3>
                             <a href="{{ 
                                 path('odysseus_front_product_details',{
-                                    'id':row.models[0].id,
-                                    'name':row.name|forUri,
-                                    'category':row.category.url
+                                    'id':row.id,
+                                    'name':row.article.name|forUri|raw,
+                                    'category':row.article.category.url
                                 }) 
                             }}">{{ row.name }}</a>
                         </h3>
@@ -140,15 +142,9 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</p>
                     </div>-->
                     <div class="actions">
-                        <a href="{{ 
-                                path('odysseus_front_product_details',{
-                                    'id':row.models[0].id,
-                                    'name':row.name|forUri,
-                                    'category':row.category.url
-                                }) 
-                            }}" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> 
+                        <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.article.name|forUri|raw), 'product_id' : row.id}) }}" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> 
                         {% if is_granted('ROLE_USER') %}
-                        <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.name|forUri|raw), 'product_id' : row.models[0].id}) }}" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+                        <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
                         {% endif %}
                     </div>
                 </div>
@@ -161,9 +157,9 @@
                     <div class="image">
                         <a href="{{ 
                                 path('odysseus_front_product_details',{
-                                    'id':row.models[0].id,
-                                    'name':row.name|forUri,
-                                    'category':row.category.url
+                                    'id':row.id,
+                                    'name':row.article.name|forUri|raw,
+                                    'category':row.article.category.url
                                 }) 
                             }}">
                             <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:131px;width:254px;border:1px solid #EEE;">
@@ -176,9 +172,9 @@
                             <h3>
                                 <a href="{{ 
                                 path('odysseus_front_product_details',{
-                                    'id':row.models[0].id,
-                                    'name':row.name|forUri,
-                                    'category':row.category.url
+                                    'id':row.id,
+                                    'name':row.article.name|forUri|raw,
+                                    'category':row.article.category.url
                                 }) 
                             }}">{{ row.name }}</a>
                             </h3>
@@ -189,15 +185,9 @@
                         </div>
                     </div><!--
                     --><div class="actions">
-                        <a href="{{ 
-                                path('odysseus_front_product_details',{
-                                    'id':row.models[0].id,
-                                    'name':row.name|forUri,
-                                    'category':row.category.url
-                                }) 
-                            }}" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> 
+                        <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.article.name|forUri|raw), 'product_id' : row.id}) }}" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> 
                         {% if is_granted('ROLE_USER') %}
-                        <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.name|forUri|raw), 'product_id' : row.models[0].id}) }}" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+                        <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
                         {% endif %}
                     </div>
                 </div>
@@ -206,7 +196,7 @@
             {% else %}
             <div class="col-xs-12">
                 <center>
-                    Aucun article disponible pour cette Catégorie.
+                    Aucun article trouvé.
                 </center>
             </div>
             {% endfor %}
@@ -223,7 +213,7 @@
                             {% if i == products.pagination.cur %}
                         <span>{{ i }}</span>
                             {% else %}
-                        <a href="{{ path('odysseus_category_index_page', {'page':i, 'category_name':category_name}) }}">{{ i }}</a>
+                        <a href="{{ path('odysseus_category_index_page', {'page':i}) }}">{{ i }}</a>
                             {% endif %}
                     </li>
                     {% endfor %}

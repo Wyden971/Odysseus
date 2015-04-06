@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label for="article_name">Nom du nouvel article :</label>
                 {{ 
-                    form_widget(form.name, {
+                    form_widget(form.article.name, {
                         'attr' : {
                             'class' : 'form-control',
                             'placeholder' : 'Nom du nouvel article'
@@ -22,13 +22,13 @@
                         'id' : 'article_name'
                     })
                 }}
-                {{ form_errors(form.name) }}
+                {{ form_errors(form.article.name) }}
             </div>
             
             <div class="form-group">
                 <label for="article_brand">Marque du nouvel article :</label>
                 {{ 
-                    form_widget(form.brand, {
+                    form_widget(form.article.brand, {
                         'attr' : {
                             'class' : 'form-control',
                             'placeholder' : 'Marque du nouvel article'
@@ -36,13 +36,13 @@
                         'id' : 'article_brand'
                     })
                 }}
-                {{ form_errors(form.brand) }}
+                {{ form_errors(form.article.brand) }}
             </div>
 
             <div class="form-group">
                 <label for="article_description">Nom du nouvel article :</label>
                 {{ 
-                    form_widget(form.description, {
+                    form_widget(form.article.description, {
                         'attr' : {
                             'class' : 'form-control',
                             'placeholder' : 'Description du nouvel article',
@@ -51,13 +51,13 @@
                         'id' : 'article_description'
                     })
                 }}
-                {{ form_errors(form.description) }}
+                {{ form_errors(form.article.description) }}
             </div>
             
             <div class="form-group">
                 <label for="article_category">Catégorie du nouvel article :</label>
                 {{ 
-                    form_widget(form.category, {
+                    form_widget(form.article.category, {
                         'attr' : {
                             'class' : 'form-control'
                         },
@@ -65,13 +65,13 @@
                         'id' : 'article_category'
                     })
                 }}
-                {{ form_errors(form.category) }}
+                {{ form_errors(form.article.category) }}
             </div>
             
             <div class="form-group">
                 <label for="article_status">Etat du nouvel article :</label>
                 {{ 
-                    form_widget(form.models[0].status, {
+                    form_widget(form.status, {
                         'attr' : {
                             'class' : 'form-control'
                         },
@@ -79,13 +79,13 @@
                         'id' : 'article_status'
                     })
                 }}
-                {{ form_errors(form.models[0].status) }}
+                {{ form_errors(form.status) }}
             </div>
             
             <div class="form-group">
                 <label for="article_price">Prix du nouvel article :</label>
                 {{ 
-                    form_widget(form.models[0].price, {
+                    form_widget(form.price, {
                         'attr' : {
                             'class' : 'form-control',
                             'placeholder' : 'Prix du nouvel article',
@@ -93,13 +93,13 @@
                         'id' : 'article_price'
                     })
                 }}
-                {{ form_errors(form.models[0].price) }}
+                {{ form_errors(form.price) }}
             </div>
             
             <div class="form-group">
                 <label for="article_weight">Poids du nouvel article :</label>
                 {{ 
-                    form_widget(form.models[0].weight, {
+                    form_widget(form.weight, {
                         'attr' : {
                             'class' : 'form-control',
                             'placeholder' : 'Poids du nouvel article'
@@ -107,13 +107,13 @@
                         'id' : 'article_weight',
                     })
                 }}
-                {{ form_errors(form.models[0].weight) }}
+                {{ form_errors(form.weight) }}
             </div>
             
             <div class="form-group">
                 <label for="article_width">Longueur du nouvel article :</label>
                 {{ 
-                    form_widget(form.models[0].width, {
+                    form_widget(form.width, {
                         'attr' : {
                             'class' : 'form-control',
                             'placeholder' : 'Longueur du nouvel article'
@@ -121,13 +121,13 @@
                         'id' : 'article_width',
                     })
                 }}
-                {{ form_errors(form.models[0].width) }}
+                {{ form_errors(form.width) }}
             </div>
             
             <div class="form-group">
                 <label for="article_height">Largeur du nouvel article :</label>
                 {{ 
-                    form_widget(form.models[0].height, {
+                    form_widget(form.height, {
                         'attr' : {
                             'class' : 'form-control',
                             'placeholder' : 'Largeur du nouvel article'
@@ -135,13 +135,13 @@
                         'id' : 'article_height',
                     })
                 }}
-                {{ form_errors(form.models[0].height) }}
+                {{ form_errors(form.height) }}
             </div>
             
             <div class="form-group">
                 <label for="article_depth">Epaisseur du nouvel article :</label>
                 {{ 
-                    form_widget(form.models[0].depth, {
+                    form_widget(form.depth, {
                         'attr' : {
                             'class' : 'form-control',
                             'placeholder' : 'Epaisseur du nouvel article'
@@ -149,16 +149,16 @@
                         'id':'article_depth',
                     })
                 }}
-                {{ form_errors(form.models[0].depth) }}
+                {{ form_errors(form.depth) }}
             </div>
             
             {% if article is defined %}
             <div class="row">
-                {% for key,image in form.models[0].image %}
+                {% for key,image in form.image %}
                 <div class="col-xs-3">
                     <div class="article-img" style="background-image:url('{{ image.vars.value.url }}');">
                         <div class="article-img-hidden-content">
-                            {{ form_widget(form.models[0].image[key]) }}
+                            {{ form_widget(form.image[key]) }}
                             <img src="{{ image.vars.value.url }}" alt="{{ image.vars.value.name }}" title="{{ image.vars.value.name }}" />
                         </div>
                         <span class="glyphicon glyphicon-remove"></span>
@@ -167,26 +167,26 @@
                 {% endfor %}
             </div>
             {% endif %}
-            {% if form.models[0].image[0] is defined %}
+            {% if form.image[0] is defined %}
             <div class="form-group">
                 <label for="article_image_1">Image 1 :</label>
                 {{ 
-                    form_widget(form.models[0].image[0].file, {
+                    form_widget(form.image[0].file, {
                         'attr' : {
                             'class' : 'form-control',
                         },
                         'id':'article_image_1',
                     })
                 }}
-                {{ form_errors(form.models[0].image[0]) }}
+                {{ form_errors(form.image[0]) }}
             </div>
             {% endif %}
             
-            {% if form.models[0].image[1] is defined %}
+            {% if form.image[1] is defined %}
             <div class="form-group">
                 <label for="article_image_2">Image 2 :</label>
                 {{ 
-                    form_widget(form.models[0].image[1].file, {
+                    form_widget(form.image[1].file, {
                         'attr' : {
                             'class' : 'form-control',
                         },
@@ -194,15 +194,15 @@
                         'required':false
                     })
                 }}
-                {{ form_errors(form.models[0].image[1]) }}
+                {{ form_errors(form.image[1]) }}
             </div>
             {% endif %}
             
-            {% if form.models[0].image[2] is defined %}
+            {% if form.image[2] is defined %}
             <div class="form-group">
                 <label for="article_image_3">Image 3 :</label>
                 {{ 
-                    form_widget(form.models[0].image[2].file, {
+                    form_widget(form.image[2].file, {
                         'attr' : {
                             'class' : 'form-control',
                         },
@@ -210,7 +210,7 @@
                         'required':false
                     })
                 }}
-                {{ form_errors(form.models[0].image[2]) }}
+                {{ form_errors(form.image[2]) }}
             </div>
             {% endif %}
             

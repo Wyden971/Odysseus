@@ -1,182 +1,187 @@
 {% extends 'OdysseusFrontBundle::layout.html.twig' %}
 {% block content %}
 <div class="row">
-	<!-- Titre de la page -->
-	<div class="col-lg-12">
-		<h2>LISTE DES PRODUITS - INFORMATIQUE</h2>
-	</div>
+    <!-- Titre de la page -->
+    <div class="col-lg-12">
+        <h2>LISTE DES PRODUITS - INFORMATIQUE</h2>
+    </div>
+    <div class="col-lg-12">
+        <div class="productFilter clearfix">
+            <div class="sortBy inline pull-left">
+                <form method="GET">
+                    Trier par
+                    <select name="sort" id="category-order">
+                        <option value="name-asc" {{ sort=='name-asc' ? 'selected':'' }}>Nom (A-Z)</option>
+                        <option value="name-desc" {{ sort=='name-desc' ? 'selected':'' }}>Nom (Z-A)</option>
+                        <option value="price-asc" {{ sort=='price-asc' ? 'selected':'' }}>Prix (Moins cher)</option>
+                        <option value="price-desc" {{ sort=='price-desc' ? 'selected':'' }}>Prix (Plus cher)</option>
+                        <option value="date-asc" {{ sort=='date-asc' ? 'selected':'' }}>Date (Moins récent)</option>
+                        <option value="date-desc" {{ sort=='date-desc' ? 'selected':'' }}>Date (Plus récent)</option>
+                    </select>
+                </form>
+                <script>
+                    $(function() {
+                        $('#category-order').change(function() {
+                            $(this).parent().submit();
+                        });
+                    });
+                </script>
+            </div>
 
-	<!-- Parametres de filtrage -->
-	<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-		<div class="sidebar">
-			<!-- Filtre par marque -->
-			<h4><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#marque">MARQUE</a></h4>
-			<ol id="marque" class="target-collapse collapse in">
-				<li><a href="#" class="active">Asus</a></li>
-				<li><a href="#">Acer</a></li>
-				<li><a href="#">Dell</a></li>
-				<li><a href="#">Alienware</a></li>
-			</ol>
-			<!-- Filtre par prix -->
-			<h4><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#prix">PRIX</a></h4>
-			<ol id="prix" class="target-collapse collapse in">
-				<li><a href="#">Moins de 100 €</a></li>
-				<li><a href="#">100 € - 200 €</a></li>
-				<li><a href="#">200 € - 300 €</a></li>
-				<li><a href="#">300 € - 400 €</a></li>
-				<li><a href="#">400 € - 500 €</a></li>
-				<li><a href="#">Plus de 500 €</a></li>
-			</ol>
-			<!-- Filtre par Etat -->
-			<h4><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#etat">ETAT</a></h4>
-			<ol id="etat" class="target-collapse collapse in">
-			<ol>
-				<li><a href="#">Neuf</a></li>
-				<li><a href="#">Comme Neuf</a></li>
-				<li><a href="#">Bon</a></li>
-				<li><a href="#">Légèrement abimé</a></li>
-				<li><a href="#">Très abimé</a></li>
-			</ol>
-		</div>
-	</div>
+            <div class="showItem inline pull-left">
+                <form method="GET">
+                    Afficher
+                    <select name="npp" id="category-npp">
+                        <option value="5" {{ npp==5 ? 'selected':'' }}>5 produits</option>
+                        <option value="10" {{ npp==10 ? 'selected':'' }}>10 produits</option>
+                        <option value="20" {{ npp==20 ? 'selected':'' }}>20 produits</option>
+                    </select>
+                </form>
+                <script>
+                    $(function() {
+                        $('#category-npp').change(function() {
+                            $(this).parent().submit();
+                        });
+                    });
+                </script>
+            </div><!--end sortBy-->
 
-	<!-- Listing de produits -->
-	<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-		<div class="row">
+            <div class="displaytBy inline pull-right">
+                <div class="btn-group">
+                    <a href="{{ listView=='grid' ? '#' : path('odysseus_front_product_more_page', {'page':page, 'category':product.article.category.url,'name':product.article.name|forUri|raw, 'id':product.id}) }}" class="btn btn-{{listView=='grid' ? 'greend active':'default' }}"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+                    <a href="{{ listView=='list' ? '#' : path('odysseus_front_product_more_page', {'page':page, 'category':product.article.category.url,'name':product.article.name|forUri|raw, 'id':product.id}) }}" class="btn btn-{{listView=='list' ? 'greend active':'default' }}"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+                </div>
+            </div><!--end displaytBy-->
+        </div>
+    </div>
+    <div class="col-xs-12">
+            {% for row in products.rows %}
+                {% if row.image is not empty %}
+                    {% set src = row.image[0].url %}
+                {% elseif row.article.image is not empty %}
+                    {% set src = row.article.image[0].url %}
+                {% else %}
+                    {% set src = asset('/bundles/odysseusfront/images/product1.jpg') %}
+                {% endif %}
+                {% if listView == 'grid' %}
+        <!-- Article -->
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <div class="shop-item">
+                <div class="image">
+                    <a href="{{ 
+                                path('odysseus_front_product_details',{
+                                    'id':row.id,
+                                    'name':row.article.name|forUri,
+                                    'category':row.article.category.url
+                                }) 
+                            }}">
 
-			<!-- Parametres d'affichage -->
-			<div class="col-lg-12">	
-				<div class="productFilter clearfix">
-					<div class="sortBy inline pull-left">
-						Trier par
-						<select name="">
-							<option value="Default">Popularité</option>
-							<option value="">Nom (A-Z)</option>
-							<option value="">Nom (Z-A)</option>
-							<option value="">Prix (Moins cher)</option>
-							<option value="">Prix (Plus cher)</option>
-						</select>
-					</div>
+                        <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:191px;border:1px solid #EEE;">
+                            <img src="{{ src }}" alt="{{ row.article.name }}" title="{{ row.article.name }}" height="191" style="opacity:0">
+                        </div>
+                    </a>
+                </div>
+                <div class="title">
+                    <h3>
+                        <a href="{{ 
+                                path('odysseus_front_product_details',{
+                                    'id':row.id,
+                                    'name':row.article.name|forUri,
+                                    'category':row.article.category.url
+                                }) 
+                            }}">{{ row.article.name }}</a>
+                    </h3>
+                </div>
+                <div class="price">
+                    <span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
+                                        {{ row.price }} €
+                </div>
+                <!--<div class="description">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</p>
+                </div>-->
+                <div class="actions">
+                    <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.article.name|forUri|raw), 'product_id' : row.id}) }}" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> 
+                        {% if is_granted('ROLE_USER') %}
+                    <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+                {% else %}
 
-					<div class="showItem inline pull-left">
-						Afficher
-						<select name="">
-							<option value="5">5 produits</option>
-							<option value="10">10 produits</option>
-							<option value="20">20 produits</option>
-						</select>
-					</div><!--end sortBy-->
+        <!-- Article ligne -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="shop-item line-item">
+                <div class="image">
+                    <a href="{{ 
+                                path('odysseus_front_product_details',{
+                                    'id':row.id,
+                                    'name':row.article.name|forUri,
+                                    'category':row.article.category.url
+                                }) 
+                            }}">
+                        <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:131px;width:254px;border:1px solid #EEE;">
+                            <img src="{{ src }}" alt="{{ row.article.name }}" title="{{ row.article.name }}" height="131" width="254" style="opacity:0">
+                        </div>
+                    </a>
+                </div><!--
+                --><div class="inline-div">
+                    <div class="title">
+                        <h3>
+                            <a href="{{ 
+                                path('odysseus_front_product_details',{
+                                    'id':row.id,
+                                    'name':row.article.name|forUri,
+                                    'category':row.article.category.url
+                                }) 
+                            }}">{{ row.name }}</a>
+                        </h3>
+                    </div>
+                    <div class="price">
+                        <span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
+                                    {{ row.price }} €
+                    </div>
+                </div><!--
+                --><div class="actions">
+                    <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.article.name|forUri|raw), 'product_id' : row.id}) }}" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> 
+                        {% if is_granted('ROLE_USER') %}
+                    <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+                {% endif %}
+            {% else %}
+        <div class="col-xs-12">
+            <center>
+                Aucun article disponible pour cette Catégorie.
+            </center>
+        </div>
+            {% endfor %}
 
-					<div class="displaytBy inline pull-right">
-						<div class="btn-group">
-							<button class="btn btn-greend active"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></button>
-							<button class="btn btn-default"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></button>
-						</div>
-					</div><!--end displaytBy-->
-				</div>
-			</div>
-
-			<!-- Article -->
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-				<div class="shop-item">
-					<div class="image">
-						<a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}"><img src="{{ asset('/bundles/odysseusfront/images/product1.jpg') }}" alt="Item Name"></a>
-					</div>
-					<div class="title">
-						<h3><a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">Lorem ipsum dolor</a></h3>
-					</div>
-					<div class="price">
-						<span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
-						25,99 €
-					</div>
-					<!--<div class="description">
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</p>
-					</div>-->
-					<div class="actions">
-						<a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
-					</div>
-				</div>
-			</div>
-
-			<!-- Article -->
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-				<div class="shop-item">
-					<img src="{{ asset('/bundles/odysseusfront/images/ruban.png') }}" class="ribbon"/>
-					<div class="image">
-						<a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}"><img src="{{ asset('/bundles/odysseusfront/images/product1.jpg') }}" alt="Item Name"></a>
-					</div>
-					<div class="title">
-						<h3><a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">Lorem ipsum dolor</a></h3>
-					</div>
-					<div class="price">
-						<span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
-						<span class="price-was">959,99 €</span> 429,99 €
-					</div>
-					<!--<div class="description">
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</p>
-					</div>-->
-					<div class="actions">
-						<a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
-					</div>
-				</div>
-			</div>
-
-			<!-- Article -->
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-				<div class="shop-item">
-					<div class="image">
-						<a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}"><img src="{{ asset('/bundles/odysseusfront/images/product1.jpg') }}" alt="Item Name"></a>
-					</div>
-					<div class="title">
-						<h3><a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">Lorem ipsum dolor</a></h3>
-					</div>
-					<div class="price">
-						<span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
-						238.00 €
-					</div>
-					<!--<div class="description">
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</p>
-					</div>-->
-					<div class="actions">
-						<a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
-					</div>
-				</div>
-			</div>
-
-			<!-- Article ligne -->
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<div class="shop-item line-item">
-					<div class="image">
-						<a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}"><img src="{{ asset('/bundles/odysseusfront/images/product1.jpg') }}" alt="Item Name"></a>
-					</div><!--
-				--><div class="inline-div">
-						<div class="title">
-							<h3><a href="{{ path('odysseus_front_product_details',{'id':245256,'name':'super-produit-annee-2015','category':'telephonie'}) }}">Lorem ipsum dolor</a></h3>
-						</div>
-						<div class="price">
-							<span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
-							238.00 €
-						</div>
-					</div><!--
-				--><div class="actions">
-						<a href="#" class="btn btn-default"><i class="icon-shopping-cart icon-white"></i> Plus de détails</a> <a href="#" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
-					</div>
-				</div>
-			</div>
-
-			<!-- Pagination -->
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custompager">
-				<ul class="pagination">
-					<li class="disabled"><span>&laquo;</span></li>
-					<li class="active"><span>1</span></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#">&raquo;</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+            {% if products.rows is not empty %}
+        <!-- Pagination -->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custompager">
+            <ul class="pagination">
+                    {% if products.pagination.min > 1 %}
+                <li class="disabled"><a href="{{ path('odysseus_front_product_more_page', {'page':products.pagination.min, 'category':product.article.category.url,'name':product.article.name|forUri|raw, 'id':product.id}) }}">&laquo;</a></li>
+                    {% endif %}
+                    {% for i in products.pagination.min..products.pagination.max %}
+                <li class="{{ i == products.pagination.cur ? 'active' : '' }}">
+                            {% if i == products.pagination.cur %}
+                    <span>{{ i }}</span>
+                            {% else %}
+                    <a href="{{ path('odysseus_front_product_more_page', {'page':i, 'category':product.article.category.url,'name':product.article.name|forUri|raw, 'id':product.id}) }}">{{ i }}</a>
+                            {% endif %}
+                </li>
+                    {% endfor %}
+                    {% if products.pagination.max < products.pagination.count %}
+                <li><a href="{{ path('odysseus_front_product_more_page', {'page':products.pagination.max, 'category':product.article.category.url,'name':product.article.name|forUri|raw, 'id':product.id}) }}">&raquo;</a></li>
+                    {% endif %}
+            </ul>
+        </div>
+            {% endif %}
+    </div>
 </div>
+
 {% endblock %}

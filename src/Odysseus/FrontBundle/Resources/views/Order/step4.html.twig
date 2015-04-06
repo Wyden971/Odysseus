@@ -9,21 +9,21 @@
             <tbody>
                 <tr>
                     <td width="25%">Méthode de paimement</td>
-                    <td width="25%" class="payment_method_view"><![PAYMENT_METHOD]></td>
+                    <td width="25%" id="payment_method_view"><![PAYMENT_METHOD]></td>
                     <td width="25%">Méthode de livraison</td>
-                    <td width="25%" class="shipping_method_view"><![SHIPPING_METHOD]></td>
+                    <td width="25%" id="shipping_method_view"><![SHIPPING_METHOD]></td>
                 </tr>
                 <tr>
                     <td width="25%">Nom</td>
-                    <td width="25%" class="payment_method_view"><![FULL_NAME]></td>
+                    <td width="25%" id="nom_view"><![FULL_NAME]></td>
                     <td width="25%">Société</td>
-                    <td width="25%" class="shipping_method_view"><![COMPANY]></td>
+                    <td width="25%" id="societe_view"><![COMPANY]></td>
                 </tr>
                 <tr>
                     <td>Adresse de Livraison</td>
-                    <td class="shipping_address"><![SHIPPING_ADDRESS]></td>
-                    <td>Code Postal / Ville</td>
-                    <td class="shipping_city"><![PAYMENT_METHOD]> / <![PAYMENT_METHOD]></td>
+                    <td id="address_view"><![SHIPPING_ADDRESS]></td>
+                    <td>Code Postal / Ville / Pays</td>
+                    <td id="city_view"><![PAYMENT_METHOD]> <![PAYMENT_METHOD]>, <![PAYMENT_METHOD]></td>
                 </tr>
         </table>
     </div>
@@ -41,18 +41,23 @@
             </thead>
             <tbody>
                 {% for row in order.articles %}
-                <tr>
-                    <td width="60%" colspan="2">
-                        <strong>{{ row.model.article.brand|capitalize }} - {{ row.model.article.name|capitalize }}</strong><br>
-                        Vendu par <span>{{ row.model.user.getFullName() }}</span>
-                    </td>
-                    <td width="20%" align="center">{{ row.model.price|number_format(2,'.', ',') }} €</td>
-                </tr>
+                    <tr>
+                        <td width="60%" colspan="2">
+                            <strong>{{ row.model.article.brand|capitalize }} - {{ row.model.article.name|capitalize }}</strong><br>
+                            Vendu par <span>{{ row.model.user.getFullName() }}</span>
+                        </td>
+                        <td width="20%" align="center">{{ row.model.price|number_format(2,'.', ',') }} €</td>
+                    </tr>
                 {% endfor %}
                 <tr>
                     <td></td>
+                    <td align="right">Livraison TTC</td>
+                    <td align="right" id="shipping_price_view"><![SHIPPING_PRICE]> €</td>
+                </tr>
+                <tr>
+                    <td></td>
                     <td align="right">TOTAL TTC</td>
-                    <td align="right">157,89 €</td>
+                    <td align="right" id="price_view" data-total="{{ total }}"><![TOTAL]> €</td>
                 </tr>
             </tbody>
         </table>
@@ -64,3 +69,56 @@
     </div>
 </div>
 
+<script>
+    
+function format_number(number, rnd, comma, separator){
+    number = new String(number);
+    number = number.replace(/(\d+)(\.(\d*))?/, function(res, p1, p2, p3){
+        if(p3 == undefined)
+            p3 = 0;
+        
+        p3 = new String(p3);
+        
+        for(var i = p3.length; i<rnd; i++)
+            p3+=0;
+       return p1+comma+p3;
+    });
+    number = number.replace(/(\d)(\d{3})/gi, '$1'+separator+'$2');
+    number = number.replace('.', comma);
+    return number;
+}
+
+$('#validationTab, #activate-step-4').click(function(){
+    var nom = $('#nom').val();
+    var prenom = $('#prenom').val();
+    var societe = $('#societe').val();
+    var address = $('#adresse').val();
+    var address2 = $('#adressecomp').val();
+    var zipCode = $('#codepostal').val();
+    var city = $('#ville').val();
+    var country = $('#pays>option:selected').text();
+    var telephone = $('#telephone').val();
+    var shippingMethod = {
+        name : $('input[type="radio"][name="odysseus_adminbundle_order[shippingMethod]"]:checked').data('name'),
+        price : parseFloat($('input[type="radio"][name="odysseus_adminbundle_order[shippingMethod]"]:checked').data('price')),
+    };
+    var paymentMethod = $('input[type="radio"][name="odysseus_adminbundle_order[paymentMethod]"]:checked').data('name');
+    var price = parseFloat($('#price_view').data('total'));
+    
+    if(prenom.length > 0)
+        prenom = prenom.substr(0, 1).toUpperCase()+(prenom.length > 1 ? prenom.substr(1).toLowerCase() : '');
+    nom = nom.toUpperCase();
+    
+    if(societe.length > 0)
+        societe = societe.substr(0, 1).toUpperCase()+(societe.length > 1 ? societe.substr(1).toLowerCase() : '');
+    
+    $('#payment_method_view').html(paymentMethod);
+    $('#shipping_method_view').html(shippingMethod.name);
+    $('#nom_view').html(prenom+' '+nom);
+    $('#address_view').html(address+'<br />'+address2);
+    $('#city_view').html(zipCode+' '+city+', '+country);
+    $('#societe_company').html(societe);
+    $('#price_view').html(format_number((price+shippingMethod.price), 2, '.', ',')+' €');
+    $('#shipping_price_view').html(format_number(shippingMethod.price, 2, '.', ',')+' €');
+});
+</script>

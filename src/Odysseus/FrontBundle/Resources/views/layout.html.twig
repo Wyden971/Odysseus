@@ -41,9 +41,9 @@
                     </div>
                     <!-- Search (big screen) -->
                     <div class="col-md-4 hidden-sm hidden-xs">
-                        <form class="navbar-form navbar-left" role="search">
+                        <form class="navbar-form navbar-left" role="search" action="{{ path('odysseus_user_homesearch') }}" method="GET">
                             <div class="form-group">
-                                <input type="text" class="form-control input-large" placeholder="Que recherchez-vous ?">
+                                <input type="text" name="q" value="{{ q is defined ? q : '' }}" class="form-control input-large" placeholder="Vous chercher un produit ?">
                             </div>
                             <button type="submit" class="btn btn-greend">Rechercher</button>
                         </form>
@@ -55,7 +55,7 @@
                         </a>
                         {% if is_granted('ROLE_USER') %}
                         <a href="{{ path('odysseus_front_cart_index') }}" class="btn btn-responsive btn-greend">
-                            <span class="glyphicon glyphicon-shopping-cart"></span> Mon Panier
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Mon Panier ({{ app.user.getActiveCart().model|length }})
                         </a>
                         {% endif %}
                     </div>
@@ -84,6 +84,9 @@
                                 <a class="navbar-brand visible-xs" href="#">Menu</a>
                             </div>
                             <!-- Contenu du menu -->
+                            <div style="position:absolute;right:15px;top:11px;font-size:12px;">
+                                <a href="{{ path('fos_user_security_front_logout') }}" >Se deconnecter <span class="glyphicon glyphicon-log-out"></span></a>
+                            </div>
                             <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
                                 <ul class="nav navbar-nav navbar-left">
                                     <li class="{{ app.request.get('_route') == 'odysseus_front_homepage' ? 'active' : '' }}">
@@ -94,8 +97,14 @@
                                         <a href="{{ path('odysseus_category_index', {'category_name':category.url}) }}">{{ category.name }}</a>
                                     </li>
                                     {% endfor %}
+                                    {% if is_granted('ROLE_USER') %}
+                                    <li>
+                                        <a href="{{ path('odysseus_front_user_add_article') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un article</a>
+                                    </li>
+                                    {% endif %}
                                 </ul>
                             </div>
+                                
                         </nav>
                     </div>
                     {% if breadcrumb is defined %}

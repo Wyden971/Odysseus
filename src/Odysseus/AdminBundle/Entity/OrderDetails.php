@@ -307,6 +307,10 @@ class OrderDetails
     }
     
     public function __toString(){
+        return $this->getFullName();
+    }
+    
+    public function getFullName(){
         return ucfirst($this->firstName).' '.strtoupper($this->lastName);
     }
 }

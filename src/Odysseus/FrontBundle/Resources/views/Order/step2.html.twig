@@ -18,7 +18,14 @@
                 </div>
                 <div class="panel-footer">
                     <label class="btn" style>
-                        {{ form_widget(form.shippingMethod[method.data.id]) }} Choisir la livraison {{ method.data.name }}
+                        {{ 
+                            form_widget(form.shippingMethod[method.data.id], {
+                                'attr' : {
+                                    'data-name':method.data.name,
+                                    'data-price':method.price
+                                }
+                            }) 
+                        }} Choisir la livraison {{ method.data.name }}
                     </label>
                 </div>
             </div>
@@ -26,6 +33,6 @@
     {% endfor %}
 
     <div class="col-xs-12">
-        <button type="submit" id="activate-step-3" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
+        <button type="button" id="activate-step-3" class="btn btn-greend btn-long pull-right">Passer à l'étape suivante</button>
     </div>
 </div>

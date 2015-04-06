@@ -1,205 +1,157 @@
 {% extends 'OdysseusFrontBundle::layout.html.twig' %}
 {% block content %}
+<style>
+    
+    .master-product-image{
+        width:539px;
+        height:360px;
+        background:no-repeat center;
+        background-size:cover;
+        overflow:hidden;
+        border:1px solid #AAA;
+    }
+    .master-product-image>img{
+        opacity:0;
+    }
+    
+    .min-product-image{
+        width:100px;
+        height:52px;
+        background:no-repeat center;
+        background-size:cover;
+        overflow:hidden;
+        border:1px solid #AAA;
+    }
+    .min-product-image>img{
+        opacity:0;
+    }
+</style>
 <div class="row">
-	<!-- Titre de la page -->
-	<div class="col-lg-12">
-		<h2>FICHE PRODUIT</h2>
-	</div>
-	
-	<!-- Images du produit -->
-	<div class="col-sm-6">
-		<div class="product-image-large slider slider-for">
-			<div><img src="http://placehold.it/700x360/009900/eeeeee"/></div>
-			<div><img src="http://placehold.it/700x360/990000/eeeeee"/></div>
-			<div><img src="http://placehold.it/700x360/000099/eeeeee"/></div>
-			<div><img src="http://placehold.it/700x360/999900/eeeeee"/></div>
-		</div>
-		<div id="product_gallery" class="slider slider-nav">
-			<div><img src="http://placehold.it/194x100/009900/eeeeee"/></div>
-			<div><img src="http://placehold.it/194x100/990000/eeeeee"/></div>
-			<div><img src="http://placehold.it/194x100/000099/eeeeee"/></div>
-			<div><img src="http://placehold.it/194x100/999900/eeeeee"/></div>
-		</div>
-	</div>
-	<!-- Détails & Options du produit -->
-	<div class="col-sm-6 product-details">
-		<h4>LOREM IPSUM DOLOR</h4>
-		<div class="price">
-			<span class="price-was">$959.99</span> $999.99
-		</div>
-		<h5>Quick Overview</h5>
-		<p>
-			Morbi eleifend congue elit nec sagittis. Praesent aliquam lobortis tellus, nec consequat massa ornare vitae. Ut fermentum justo vel venenatis eleifend. Fusce id magna eros.
-		</p>
-		<table class="shop-item-selections">
-			<!-- Option 1 -->
-			<tbody><tr>
-				<td><b>Option 1</b></td>
-				<td>
-					<div class="select-grey">
-						<select>
-							<option>Aucune</option>
-							<option>Option 1</option>
-							<option>Option 2</option>
-							<option>Option 3</option>
-							<option>Option 4</option>
-						</select>
-					</div>
-				</td>
-			</tr>
-			<!-- Option 2 -->
-			<tr>
-				<td><b>Option 2</b></td>
-				<td>
-					<div class="select-grey">
-						<select>
-							<option>Aucune</option>
-							<option>Option 1</option>
-							<option>Option 2</option>
-							<option>Option 3</option>
-							<option>Option 4</option>
-						</select>
-					</div>
-				</td>
-			</tr>
-			<!-- Quantité -->
-			<tr>
-				<td><b>Quantité</b></td>
-				<td>
-					<input class="form-control input-sm input-micro" value="1" type="text">
-				</td>
-			</tr>
-			<!-- Boutons -->
-			<tr>
-				<td>&nbsp;</td>
-				<td style="text-align:right">
-					<a href="#" class="btn btn-greend"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Ajouter au panier</a>
-				</td>
-			</tr>
-		</tbody></table>
-	</div>
-	
-	<!-- Onglets -->
-	<div class="col-sm-12">
-		<div>
-			<!-- Onglets -->
-			<ul class="nav nav-tabs product-details-nav">
-				<li class="active"><a href="#tab1" data-toggle="tab">Description</a></li>
-				<li class=""><a href="#tab2" data-toggle="tab">Fiche technique</a></li>
-				<li class=""><a href="#tab3" data-toggle="tab">Commentaires</a></li>
-			</ul>
-			<!-- Description -->
-			<div class="tab-content product-detail-info">
-				<div class="tab-pane active" id="tab1">
-					<h4>Description du produit</h4>
-					<p>
-						Donec hendrerit massa metus, a ultrices elit iaculis eu. Pellentesque ullamcorper augue lacus. Phasellus et est quis diam iaculis fringilla id nec sapien. Sed tempor ornare felis, non vulputate dolor. Etiam ornare diam vitae ligula malesuada tempor. Vestibulum nec odio vel libero ullamcorper euismod et in sapien. Suspendisse potenti.
-					</p>
-					<h4>Fonctionalités</h4>
-					<ul>
-						<li>Nullam dictum augue nec iaculis rhoncus. Aenean lobortis fringilla orci, vitae varius purus eleifend vitae.</li>
-						<li>Nunc ornare, dolor a ultrices ultricies, magna dolor convallis enim, sed volutpat quam sem sed tellus.</li>
-						<li>Aliquam malesuada cursus urna a rutrum. Ut ultricies facilisis suscipit.</li>
-						<li>Duis a magna iaculis, aliquam metus in, luctus eros.</li>
-						<li>Aenean nisi nibh, imperdiet sit amet eleifend et, gravida vitae sem.</li>
-						<li>Donec quis nisi congue, ultricies massa ut, bibendum velit.</li>
-					</ul>
-					<h4>Informations d'utilisation</h4>
-					<p>
-						Donec hendrerit massa metus, a ultrices elit iaculis eu. Pellentesque ullamcorper augue lacus. Phasellus et est quis diam iaculis fringilla id nec sapien. Sed tempor ornare felis, non vulputate dolor. Etiam ornare diam vitae ligula malesuada tempor. Vestibulum nec odio vel libero ullamcorper euismod et in sapien. Suspendisse potenti.
-					</p>
-				</div>
-				<!-- Fiche technique -->
-				<div class="tab-pane" id="tab2">
-					<table>
-						<tbody><tr>
-							<td>Appareil photo (Arrière)</td>
-							<td>16 Megapixels</td>
-						</tr>
-						<tr>
-							<td>Appareil photo (Avant)</td>
-							<td>8 Megapixels</td>
-						</tr>
-						<tr>
-							<td>Balance auto. des blancs</td>
-							<td>Oui</td>
-						</tr>
-						<tr>
-							<td>Batterie</td>
-							<td>Lithium Ion - 5400 ampères</td>
-						</tr>
-						<tr>
-							<td>Mémoire vive (RAM)</td>
-							<td>2 Go</td>
-						</tr>
-						<tr>
-							<td>Mémoire extensible</td>
-							<td>Non</td>
-						</tr>
-						<tr>
-							<td>Resolution d'écran</td>
-							<td>1280x800</td>
-						</tr>
-						<tr>
-							<td>Thug life</td>
-							<td>Oui</td>
-						</tr>
-					</tbody></table>
-				</div>
-				<!-- Commentaires -->
-				<div class="tab-pane" id="tab3">
-					<div class="product-review">
-						<div class="review-header">
-							<ul class="rating">
-								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-							</ul>
-							<h4>Ichigodu73</h4>
-							<small>Posté le 26/11/2012</small>
-						</div>
-						<div class="review-body">
-							<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-						</div>
-					</div>
-					<div class="product-review">
-						<div class="review-header">
-							<ul class="rating">
-								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-							</ul>
-							<h4>Marine Le Stylo</h4>
-							<small>Posté le 26/11/2012</small>
-						</div>
-						<div class="review-body">
-							<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-						</div>
-					</div>
+    <!-- Titre de la page -->
+    <div class="col-lg-12">
+        <h2>FICHE PRODUIT</h2>
+    </div>
 
-					<div class="product-review">
-						<div class="review-header">
-							<ul class="rating">
-								<li><span class="glyphicon glyphicon-star star-on" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-								<li><span class="glyphicon glyphicon-star star-off" aria-hidden="true"></span></li>
-							</ul>
-							<h4>Morsay T2LG</h4>
-							<small>Posté le 26/11/2012</small>
-						</div>
-						<div class="review-body">
-							<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- Images du produit -->
+    <div class="col-sm-6">
+        <div class="product-image-large slider slider-for">
+            {% for image in product.image %}
+            <div class="master-product-image" style="background-image:url('{{ image.url }}');">
+                <img src="{{ image.url }}"/>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="product_gallery" class="slider slider-nav">
+            {% for image in product.image %}
+            <div class="min-product-image" style="background-image:url('{{ image.url }}');">
+                <img src="{{ image.url }}"/>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Détails & Options du produit -->
+    <div class="col-sm-6 product-details">
+        <h4>{{ product.article.brand|capitalize }} - {{ product.article.name }}</h4>
+        <div class="price">
+            {{ product.price|number_format(2, '.', ',') }} €
+        </div>
+        <h5>Description : </h5>
+        <div style="min-height:190px;">
+            <p> {{product.article.description }}</p>
+        </div>
+        {% if is_granted('ROLE_USER') %}
+        <div style="text-align:right;">
+            <a href="{{ path('odysseus_front_product_create', {'category':product.article.category.url, 'name':(product.article.name|forUri|raw), 'id' : product.id}) }}" class="btn btn-greend"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> J'ai un exemplaire à vendre</a>
+            <a href="{{ path('odysseus_front_cart_add', {'product_name':(product.article.name|forUri|raw), 'product_id' : product.id}) }}" class="btn btn-greend"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Ajouter au panier</a>
+        </div>
+        {% endif %}
+    </div>
+
+    
+    <!-- Onglets -->
+    <div class="col-lg-12">
+        <h2>VENDU PAR D'AUTRES VENDEURS (<a href="{{ 
+                        path('odysseus_front_product_more',{
+                            'id':product.id,
+                            'name':product.article.name|forUri|raw,
+                            'category':product.article.category.url
+                        }) 
+                    }}">Voir tout</a>)</h2>
+        <div class="row">
+            {% for row in more_models %}
+                    {% if row.image is not empty %}
+                        {% set src = row.image[0].url %}
+                    {% elseif row.article.image is not empty %}
+                        {% set src = row.article.image[0].url %}
+                    {% else %}
+                        {% set src = asset('/bundles/odysseusfront/images/product1.jpg') %}
+                    {% endif %}
+            <!-- Article -->
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="shop-item">
+                    <img src="{{ asset('/bundles/odysseusfront/images/ruban.png') }}" class="ribbon"/>
+                    <div class="image">
+                        <a href="{{ 
+                                    path('odysseus_front_product_details',{
+                                        'id':row.id,
+                                        'name':row.article.name|forUri,
+                                        'category':row.article.category.url
+                                    }) 
+                                }}">
+
+                            <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:191px;border:1px solid #EEE;">
+                                <img src="{{ src }}" alt="{{ row.article.name }}" title="{{ row.article.name }}" height="191" style="opacity:0">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="title">
+                        <h3>
+                            <a href="{{ 
+                                    path('odysseus_front_product_details',{
+                                        'id':row.id,
+                                        'name':row.article.name|forUri|raw,
+                                        'category':row.article.category.url
+                                    }) 
+                                }}">{{ row.article.name }}</a>
+                        </h3>
+                    </div>
+                    <div class="price">
+                        <span class="price-text"><span style="color: #00AA00;">Disponible</span> à partir de</span>
+                                                    {{ row.price }} €
+                    </div>
+
+                    <div class="actions">
+                        <a href="{{ 
+                                    path('odysseus_front_product_details',{
+                                        'id':row.id,
+                                        'name':row.article.name|forUri,
+                                        'category':row.article.category.url
+                                    }) 
+                                }}" class="btn btn-default">
+                            <i class="icon-shopping-cart icon-white"></i> Plus de détails
+                        </a> 
+                        <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.article.name|forUri|raw), 'product_id' : row.id}) }}" class="btn btn-greend">
+                            <i class="icon-shopping-cart icon-white"></i> Ajouter au panier
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            {% else %}
+            <center>Pas d'autres articles disponibles</center>
+            {% endfor %}
+        </div>
+       <div class="row" style="text-align:right">
+            <div class="col-xs-12">
+                <a href="{{ 
+                        path('odysseus_front_product_more',{
+                            'id':product.id,
+                            'name':product.article.name|forUri|raw,
+                            'category':product.article.category.url
+                        }) 
+                    }}">Voir tout</a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'OdysseusAdminBundle::column2.layout.html.twig' %}
+
+{% block title %}Commande n° {{ data.id }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <h1 class="page-header">Commande n° {{ data.id }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <table style="width:100%;table-layout: fixed;">
+            <tbody>
+                <tr>
+                    <td colspan="3" style="border-bottom:1px solid #DDD;color:#009900;">
+                        Informations commandes
+                    </td>
+                </tr>
+                <tr>
+                    <th>Acheteur</th>
+                    <th>Date de la commande</th>
+                    <th>Montant de la commande</th>
+                </tr>
+                <tr>
+                    <td valign="top">{{ data.user.getFullName() }}</td>
+                    <td valign="top">{{ data.createdAt|date('d/m/Y') }}</td>
+                    <td valign="top" style="color:#009900;">{{ data.getTotal()|number_format(2, '.', ',') }} €</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <th>Nombre d'articles</th>
+                    <th>Méthode de paiement</th>
+                </tr>
+                <tr>
+                    <td valign="top">{{ data.status.name|capitalize }}</td>
+                    <td valign="top">{{ data.articles|length }}</td>
+                    <td valign="top">{{ data.paymentMethod.name|capitalize }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        &nbsp;<br />&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border-bottom:1px solid #DDD;color:#009900;">
+                        Informations de livraisons
+                    </td>
+                </tr>
+                <tr>
+                    <th>Méthode de livraison</th>
+                    <th>Société, Nom et Prénom</th>
+                    <th>Adresse</th>
+                </tr>
+                <tr>
+                    <td valign="top">{{ data.shippingMethod.name|capitalize }}<br /><span style="color:#009900;">{{ data.getShippingCost()|number_format(2, '.', ',') }} €</span></td>
+                    <td valign="top">{{ data.shipping.company }} {{ data.shipping.getFullName() }}</td>
+                    <td valign="top">{{ data.shipping.address1 }}<br />{{ data.shipping.address2 }}{{ data.shipping.address2 is empty ? '' : '<br />' }}{{ data.shipping.zipCode }} {{ data.shipping.city|capitalize }}, {{ data.shipping.country.name|capitalize }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        &nbsp;<br />&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border-bottom:1px solid #DDD;color:#009900;">
+                        Les articles ({{ data.articles|length }})
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+        <table style="width:100%;">
+            <thead>
+                <tr>
+                    <th style="min-width:250px">Désignation</th>
+                    <th style="text-align:center">Vendeur</th>
+                    <th style="text-align:center">Statut</th>
+                    <th style="text-align:center">Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in data.articles %}
+                <tr>
+                    <td>
+                        <a href="{{ path('odysseus_admin_article_update', { 'id' : article.model.id}) }}">{{ article.model.article.brand|capitalize }} - {{ article.model.article.name }}</a>
+                    </td>
+                    <td style="text-align:center">{{ article.model.user.getFullName() }}</td>
+                    <td style="text-align:center">En attente de livraison</td>
+                    <td style="text-align:center">{{ article.model.price|number_format(2, '.', ',') }} €</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block operations %}
+<li class="list-group-item">
+    <a href="#">Voir les commandes</a>
+</li>
+<li class="list-group-item">
+    <a href="#">Voir les statistiques</a>
+</li>
+ {% endblock operations %}
