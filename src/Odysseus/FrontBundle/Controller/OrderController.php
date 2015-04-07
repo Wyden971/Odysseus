@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Odysseus\AdminBundle\Entity\Order;
 use Odysseus\AdminBundle\Form\OrderType;
 use Odysseus\AdminBundle\Entity\OrderDetails;
@@ -104,9 +105,11 @@ class OrderController extends Controller {
         $html = $this->renderView('OdysseusFrontBundle:Order:pdf.html.twig', array(
             'commande' => $commande
         ));
-
+        #return $this->render('OdysseusFrontBundle:Order:pdf.html.twig', array(
+        #    'commande' => $commande
+        #));
         return new Response(
-                $this->get('knp_snappy.pdf')->getOutputFromHtml($html), 200, array(
+                $this->get('knp_snappy.pdf')->generateFromHtml($html, '/symfony/file2.pdf'), 200, array(
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'attachment; filename="file.pdf"'
                 )

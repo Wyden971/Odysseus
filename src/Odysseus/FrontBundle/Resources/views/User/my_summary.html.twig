@@ -50,11 +50,11 @@
                         {%if article.model is not null %}
                             <!-- Vente -->
                             <tr>
-                                <td><a href="{{ path('odysseus_front_user_my_order_details', {'id' : order.id}) }}">C{{order.id}}</td>
+                                <td><a href="{{ path('odysseus_front_user_my_order_details', {'id' : article.order.id}) }}">C{{article.order.id}}</td>
                                 <td>Vente</td>
                                 <td>{{ article.order.createdAt|date('d/m/Y') }}</td>
-                                <td>{{ article.order.user.infos.lastName|capitalize}} {{ article.order.user.infos.firstName}}</td>
-                                <td>{{ order.status.name }}</td>
+                                <td>{{ article.order.user.infos[0].lastName|capitalize}} {{ article.order.user.infos[0].firstName}}</td>
+                                <td>{{ article.order.status.name }}</td>
                             </tr>
                         {%else%}
                             <!-- Achat -->

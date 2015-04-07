@@ -228,8 +228,8 @@ class UserController extends Controller {
                 ->select('oa')
                 ->join('oa.order', 'o')
                 ->join('oa.model', 'm')
-                #->where('o.user = ' . $user->getId())
-                ->where('m.user = ' . $user->getId())
+                ->where('o.user = ' . $user->getId())
+                ->orWhere('m.user = ' . $user->getId())
                 ->getQuery()->getResult();
         // derniers articles ajoutés
         $lastAddedArticle = $this->getUserProducts($user->getId(), 1, 5);
@@ -545,6 +545,8 @@ class UserController extends Controller {
         $this->get('mailer')->send($message);
     }
 
+    
+    
     private function getCommandes($userId, $page, $count) {
         $page--;
         if ($page < 0)

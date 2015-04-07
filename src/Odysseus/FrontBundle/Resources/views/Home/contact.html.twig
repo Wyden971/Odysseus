@@ -38,22 +38,34 @@
 			</div>
 			<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC__J69El1YGAGKxqNSBpz2q0f-N33HGpQ&amp;q=IP+Formation,Paris" height="246"></iframe>
 		</div>
+            {%if user is not null and not valid%}
 		<div class="contact-form">
 			<div class="titleHeader clearfix">
 				<h3>Formulaire de contact</h3>
 			</div>
-			<form method="POST" action="page">
+			<form method="POST" action="">
 				<div class="row">
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input class="form-control" placeholder="Votre nom" type="text"></div>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input class="form-control" placeholder="Votre adresse e-mail" type="text"></div>
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><textarea class="form-control" placeholder="Votre message"></textarea></div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input class="form-control" placeholder="Votre nom" type="text" value="{{user.infos[0].lastName}} {{user.infos[0].firstName}}"></div>
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"><input class="form-control" placeholder="Votre adresse e-mail" type="text" value="{{user.email}}"></div>
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><textarea class="form-control" name="message" placeholder="Votre message"></textarea></div>
 				</div>
 				<div class="controls">
 					<button type="submit" class="btn btn-greend pull-right">Envoyer le message</button>
 				</div>
 			</form>
 		</div>
-
+            {%endif%}
+            
+            {% if valid %}
+                <div class="contact-form">
+                    <div class="titleHeader clearfix">
+				<h3>Formulaire de contact</h3>
+			</div>
+                            <div class="well text-center" style='margin-top: 20px;'>
+                                <h1 class="text-center" style="margin:10px 0px 15px">Votre message a été envoyé au support avec succès !</h1>
+                            </div>
+                </div>
+            {% endif %}
 	</div>
 </div>
 {% endblock %}
