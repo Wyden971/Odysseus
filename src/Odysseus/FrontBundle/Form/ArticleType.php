@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+
 use Odysseus\FrontBundle\Form\ArticleModelType;
 
 class ArticleType extends AbstractType
@@ -54,6 +55,8 @@ class ArticleType extends AbstractType
      */
     public function getName()
     {
+
         return 'odysseus_adminbundle_article';
+
     }
 }

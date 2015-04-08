@@ -20,6 +20,7 @@ class ArticleController extends Controller {
 
     /**
      * @Route("/", name="odysseus_front_product_details")
+     * @Route("/{page}", name="odysseus_front_product_details_page", requirements={"page"="\d+"})
      */
     public function indexAction($category, $name, $id) {
         
@@ -65,6 +66,7 @@ class ArticleController extends Controller {
         $list_view = ($session->has('category_list_view') ? $session->get('category_list_view') : 'grid' );
         $sort = ($session->has('category_sort') ? $session->get('category_sort') : 'pert' );
 
+
         if ($request->query->has('npp')) {
             $npp = $request->query->get('npp');
 
@@ -72,7 +74,9 @@ class ArticleController extends Controller {
                 $npp = 5;
             }
 
+
             $this->get('session')->set('category_npp', $npp);
+
         }
 
         if ($request->query->has('list_view')) {
@@ -82,6 +86,7 @@ class ArticleController extends Controller {
             }
 
             $this->get('session')->set('category_list_view', $list_view);
+
         }
 
         if ($request->query->has('sort')) {
@@ -175,6 +180,7 @@ class ArticleController extends Controller {
             'model' => $model,
             'category_name' => $product->getArticle()->getCategory()->getUrl()
         ));
+
     }
     
     
@@ -182,7 +188,7 @@ class ArticleController extends Controller {
     public function getRepository() {
         return $this->getDoctrine()->getRepository('OdysseusAdminBundle:Article');
     }
-    
+
     public function getArticleModelRepository() {
         return $this->getDoctrine()->getRepository('OdysseusAdminBundle:ArticleModel');
     }

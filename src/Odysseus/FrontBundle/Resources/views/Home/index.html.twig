@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <!-- Panneaux publicitaires -->
-    <div class="col-lg-12 hidden-xs" style="margin-bottom:20px; text-align:center;">
+    <div class="col-lg-12 hidden-xs" style="margin-bottom:20px;margin-top: 20px; text-align:center;">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3">
                 <img src="{{ asset('/bundles/odysseusfront/images/service1.png') }}" alt="service" />
@@ -71,6 +71,7 @@
                 <div class="shop-item">
                     <img src="{{ asset('/bundles/odysseusfront/images/ruban.png') }}" class="ribbon"/>
                     <div class="image">
+
                         <a href="{{ 
                                 path('odysseus_front_product_details',{
                                     'id':row.id,
@@ -79,6 +80,7 @@
                                 }) 
                             }}">
 
+
                             <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:191px;border:1px solid #EEE;">
                                 <img src="{{ src }}" alt="{{ row.article.name }}" title="{{ row.article.name }}" height="191" style="opacity:0">
                             </div>
@@ -86,6 +88,7 @@
                     </div>
                     <div class="title">
                         <h3>
+
                             <a href="{{ 
                                 path('odysseus_front_product_details',{
                                     'id':row.id,
@@ -93,6 +96,7 @@
                                     'category':row.article.category.url
                                 }) 
                             }}">{{ row.article.name }}</a>
+
                         </h3>
                     </div>
                     <div class="price">
@@ -101,6 +105,7 @@
                     </div>
 
                     <div class="actions">
+
                         <a href="{{ 
                                 path('odysseus_front_product_details',{
                                     'id':row.id,
@@ -115,6 +120,7 @@
                             <i class="icon-shopping-cart icon-white"></i> Ajouter au panier
                         </a>
                         {% endif %}
+
                     </div>
                 </div>
             </div>

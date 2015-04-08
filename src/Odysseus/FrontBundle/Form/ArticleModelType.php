@@ -36,6 +36,7 @@ class ArticleModelType extends AbstractType
                 )
             ))
             //->add('cart')
+
         ;
     }
     
@@ -54,6 +55,8 @@ class ArticleModelType extends AbstractType
      */
     public function getName()
     {
+
         return 'odysseus_adminbundle_articlemodel';
+
     }
 }

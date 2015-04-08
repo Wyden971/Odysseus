@@ -50,11 +50,11 @@
                         {%if article.model is not null %}
                             <!-- Vente -->
                             <tr>
-                                <td><a href="{{ path('odysseus_front_user_my_order_details', {'id' : order.id}) }}">C{{order.id}}</td>
+                                <td><a href="{{ path('odysseus_front_user_my_order_details', {'id' : article.order.id}) }}">C{{article.order.id}}</td>
                                 <td>Vente</td>
                                 <td>{{ article.order.createdAt|date('d/m/Y') }}</td>
-                                <td>{{ article.order.user.infos.lastName|capitalize}} {{ article.order.user.infos.firstName}}</td>
-                                <td>{{ order.status.name }}</td>
+                                <td>{{ article.order.user.infos[0].lastName|capitalize}} {{ article.order.user.infos[0].firstName}}</td>
+                                <td>{{ article.order.status.name }}</td>
                             </tr>
                         {%else%}
                             <!-- Achat -->
@@ -75,7 +75,37 @@
                             </tbody>
                         </table>
                     </div>
-
+                    <!-- Tableau des articles ajoutés -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h4 style="margin-top:19px">Derniers articles ajoutés</h4>
+                        <table class="table table-condensed table-hover orderList">
+                            <thead>
+                                <tr>
+                                    <th>Nom de l'article</th>
+                                    <th>Marque</th>
+                                    <th>Catégorie</th>
+                                    <th>Prix TTC</th>
+                                    <th>État</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in lastAddedArticle %}
+                                    <tr>
+                                        <td><a href="{{path('odysseus_front_product_details',{'category':product.article.category.name|forUri|raw,'name':product.article.name|forUri|raw,'id':product.article.id})}}">{{product.article.name}}</a></td>
+                                        <td>{{ product.article.brand }}</td>
+                                        <td>{{ product.article.category.name }}</td>
+                                        <td>{{ product.price }} €</td>
+                                        <td>{{ product.status.name }}</td>
+                                    </tr>
+                                    {% else %}
+                                    <td colspan="7" align="center">
+                                        Aucun Article
+                                    </td>
+                                    {% endfor %}
+                                        </tbody>
+                        </table>
+                        
+                    </div>
                 </div>
 
                 {% endblock %}

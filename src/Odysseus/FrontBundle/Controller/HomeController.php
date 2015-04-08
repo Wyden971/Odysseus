@@ -29,9 +29,20 @@ class HomeController extends Controller
      * @Route("/contact", name="odysseus_front_contact")
      * @Route("/nous-contacter")
      */
-    public function contactAction()
+    public function contactAction(\Symfony\Component\HttpFoundation\Request $request)
     {
-        return $this->render('OdysseusFrontBundle:Home:contact.html.twig');
+        $user = $this->getUser();
+        $valid = false;
+        if ($request->getMethod() == 'POST') {
+            $message = $this->get('request')->request->get('message');
+            $this->sendEmailSupport($user, $message);
+            $valid = true;
+        }
+        return $this->render('OdysseusFrontBundle:Home:contact.html.twig',
+                array(
+                    'user' => $user,
+                    'valid' => $valid
+                    ));
     }
 	
     /**
@@ -231,5 +242,25 @@ class HomeController extends Controller
                 ->findBy(array(), array(
                     'createdAt' => 'DESC'
                     ), 4);
+    }
+    private function sendEmailSupport($user, $message) {
+        $twig = $this->get('twig');
+        
+        $template = $twig->loadTemplate('Mail/contact.twig');
+        $parameters = array(
+            'user' => $user,
+            'message' => $message,
+        );
+        $subject = $template->renderBlock('subject', $parameters);
+        $bodyHtml = $template->renderBlock('body_html', $parameters);
+        $bodyText = $template->renderBlock('body_text', $parameters);
+        $message = \Swift_Message::newInstance()
+                ->setSubject($subject)
+                ->setFrom($user->getEmail())
+                ->setTo('yoann.pierre93@gmail.com')
+                ->setBody($bodyText, 'text/plain')
+                ->addPart($bodyHtml, 'text/html')
+        ;
+        $this->get('mailer')->send($message);
     }
 }

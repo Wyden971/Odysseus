@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Odysseus\FrontBundle\OdysseusFrontBundle(),
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

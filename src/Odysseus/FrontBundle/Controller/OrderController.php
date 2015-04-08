@@ -7,12 +7,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Odysseus\AdminBundle\Entity\Order;
 use Odysseus\AdminBundle\Form\OrderType;
 use Odysseus\AdminBundle\Entity\OrderDetails;
 use Odysseus\AdminBundle\Entity\UserInfos;
 use Odysseus\AdminBundle\Entity\OrderArticle;
-
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -22,15 +22,16 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
  * @Route("/commande")
  */
 class OrderController extends Controller {
-    
+
     private $serializer;
-    
-    function __construct(){
+
+    function __construct() {
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new GetSetMethodNormalizer());
 
         $this->serializer = new Serializer($normalizers, $encoders);
     }
+
     
     private function getBreadcrumb($label='', $more = NULL){
         $request = $this->container->get('request');
@@ -69,6 +70,7 @@ class OrderController extends Controller {
             $shippingMethod = $this->getRepository('ShippingMethod')->find(1);
         }
                 
+
         $order = new Order();
         $order->setShippingMethod($shippingMethod);
         $order->setPaymentMethod($this->getDefaultPaymentMethod());
@@ -77,34 +79,38 @@ class OrderController extends Controller {
         $order->setUser($this->getUser());
         $order->setCreatedAt(new \DateTime());
         $order->setStatus($this->getDefaultOrderStatus());
-        
+
         $cart = $this->getUser()->getActiveCart();
+
         $total = 0;
         
         foreach($cart->getModel() as $model){
+
             $orderArticle = new OrderArticle();
             $orderArticle->setModel($model);
             $orderArticle->setStatus($this->getDoctrine()->getRepository('OdysseusAdminBundle:OrderArticleStatus')->find(1));
             $orderArticle->setOrder($order);
-            
+
             $order->addArticle($orderArticle);
             $total += $model->getPrice();
         }
-        
-        
+
+
         $form = $this->createForm(new OrderType(), $order);
-        
-        if($request->getMethod() == 'POST'){
+
+        if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
-            
-            if($form->isValid()){
-                
+
+            if ($form->isValid()) {
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($order);
                 $em->flush();
+
                 
                 $this->get('session')->getFlashBag()->add('order_confirmation', 'OK');
                 return $this->redirect($this->generateURL('odysseus_front_order_confirmation'));
+
             }
         }
         $breadcrumb = $this->getBreadcrumb('Ma commande');
@@ -146,49 +152,79 @@ class OrderController extends Controller {
         
         return $this->render('OdysseusFrontBundle:Order:confirmation.html.twig', array(
             'breadcrumb' => $breadcrumb
+
         ));
     }
-    
-    private function getShippingMethods($cart){
+
+    /**
+     * @Route("/pdf/{id}", name="odysseus_front_order_pdf", requirements={"id"="\d+"})
+     */
+    public function pdfAction($id) {
+        $user = $this->getUser();
+        $commande = $this->getRepository('Order')
+                ->createQueryBuilder('o')
+                ->select('o')
+                ->where('o.user = ' . $user->getId())
+                ->andWhere('o.id = ' . $id)
+                ->getQuery()
+                ->getSingleResult();
+        if (empty($commande)) {
+            throw $this->createNotFoundException();
+        }
+        $html = $this->renderView('OdysseusFrontBundle:Order:pdf.html.twig', array(
+            'commande' => $commande
+        ));
+        #return $this->render('OdysseusFrontBundle:Order:pdf.html.twig', array(
+        #    'commande' => $commande
+        #));
+        return new Response(
+                $this->get('knp_snappy.pdf')->generateFromHtml($html, '/symfony/file2.pdf'), 200, array(
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="file.pdf"'
+                )
+        );
+    }
+
+    private function getShippingMethods($cart) {
         $methods = array();
         $data = $this->getRepository('ShippingMethod')->findBy(array(), array(
-            'order'=>'ASC'
-            ));
-        foreach($data as $method){
+            'order' => 'ASC'
+        ));
+        foreach ($data as $method) {
             $total = 0;
-            foreach($cart->getModel() as $model){
-                $total += round($model->getShippingPrice($method)*100)/100;
+            foreach ($cart->getModel() as $model) {
+                $total += round($model->getShippingPrice($method) * 100) / 100;
             }
-            $methods[] = (Object)array(
-                'price' => $total,
-                'data' => $method
+            $methods[] = (Object) array(
+                        'price' => $total,
+                        'data' => $method
             );
         }
         return $methods;
     }
-    
-    private function getPaymentMethods(){
+
+    private function getPaymentMethods() {
         return $this->getRepository('PaymentMethod')->findBy(array(), array(
-            'order'=>'ASC'
-            ));
+                    'order' => 'ASC'
+        ));
     }
-    
-    private function getDefaultPaymentMethod(){
+
+    private function getDefaultPaymentMethod() {
         return $this->getRepository('PaymentMethod')->find(1);
     }
-    
-    private function getDefaultOrderStatus(){
+
+    private function getDefaultOrderStatus() {
         return $this->getRepository('OrderStatus')->find(1);
     }
 
-    private function getRepository($model){
+    private function getRepository($model) {
         return $this->getDoctrine()->getRepository("OdysseusAdminBundle:$model");
     }
-    
-    private function getActualShippingDetails(){
+
+    private function getActualShippingDetails() {
         $shippingInfos = $this->getUser()->getDefaultInfos();
         $orderShipping = new OrderDetails();
-        
+
         $orderShipping->setCompany($shippingInfos->getCompany());
         $orderShipping->setFirstName($shippingInfos->getFirstName());
         $orderShipping->setLastName($shippingInfos->getLastName());
@@ -198,15 +234,15 @@ class OrderController extends Controller {
         $orderShipping->setCity($shippingInfos->getCity());
         $orderShipping->setCountry($shippingInfos->getCountry());
         $orderShipping->setTelephone($shippingInfos->getMobilePhone());
-        
+
         return $orderShipping;
     }
-    
-    private function getActualBuillingDetails(){
+
+    private function getActualBuillingDetails() {
         $buillingInfos = $this->getUser()->getBuillingInfos();
-        
+
         $orderBuilling = new OrderDetails();
-        
+
         $orderBuilling->setCompany($buillingInfos->getCompany());
         $orderBuilling->setFirstName($buillingInfos->getFirstName());
         $orderBuilling->setLastName($buillingInfos->getLastName());
@@ -216,7 +252,8 @@ class OrderController extends Controller {
         $orderBuilling->setCity($buillingInfos->getCity());
         $orderBuilling->setCountry($buillingInfos->getCountry());
         $orderBuilling->setTelephone($buillingInfos->getMobilePhone());
-        
+
         return $orderBuilling;
     }
+
 }

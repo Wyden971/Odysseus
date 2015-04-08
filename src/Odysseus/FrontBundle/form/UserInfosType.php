@@ -15,19 +15,28 @@ class UserInfosType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('civility', 'choice', array(
+                'choices'   => array('M' => 'Monsieur', 'Mme' => 'Madame'),
+                'expanded' => true
+            ))
             ->add('firstName')
             ->add('lastName')
+            ->add('company')
             ->add('address1')
             ->add('address2')
             ->add('zipCode')
             ->add('city')
             ->add('telephone')
-            ->add('createdAt')
-            ->add('modifiedAt')
-            ->add('isDefault')
-            ->add('isBuilling')
-            ->add('country')
-            ->add('user')
+            ->add('mobilePhone')
+            //->add('createdAt')
+            //->add('modifiedAt')
+            //->add('isDefault')
+           // ->add('isBuilling')
+            ->add('country', 'entity', array(
+                'class' => 'Odysseus\AdminBundle\Entity\Country',
+                'required' => true
+            ))
+            //->add('user')
         ;
     }
     

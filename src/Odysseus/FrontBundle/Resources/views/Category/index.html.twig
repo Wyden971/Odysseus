@@ -50,7 +50,7 @@
                     <div class="sortBy inline pull-left">
                         <form method="GET">
                             Trier par
-                            <select name="sort" id="category-order">
+                            <select name="sort" id="category_sort">
                                 <option value="name-asc" {{ sort=='name-asc' ? 'selected':'' }}>Nom (A-Z)</option>
                                 <option value="name-desc" {{ sort=='name-desc' ? 'selected':'' }}>Nom (Z-A)</option>
                                 <option value="price-asc" {{ sort=='price-asc' ? 'selected':'' }}>Prix (Moins cher)</option>
@@ -61,7 +61,7 @@
                         </form>
                         <script>
                             $(function() {
-                                $('#category-order').change(function() {
+                                $('#category_sort').change(function() {
                                     $(this).parent().submit();
                                 });
                             });
@@ -108,6 +108,7 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="shop-item">
                     <div class="image">
+
                         <a href="{{ 
                                 path('odysseus_front_product_details',{
                                     'id':row.models[0].id,
@@ -115,6 +116,7 @@
                                     'category':row.category.url
                                 }) 
                             }}">
+
                             
                             <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:191px;border:1px solid #EEE;">
                                 <img src="{{ src }}" alt="{{ row.name }}" title="{{ row.name }}" height="191" style="opacity:0">
@@ -123,6 +125,7 @@
                     </div>
                     <div class="title">
                         <h3>
+
                             <a href="{{ 
                                 path('odysseus_front_product_details',{
                                     'id':row.models[0].id,
@@ -130,6 +133,7 @@
                                     'category':row.category.url
                                 }) 
                             }}">{{ row.name }}</a>
+
                         </h3>
                     </div>
                     <div class="price">
@@ -140,6 +144,7 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio.</p>
                     </div>-->
                     <div class="actions">
+
                         <a href="{{ 
                                 path('odysseus_front_product_details',{
                                     'id':row.models[0].id,
@@ -150,6 +155,7 @@
                         {% if is_granted('ROLE_USER') %}
                         <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.name|forUri|raw), 'product_id' : row.models[0].id}) }}" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
                         {% endif %}
+
                     </div>
                 </div>
             </div>
@@ -159,6 +165,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="shop-item line-item">
                     <div class="image">
+
                         <a href="{{ 
                                 path('odysseus_front_product_details',{
                                     'id':row.models[0].id,
@@ -166,6 +173,7 @@
                                     'category':row.category.url
                                 }) 
                             }}">
+
                             <div style="background:url('{{ src }}') no-repeat center;background-size:cover;height:131px;width:254px;border:1px solid #EEE;">
                                 <img src="{{ src }}" alt="{{ row.name }}" title="{{ row.name }}" height="131" width="254" style="opacity:0">
                             </div>
@@ -174,6 +182,7 @@
                     --><div class="inline-div">
                         <div class="title">
                             <h3>
+
                                 <a href="{{ 
                                 path('odysseus_front_product_details',{
                                     'id':row.models[0].id,
@@ -181,6 +190,7 @@
                                     'category':row.category.url
                                 }) 
                             }}">{{ row.name }}</a>
+
                             </h3>
                         </div>
                         <div class="price">
@@ -189,6 +199,7 @@
                         </div>
                     </div><!--
                     --><div class="actions">
+
                         <a href="{{ 
                                 path('odysseus_front_product_details',{
                                     'id':row.models[0].id,
@@ -199,6 +210,7 @@
                         {% if is_granted('ROLE_USER') %}
                         <a href="{{ path('odysseus_front_cart_add', {'product_name':(row.name|forUri|raw), 'product_id' : row.models[0].id}) }}" class="btn btn-greend"><i class="icon-shopping-cart icon-white"></i> Ajouter au panier</a>
                         {% endif %}
+
                     </div>
                 </div>
             </div>
