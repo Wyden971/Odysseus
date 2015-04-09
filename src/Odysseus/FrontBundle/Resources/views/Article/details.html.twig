@@ -43,7 +43,8 @@
         </div>
         <div id="product_gallery" class="slider slider-nav">
             {% for image in product.image %}
-            <div class="min-product-image" style="background-image:url('{{ image.url }}');">
+			
+            <div class="min-product-image" style="background-image:url('{{ image.url }}');cursor:pointer;">
                 <img src="{{ image.url }}"/>
             </div>
             {% endfor %}
